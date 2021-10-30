@@ -14,6 +14,9 @@
 		2847CA83272D652400328103 /* Finance_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2847CA82272D652400328103 /* Finance_TrackerTests.swift */; };
 		2847CA8D272D652400328103 /* Finance_TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2847CA8C272D652400328103 /* Finance_TrackerUITests.swift */; };
 		2847CA8F272D652400328103 /* Finance_TrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2847CA8E272D652400328103 /* Finance_TrackerUITestsLaunchTests.swift */; };
+		2847CA9D272D658600328103 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2847CA9C272D658600328103 /* MainView.swift */; };
+		2847CAA3272D76F100328103 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2847CAA2272D76F100328103 /* BalanceView.swift */; };
+		28C7CC02272DD0A100D0FF33 /* AnalyticsOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7CC01272DD0A100D0FF33 /* AnalyticsOverviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		2847CA88272D652400328103 /* Finance TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Finance TrackerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2847CA8C272D652400328103 /* Finance_TrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finance_TrackerUITests.swift; sourceTree = "<group>"; };
 		2847CA8E272D652400328103 /* Finance_TrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finance_TrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2847CA9C272D658600328103 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		2847CAA2272D76F100328103 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
+		28C7CC01272DD0A100D0FF33 /* AnalyticsOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsOverviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				2847CA71272D652200328103 /* Finance_TrackerApp.swift */,
-				2847CA73272D652200328103 /* ContentView.swift */,
+				2847CA9B272D656300328103 /* Views */,
 				2847CA75272D652300328103 /* Assets.xcassets */,
 				2847CA77272D652300328103 /* Preview Content */,
 			);
@@ -125,6 +131,33 @@
 				2847CA8E272D652400328103 /* Finance_TrackerUITestsLaunchTests.swift */,
 			);
 			path = "Finance TrackerUITests";
+			sourceTree = "<group>";
+		};
+		2847CA9B272D656300328103 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2847CA73272D652200328103 /* ContentView.swift */,
+				2847CA9E272D68B400328103 /* FinanceViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2847CA9E272D68B400328103 /* FinanceViews */ = {
+			isa = PBXGroup;
+			children = (
+				2847CA9C272D658600328103 /* MainView.swift */,
+				2847CAA1272D699500328103 /* MainViewElements */,
+			);
+			path = FinanceViews;
+			sourceTree = "<group>";
+		};
+		2847CAA1272D699500328103 /* MainViewElements */ = {
+			isa = PBXGroup;
+			children = (
+				2847CAA2272D76F100328103 /* BalanceView.swift */,
+				28C7CC01272DD0A100D0FF33 /* AnalyticsOverviewView.swift */,
+			);
+			path = MainViewElements;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +291,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2847CA74272D652200328103 /* ContentView.swift in Sources */,
+				2847CAA3272D76F100328103 /* BalanceView.swift in Sources */,
+				28C7CC02272DD0A100D0FF33 /* AnalyticsOverviewView.swift in Sources */,
+				2847CA9D272D658600328103 /* MainView.swift in Sources */,
 				2847CA72272D652200328103 /* Finance_TrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
