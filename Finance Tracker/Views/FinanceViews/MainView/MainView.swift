@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var showtransactionsheet = false
+    @State private var showsettingssheet = false
+    
     var body: some View {
         VStack {
             NavigationView {
@@ -17,23 +20,38 @@ struct MainView: View {
                             .foregroundColor(Color(.systemGray6))
                             .frame(height: 150)
                             .padding()
-                        AnalyticsOverviewView()
-                            .frame(height: 450)
+                        AnalyticsFrameView()
+                            .frame(height: 400)
                             .padding()
-                        
                     }
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Image(systemName: "gearshape.fill")
-                            .imageScale(.large)
+                        Button {
+                            showsettingssheet.toggle()
+                        } label: {
+                            Image(systemName: "gearshape.fill")
+                                .imageScale(.large)
+                        }
+                        .foregroundColor(Color(.white))
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showtransactionsheet.toggle()
+                        } label: {
                         Image(systemName: "plus.circle.fill")
                             .imageScale(.large)
+                        }
+                        .foregroundColor(Color(.white))
                     }
                 }
-                .navigationTitle("Balance")
+                .navigationTitle("Overview")
+            }
+            .sheet(isPresented: $showtransactionsheet) {
+                AddTransactionView()
+            }
+            .sheet(isPresented: $showsettingssheet) {
+                SettingsView()
             }
         }
         .preferredColorScheme(.dark)
