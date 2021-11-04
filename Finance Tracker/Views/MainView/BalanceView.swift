@@ -11,14 +11,15 @@ struct BalanceView: View {
     var body: some View {
         ZStack {
             Capsule(style: .continuous)
-            HStack {
-                Image(systemName: "plus")
+                .foregroundColor(Color(.systemGray6))
+            NavigationLink(destination: HistoryView()) {
+                Image(systemName: "arrow.up")
                 Text("1587,24")
                     .bold()
                 Image(systemName: "eurosign.circle")
                 
             }
-            .font(.system(size: 48))
+            .font(.system(size: 42))
             .foregroundColor(Color(red: 35/255, green: 310/255, blue: 139/255))
         }
     }
@@ -27,5 +28,7 @@ struct BalanceView: View {
 struct BalanceView_Previews: PreviewProvider {
     static var previews: some View {
         BalanceView()
+            .previewLayout(.fixed(width: 400, height: 150))
+            .preferredColorScheme(.dark)
     }
 }

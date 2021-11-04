@@ -30,14 +30,13 @@ struct AnalyticsFrameView: View {
                 }
             }
             .padding()
-            
         }
-        .preferredColorScheme(.dark)
     }
 }
 
 struct AnalyticsOverviewView_Previews: PreviewProvider {
     static var previews: some View {
         AnalyticsFrameView()
+            .preferredColorScheme(.dark)
     }
 }

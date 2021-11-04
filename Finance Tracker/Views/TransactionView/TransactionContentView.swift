@@ -13,6 +13,7 @@ struct TransactionContentView: View {
             AmountView()
             InfoView()
             DateView()
+            MapView()
         }
     }
 }

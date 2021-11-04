@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AmountView: View {
-    @State private var amount: String = ""
+    @EnvironmentObject var data: Data
+    @State private var amounttemp: Double?
     
     var body: some View {
         ZStack {
@@ -16,17 +17,29 @@ struct AmountView: View {
                 .foregroundColor(Color(.systemGray5))
             HStack {
                 Text("Amount")
-                TextField("", text: $amount)
-                    .keyboardType(.numberPad)
+                TextField("9,11", value: $amounttemp, format: .number)
+                    .keyboardType(.decimalPad)
             }
             .padding()
         }
         .padding()
+    }
+    func saveamount() {
+        if let amounttemp = self.amounttemp {
+            data.amount.append(amounttemp)
+        }
+        emptyamount()
+    }
+    func emptyamount() {
+        amounttemp = nil
     }
 }
 
 struct TransactionAmountView_Previews: PreviewProvider {
     static var previews: some View {
         AmountView()
+            .environmentObject(Data())
+            .previewLayout(.fixed(width: 400, height: 100))
+            .preferredColorScheme(.dark)
     }
 }

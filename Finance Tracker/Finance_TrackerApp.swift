@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct Finance_TrackerApp: App {
+    @EnvironmentObject var data: Data
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .background(Color.black)
         }
     }
 }
