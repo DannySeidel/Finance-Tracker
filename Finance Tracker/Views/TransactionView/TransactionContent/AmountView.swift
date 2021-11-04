@@ -24,10 +24,6 @@ struct AmountView: View {
         }
         .padding()
     }
-    func emptyamount() {
-        amounttemp = nil
-        print(data.transactions)
-    }
 }
 
 struct TransactionAmountView_Previews: PreviewProvider {

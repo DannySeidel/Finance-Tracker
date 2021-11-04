@@ -11,10 +11,14 @@ struct AddTransactionView: View {
     @Binding var showTransactionSheet: Bool
     
     @EnvironmentObject var data: Data
-    @State private var transactionType = 0
+    @State private var transactiontypetemp = false
     @State private var amounttemp: Double?
     @State private var nametemp: String?
     @State private var categorytemp: String?
+    @State private var dateandtimetemp = Date()
+    @State private var repeattagtemp = 0
+    @State private var endrepeattemp = false
+    @State private var repeatenddatetemp = Date()
     
     var body: some View {
         GeometryReader { geometry in
@@ -22,8 +26,11 @@ struct AddTransactionView: View {
                 VStack {
                     ScrollView {
                         AmountView(amounttemp: $amounttemp)
+                        
                         InfoView(nametemp: $nametemp, categroytemp: $categorytemp)
-                        DateView()
+                        
+                        DateView(dateandtime: $dateandtimetemp, repeattag: $repeattagtemp, endrepeat: $endrepeattemp, repeatenddate: $repeatenddatetemp)
+                        
                         MapView()
                     }
                 }
@@ -34,9 +41,9 @@ struct AddTransactionView: View {
                                 showTransactionSheet.toggle()
                             }
                             VStack {
-                                Picker("", selection: $transactionType) {
-                                    Image(systemName: "minus").tag(0)
-                                    Image(systemName: "plus").tag(1)
+                                Picker("", selection: $transactiontypetemp) {
+                                    Image(systemName: "minus").tag(false)
+                                    Image(systemName: "plus").tag(true)
                                 }
                                 .pickerStyle(.segmented)
                                 .frame(width: 150)
@@ -47,7 +54,7 @@ struct AddTransactionView: View {
                     trailing:
                         Button("Add") {
                             showTransactionSheet.toggle()
-                            save()
+                            savedata()
                             debugPrint(data.transactions[0])
                         }
                 )
@@ -57,9 +64,20 @@ struct AddTransactionView: View {
         }
         .preferredColorScheme(.dark)
     }
-    func save() {
+    func savedata() {
         if let amounttemp = amounttemp, let nametemp = nametemp, let categorytemp = categorytemp {
-            data.transactions.append(DataStructure(amount: amounttemp, name: nametemp, category: categorytemp))
+            data.transactions.append(
+                DataStructure(
+                    transactiontype: transactiontypetemp,
+                    amount: amounttemp,
+                    name: nametemp,
+                    category: categorytemp,
+                    dateandtime: dateandtimetemp,
+                    repeattag: repeattagtemp,
+                    endrepeat: endrepeattemp,
+                    repeatenddate: repeatenddatetemp
+                )
+            )
         }
     }
 }

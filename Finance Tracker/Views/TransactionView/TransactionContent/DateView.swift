@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct DateView: View {
-    @State private var dateandtime = Date()
-    @State private var repeatenddate = Date()
-    @State private var endrepeat = false
-    @State private var repeattag = 0
+    @Binding var dateandtime: Date
+    @Binding var repeattag: Int
+    @Binding var endrepeat: Bool
+    @Binding var repeatenddate: Date
     
     var body: some View {
         ZStack {
@@ -66,7 +66,9 @@ struct DateView: View {
 
 struct TransactionDateView_Previews: PreviewProvider {
     static var previews: some View {
-        DateView()
+        DateView(
+            dateandtime: .constant(Date.now), repeattag: .constant(0), endrepeat: .constant(false), repeatenddate: .constant(Date.now)
+        )
             .preferredColorScheme(.dark)
     }
 }

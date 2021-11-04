@@ -8,9 +8,14 @@
 import Foundation
 
 struct DataStructure: Hashable {
+    var transactiontype: Bool
     var amount: Double
     var name: String
     var category: String
+    var dateandtime: Date
+    var repeattag: Int
+    var endrepeat: Bool
+    var repeatenddate: Date
 }
 
 class Data: ObservableObject {
