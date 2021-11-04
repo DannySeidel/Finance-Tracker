@@ -9,16 +9,20 @@ import SwiftUI
 
 struct AddTransactionView: View {
     @Binding var showTransactionSheet: Bool
-    @State private var transactionType = 0
+    
     @EnvironmentObject var data: Data
+    @State private var transactionType = 0
+    @State private var amounttemp: Double?
+    @State private var nametemp: String?
+    @State private var categorytemp: String?
     
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
                 VStack {
                     ScrollView {
-                        AmountView()
-                        InfoView()
+                        AmountView(amounttemp: $amounttemp)
+                        InfoView(nametemp: $nametemp, categroytemp: $categorytemp)
                         DateView()
                         MapView()
                     }
@@ -27,7 +31,6 @@ struct AddTransactionView: View {
                     leading:
                         HStack {
                             Button("Cancel") {
-                                emptydata()
                                 showTransactionSheet.toggle()
                             }
                             VStack {
@@ -43,8 +46,9 @@ struct AddTransactionView: View {
                         },
                     trailing:
                         Button("Add") {
-                            adddata()
                             showTransactionSheet.toggle()
+                            save()
+                            debugPrint(data.transactions[0])
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
@@ -53,13 +57,10 @@ struct AddTransactionView: View {
         }
         .preferredColorScheme(.dark)
     }
-    private func adddata() {
-        AmountView().saveamount()
-        InfoView().saveinfo()
-    }
-    private func emptydata() {
-        AmountView().emptyamount()
-        InfoView().emptyinfo()
+    func save() {
+        if let amounttemp = amounttemp, let nametemp = nametemp, let categorytemp = categorytemp {
+            data.transactions.append(DataStructure(amount: amounttemp, name: nametemp, category: categorytemp))
+        }
     }
 }
 

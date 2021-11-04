@@ -29,8 +29,8 @@ extension Optional where Wrapped == String {
 struct InfoView: View {
     @EnvironmentObject var data: Data
     
-    @State private var nametemp: String?
-    @State private var categroytemp: String?
+    @Binding var nametemp: String?
+    @Binding var categroytemp: String?
     
     var body: some View {
         ZStack {
@@ -57,24 +57,11 @@ struct InfoView: View {
         }
         .padding()
     }
-    func saveinfo() {
-        if let nametemp = self.nametemp {
-            data.name.append(nametemp)
-        }
-        if let categroytemp = self.categroytemp {
-            data.category.append(categroytemp)
-        }
-        emptyinfo()
-    }
-    func emptyinfo() {
-        nametemp = ""
-        categroytemp = nil
-    }
 }
 
 struct TransactionInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoView()
+        InfoView(nametemp: .constant(""), categroytemp: .constant(""))
             .previewLayout(.fixed(width: 400, height: 150))
             .preferredColorScheme(.dark)
     }

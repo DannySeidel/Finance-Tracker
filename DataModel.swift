@@ -7,9 +7,12 @@
 
 import Foundation
 
+struct DataStructure: Hashable {
+    var amount: Double
+    var name: String
+    var category: String
+}
+
 class Data: ObservableObject {
-//    @Published var transaction:
-    @Published var amount: [Double] = []
-    @Published var name: [String] = []
-    @Published var category: [String] = []    
+    @Published var transactions: [DataStructure] = []
 }

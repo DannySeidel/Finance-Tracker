@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AmountView: View {
     @EnvironmentObject var data: Data
-    @State private var amounttemp: Double?
+    @Binding var amounttemp: Double?
     
     var body: some View {
         ZStack {
@@ -24,20 +24,15 @@ struct AmountView: View {
         }
         .padding()
     }
-    func saveamount() {
-        if let amounttemp = self.amounttemp {
-            data.amount.append(amounttemp)
-        }
-        emptyamount()
-    }
     func emptyamount() {
         amounttemp = nil
+        print(data.transactions)
     }
 }
 
 struct TransactionAmountView_Previews: PreviewProvider {
     static var previews: some View {
-        AmountView()
+        AmountView(amounttemp: .constant(9.11))
             .environmentObject(Data())
             .previewLayout(.fixed(width: 400, height: 100))
             .preferredColorScheme(.dark)
