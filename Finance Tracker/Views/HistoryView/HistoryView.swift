@@ -11,11 +11,8 @@ struct HistoryView: View {
     @EnvironmentObject var data: Data
     
     var body: some View {
-//        ForEach(data) { element in
-//            TransactionElement(data: data)
-//    }
-        TransactionElement()
-            .frame(height: 80)
+        
+        Text("filler")
     }
 }
 
