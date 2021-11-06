@@ -14,9 +14,13 @@ struct Category: Identifiable {
 
 struct CategoryElementView: View {
     var category: Category
+    @Binding var categroytemp: String?
     
     var body: some View {
-        Text(category.title)
+        Button(category.title) {
+            categroytemp = category.title
+        }
+        .navigationTitle("Select Category")
     }
 }
 
@@ -30,7 +34,7 @@ struct CategorySelectView: View {
     
     var body: some View {
         List(categories) { category in
-            CategoryElementView(category: category)
+            CategoryElementView(category: category, categroytemp: $categroytemp)
             
         }
     }

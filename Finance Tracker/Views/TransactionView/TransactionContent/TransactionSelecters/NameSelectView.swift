@@ -14,9 +14,13 @@ struct Name: Identifiable {
 
 struct NameElementView: View {
     var name: Name
+    @Binding var nametemp: String?
     
     var body: some View {
-        Text(name.title)
+        Button(name.title) {
+            nametemp = name.title
+        }
+        .navigationTitle("Select Name")
     }
 }
 
@@ -29,9 +33,10 @@ struct NameSelectView: View {
     ]
     
     var body: some View {
-        List(names) { name in
-            NameElementView(name: name)
-            
+        List {
+            ForEach(names) { name in
+                NameElementView(name: name, nametemp: $nametemp)
+            }
         }
     }
 }
