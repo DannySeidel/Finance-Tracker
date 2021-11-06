@@ -40,7 +40,7 @@ struct InfoView: View {
                 HStack {
                     Text("Name")
                     TextField("Lunch", text: $nametemp.bound)
-                    NavigationLink(destination: NameSelectView()) {
+                    NavigationLink(destination: NameSelectView(nametemp: $nametemp)) {
                         Image(systemName: "plus")
                     }
                 }
@@ -48,7 +48,7 @@ struct InfoView: View {
                 HStack {
                     Text("Category")
                     TextField("Food", text: $categroytemp.bound)
-                    NavigationLink(destination: CategorySelectView()) {
+                    NavigationLink(destination: CategorySelectView(categroytemp: $categroytemp)) {
                         Image(systemName: "plus")
                     }
                 }

@@ -13,6 +13,7 @@ struct Finance_TrackerApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environmentObject(Data())
                 .background(Color.black)
         }
     }

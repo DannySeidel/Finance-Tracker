@@ -11,6 +11,7 @@ struct AddTransactionView: View {
     @Binding var showTransactionSheet: Bool
     
     @EnvironmentObject var data: Data
+    @State private var idtemp = 0
     @State private var transactiontypetemp = false
     @State private var amounttemp: Double?
     @State private var nametemp: String?
@@ -68,6 +69,7 @@ struct AddTransactionView: View {
         if let amounttemp = amounttemp, let nametemp = nametemp, let categorytemp = categorytemp {
             data.transactions.append(
                 DataStructure(
+                    id: idtemp,
                     transactiontype: transactiontypetemp,
                     amount: amounttemp,
                     name: nametemp,

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BalanceView: View {
+    @EnvironmentObject var data: Data
+    
     var body: some View {
         ZStack {
             Capsule(style: .continuous)

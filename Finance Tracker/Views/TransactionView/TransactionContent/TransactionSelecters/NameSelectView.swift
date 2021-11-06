@@ -7,14 +7,37 @@
 
 import SwiftUI
 
-struct NameSelectView: View {
+struct Name: Identifiable {
+    let id = UUID()
+    let title: String
+}
+
+struct NameElementView: View {
+    var name: Name
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(name.title)
+    }
+}
+
+struct NameSelectView: View {
+    @Binding var nametemp: String?
+    
+    let names = [
+        Name(title: "1"),
+        Name(title: "2")
+    ]
+    
+    var body: some View {
+        List(names) { name in
+            NameElementView(name: name)
+            
+        }
     }
 }
 
 struct NameSelectView_Previews: PreviewProvider {
     static var previews: some View {
-        NameSelectView()
+        NameSelectView(nametemp: .constant(""))
     }
 }

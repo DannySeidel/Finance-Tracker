@@ -7,14 +7,37 @@
 
 import SwiftUI
 
-struct CategorySelectView: View {
+struct Category: Identifiable {
+    let id = UUID()
+    let title: String
+}
+
+struct CategoryElementView: View {
+    var category: Category
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(category.title)
+    }
+}
+
+struct CategorySelectView: View {
+    @Binding var categroytemp: String?
+    
+    let categories = [
+        Category(title: "1"),
+        Category(title: "2")
+    ]
+    
+    var body: some View {
+        List(categories) { category in
+            CategoryElementView(category: category)
+            
+        }
     }
 }
 
 struct CategorySelectView_Previews: PreviewProvider {
     static var previews: some View {
-        CategorySelectView()
+        CategorySelectView(categroytemp: .constant(""))
     }
 }

@@ -12,6 +12,22 @@ struct TransactionElement: View {
     @State private var time = "13:24"
     @State private var balance = 537.93
     
+    var amountcolor: Color {
+        if transaction.transactiontype {
+            return Color(red: 35/255, green: 310/255, blue: 139/255)
+        } else {
+            return Color(red: 240/255, green: 60/255, blue: 25/255)
+        }
+    }
+    
+    var factor: Double {
+        if transaction.transactiontype {
+            return 1
+        } else {
+            return -1
+        }
+    }
+    
     var transaction: DataStructure
     
     var body: some View {
@@ -24,7 +40,8 @@ struct TransactionElement: View {
                     
                     Spacer()
                     
-                    Text(String(transaction.amount))
+                    Text(String((transaction.amount * factor)))
+                        .foregroundColor(amountcolor)
                 }
                 HStack {
                     Text(time)
@@ -43,7 +60,7 @@ struct TransactionElement: View {
 
 struct TransactionElement_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionElement(transaction: DataStructure(transactiontype: false, amount: 9.11, name: "911", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+        TransactionElement(transaction: DataStructure(id: 0, transactiontype: false, amount: 9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
             .preferredColorScheme(.dark)
             .frame(width: 400, height: 100)
     }

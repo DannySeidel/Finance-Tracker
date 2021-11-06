@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct DataStructure: Hashable {
+struct DataStructure: Hashable, Identifiable {
+    var id: Int
     var transactiontype: Bool
     var amount: Double
     var name: String
