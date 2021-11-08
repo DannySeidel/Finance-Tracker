@@ -14,11 +14,13 @@ struct Name: Identifiable {
 
 struct NameElementView: View {
     var name: Name
+    @Environment(\.presentationMode) var presentationMode
     @Binding var nametemp: String?
     
     var body: some View {
         Button(name.title) {
             nametemp = name.title
+            presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Name")
     }
@@ -44,5 +46,6 @@ struct NameSelectView: View {
 struct NameSelectView_Previews: PreviewProvider {
     static var previews: some View {
         NameSelectView(nametemp: .constant(""))
+            .preferredColorScheme(.dark)
     }
 }

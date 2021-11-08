@@ -46,7 +46,6 @@ struct MainView: View {
         }
         .sheet(isPresented: $showtransactionsheet) {
             AddTransactionView(showTransactionSheet: $showtransactionsheet)
-                .environmentObject(Data())
         }
         .sheet(isPresented: $showsettingssheet) {
             SettingsView()

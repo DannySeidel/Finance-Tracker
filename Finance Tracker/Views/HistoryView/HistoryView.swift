@@ -12,13 +12,9 @@ struct HistoryView: View {
     
     var body: some View {
         ForEach(data.transactions) { transaction in
-            ZStack {
-                RoundedRectangle(cornerRadius: 15, style: .continuous)
                 TransactionElement(transaction: transaction)
-            }
+                .frame(height: 65)
         }
-        
-        Text("filler")
     }
 }
 

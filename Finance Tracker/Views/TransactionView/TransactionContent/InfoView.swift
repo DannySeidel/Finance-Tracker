@@ -32,6 +32,8 @@ struct InfoView: View {
     @Binding var nametemp: String?
     @Binding var categroytemp: String?
     
+    let names = ["1", "2"]
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)

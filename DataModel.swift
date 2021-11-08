@@ -22,3 +22,7 @@ struct DataStructure: Hashable, Identifiable {
 class Data: ObservableObject {
     @Published var transactions: [DataStructure] = []
 }
+
+//let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+//let db = try Connection(path.appendingPathComponent("database.db").absoluteString)
+
