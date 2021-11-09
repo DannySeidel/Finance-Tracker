@@ -9,7 +9,6 @@ import Foundation
 
 struct DataStructure: Hashable, Identifiable {
     var id: Int
-    var transactiontype: Bool
     var amount: Double
     var name: String
     var category: String

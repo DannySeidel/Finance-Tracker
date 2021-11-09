@@ -21,6 +21,10 @@ struct AddTransactionView: View {
     @State private var endrepeattemp = false
     @State private var repeatenddatetemp = Date()
     
+    var factor: Double {
+        transactiontypetemp ? 1 : -1
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
@@ -55,8 +59,10 @@ struct AddTransactionView: View {
                     trailing:
                         Button("Add") {
                             showTransactionSheet.toggle()
+                            amounttemp! *= factor
                             savedata()
-                            debugPrint(data.transactions[0])
+                            debugPrint(data.transactions[idtemp])
+                            idtemp += 1
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
@@ -70,7 +76,6 @@ struct AddTransactionView: View {
             data.transactions.append(
                 DataStructure(
                     id: idtemp,
-                    transactiontype: transactiontypetemp,
                     amount: amounttemp,
                     name: nametemp,
                     category: categorytemp,
