@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SQLite
 
 struct DataStructure: Hashable, Identifiable {
     var id: Int
@@ -22,6 +23,38 @@ class Data: ObservableObject {
     @Published var transactions: [DataStructure] = []
 }
 
-//let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-//let db = try Connection(path.appendingPathComponent("database.db").absoluteString)
-
+func createdatabase() {
+    do {
+        let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let db = try Connection(path.appendingPathComponent("database.db").absoluteString)
+        
+        let transactions = Table("transactions")
+        
+        let id = Expression<Int>("id")
+        let amount = Expression<Int>("amount")
+        let name = Expression<String>("name")
+        let category = Expression<String>("category")
+        let dateandtime = Expression<Date>("dateandtime")
+        let repeattag = Expression<Int>("repeattag")
+        let endrepeat = Expression<Bool>("endrepeat")
+        let repeatenddate = Expression<Date>("repeatenddate")
+        
+        try db.run(transactions.create { t in
+            t.column(id, primaryKey: true)
+            t.column(amount)
+            t.column(name)
+            t.column(category)
+            t.column(dateandtime)
+            t.column(repeattag)
+            t.column(endrepeat)
+            t.column(repeatenddate)
+        })
+        
+        for transaction in try db.prepare(transactions) {
+            
+        }
+        
+    } catch {
+        print(error)
+    }
+}

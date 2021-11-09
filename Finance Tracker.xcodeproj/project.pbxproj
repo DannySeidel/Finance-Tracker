@@ -24,6 +24,7 @@
 		285A46D32732961300A3996A /* CategorySelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A46D22732961300A3996A /* CategorySelectView.swift */; };
 		285A46D62732969500A3996A /* NameSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A46D52732969500A3996A /* NameSelectView.swift */; };
 		285A46DA2732CD8C00A3996A /* TransactionElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A46D92732CD8C00A3996A /* TransactionElement.swift */; };
+		28954814273B05E900FC7241 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 28954813273B05E900FC7241 /* SQLite */; };
 		28A3198427317DF70022103D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3198327317DF70022103D /* HistoryView.swift */; };
 		28B31769272FFC2600A848F0 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B31768272FFC2600A848F0 /* MapView.swift */; };
 		28C7CC02272DD0A100D0FF33 /* AnalyticsFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7CC01272DD0A100D0FF33 /* AnalyticsFrameView.swift */; };
@@ -77,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28954814273B05E900FC7241 /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +240,9 @@
 			dependencies = (
 			);
 			name = "Finance Tracker";
+			packageProductDependencies = (
+				28954813273B05E900FC7241 /* SQLite */,
+			);
 			productName = "Finance Tracker";
 			productReference = 2847CA6E272D652200328103 /* Finance Tracker.app */;
 			productType = "com.apple.product-type.application";
@@ -310,6 +315,9 @@
 				Base,
 			);
 			mainGroup = 2847CA65272D652200328103;
+			packageReferences = (
+				28954812273B05E900FC7241 /* XCRemoteSwiftPackageReference "SQLite" */,
+			);
 			productRefGroup = 2847CA6F272D652200328103 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -713,6 +721,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		28954812273B05E900FC7241 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28954813273B05E900FC7241 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28954812273B05E900FC7241 /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2847CA66272D652200328103 /* Project object */;
 }

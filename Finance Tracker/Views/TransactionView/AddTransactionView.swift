@@ -12,7 +12,6 @@ struct AddTransactionView: View {
     
     @EnvironmentObject var data: Data
     @State private var idtemp = 0
-    @State private var transactiontypetemp = false
     @State private var amounttemp: Double?
     @State private var nametemp: String?
     @State private var categorytemp: String?
@@ -20,6 +19,8 @@ struct AddTransactionView: View {
     @State private var repeattagtemp = 0
     @State private var endrepeattemp = false
     @State private var repeatenddatetemp = Date()
+    
+    @State private var transactiontypetemp = false
     
     var factor: Double {
         transactiontypetemp ? 1 : -1
@@ -61,8 +62,6 @@ struct AddTransactionView: View {
                             showTransactionSheet.toggle()
                             amounttemp! *= factor
                             savedata()
-                            debugPrint(data.transactions[idtemp])
-                            idtemp += 1
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
@@ -86,6 +85,8 @@ struct AddTransactionView: View {
                 )
             )
         }
+        debugPrint(data.transactions[idtemp])
+        idtemp += 1
     }
 }
 
