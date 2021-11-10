@@ -11,7 +11,6 @@ struct AddTransactionView: View {
     @Binding var showTransactionSheet: Bool
     
     @EnvironmentObject var data: Data
-    @State private var idtemp = 0
     @State private var amounttemp: Double?
     @State private var nametemp: String?
     @State private var categorytemp: String?
@@ -74,7 +73,6 @@ struct AddTransactionView: View {
         if let amounttemp = amounttemp, let nametemp = nametemp, let categorytemp = categorytemp {
             data.transactions.append(
                 DataStructure(
-                    id: idtemp,
                     amount: amounttemp,
                     name: nametemp,
                     category: categorytemp,
@@ -85,8 +83,6 @@ struct AddTransactionView: View {
                 )
             )
         }
-        debugPrint(data.transactions[idtemp])
-        idtemp += 1
     }
 }
 

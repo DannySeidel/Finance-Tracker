@@ -9,7 +9,7 @@ import Foundation
 import SQLite
 
 struct DataStructure: Hashable, Identifiable {
-    var id: Int
+    var id = UUID().uuidString
     var amount: Double
     var name: String
     var category: String

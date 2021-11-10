@@ -52,7 +52,7 @@ struct TransactionElement: View {
 
 struct TransactionElement_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionElement(transaction: DataStructure(id: 0, amount: -9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+        TransactionElement(transaction: DataStructure(amount: -9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
             .preferredColorScheme(.dark)
             .frame(width: 400, height: 100)
     }
