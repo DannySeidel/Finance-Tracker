@@ -9,13 +9,23 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .preferredColorScheme(.dark)
+        NavigationView {
+            List {
+                NavigationLink(destination: ManageCategoryView()) {
+                    Text("Manage Categories")
+                }
+                NavigationLink(destination: ManageAnalyticsView()) {
+                    Text("Standart Diagram Type")
+                }
+            }
+            .navigationTitle("Settings")
+        }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+            .preferredColorScheme(.dark)
     }
 }

@@ -37,6 +37,7 @@ struct AnalyticsFrameView: View {
 struct AnalyticsOverviewView_Previews: PreviewProvider {
     static var previews: some View {
         AnalyticsFrameView()
+            .frame(height: 400)
             .preferredColorScheme(.dark)
     }
 }

@@ -27,7 +27,7 @@ func createdatabase() {
         let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let db = try Connection(path.appendingPathComponent("database.db").absoluteString)
         
-        let transaction_tabel = Table("transactions")
+        let transactions = Table("transactions")
         
         let id = Expression<Int>("id")
         let amount = Expression<Int>("amount")
@@ -38,7 +38,7 @@ func createdatabase() {
         let endrepeat = Expression<Bool>("endrepeat")
         let repeatenddate = Expression<Date>("repeatenddate")
         
-        try db.run(transaction_tabel.create { t in
+        try db.run(transactions.create { t in
             t.column(id, primaryKey: true)
             t.column(amount)
             t.column(name)
@@ -48,6 +48,9 @@ func createdatabase() {
             t.column(endrepeat)
             t.column(repeatenddate)
         })
+        
+        let insert = transactions.insert()
+        try db.run(insert)
         
         
     } catch {
