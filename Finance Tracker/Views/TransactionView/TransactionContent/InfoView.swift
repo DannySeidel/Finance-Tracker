@@ -31,6 +31,7 @@ struct InfoView: View {
     
     @Binding var nametemp: String?
     @Binding var categroytemp: String?
+    @Binding var transactiontypetemp: Bool
     
     let names = ["1", "2"]
     
@@ -50,7 +51,7 @@ struct InfoView: View {
                 HStack {
                     Text("Category")
                     TextField("Food", text: $categroytemp.bound)
-                    NavigationLink(destination: CategorySelectView(categroytemp: $categroytemp)) {
+                    NavigationLink(destination: CategorySelectView(categroytemp: $categroytemp, transactiontypetemp: $transactiontypetemp)) {
                         Image(systemName: "plus")
                     }
                 }
@@ -63,7 +64,7 @@ struct InfoView: View {
 
 struct TransactionInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoView(nametemp: .constant(""), categroytemp: .constant(""))
+        InfoView(nametemp: .constant(""), categroytemp: .constant(""), transactiontypetemp: .constant(false))
             .previewLayout(.fixed(width: 400, height: 150))
             .preferredColorScheme(.dark)
     }

@@ -32,7 +32,7 @@ struct AddTransactionView: View {
                     ScrollView {
                         AmountView(amounttemp: $amounttemp)
                         
-                        InfoView(nametemp: $nametemp, categroytemp: $categorytemp)
+                        InfoView(nametemp: $nametemp, categroytemp: $categorytemp, transactiontypetemp: $transactiontypetemp)
                         
                         DateView(dateandtime: $dateandtimetemp, repeattag: $repeattagtemp, endrepeat: $endrepeattemp, repeatenddate: $repeatenddatetemp)
                         
