@@ -16,7 +16,7 @@ struct HistoryView: View {
     
     var body: some View {
         ScrollView {
-            ForEach(data.transactions) { transaction in
+            ForEach(sortedtransactions) { transaction in
                 TransactionElement(transaction: transaction)
                     .frame(height: 130)
             }
