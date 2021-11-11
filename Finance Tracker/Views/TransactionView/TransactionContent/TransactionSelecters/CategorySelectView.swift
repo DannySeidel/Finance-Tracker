@@ -14,11 +14,13 @@ struct Category: Identifiable {
 
 struct CategoryElementView: View {
     var category: Category
+    @Environment(\.presentationMode) var presentationMode
     @Binding var categroytemp: String?
     
     var body: some View {
         Button(category.title) {
             categroytemp = category.title
+            presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Category")
         .foregroundColor(Color(.white))

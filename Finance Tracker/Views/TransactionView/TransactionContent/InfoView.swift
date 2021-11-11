@@ -50,7 +50,7 @@ struct InfoView: View {
                 Divider()
                 HStack {
                     Text("Category")
-                    TextField("Food", text: $categroytemp.bound)
+                    TextField("Food & Drinks", text: $categroytemp.bound)
                     NavigationLink(destination: CategorySelectView(categroytemp: $categroytemp, transactiontypetemp: $transactiontypetemp)) {
                         Image(systemName: "plus")
                     }

@@ -12,15 +12,13 @@ struct TransactionElement: View {
     @State private var time = "13:24"
     @State private var balance = 537.93
     
-    var amountcolor: Color {
-        if transaction.amount > 0 {
-            return Color(red: 35/255, green: 310/255, blue: 139/255)
-        } else {
-            return Color(red: 240/255, green: 60/255, blue: 25/255)
-        }
-    }
-    
     var transaction: DataStructure
+
+    var amountcolor: Color {
+        transaction.amount > 0 ?
+        Color(red: 35/255, green: 310/255, blue: 139/255) :
+        Color(red: 240/255, green: 60/255, blue: 25/255)
+    }    
     
     var body: some View {
         ZStack {
