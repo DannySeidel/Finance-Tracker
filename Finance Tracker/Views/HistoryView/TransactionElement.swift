@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TransactionElement: View {
     @EnvironmentObject var data: Data
-    @State private var time = "13:24"
     @State private var balance = 537.93
     
     var transaction: DataStructure
@@ -21,28 +20,36 @@ struct TransactionElement: View {
     }    
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .foregroundColor(Color(.systemGray6))
-            VStack {
-                HStack {
-                    Text(transaction.name)
-                    
-                    Spacer()
-                    
-                    Text(String(transaction.amount))
-                        .foregroundColor(amountcolor)
-                }
-                HStack {
-                    Text(time)
-                    
-                    Spacer()
-                    
-                    Text(String(balance))
-                }
-                .foregroundColor(Color(.systemGray))
+        VStack {
+            HStack {
+                Text(transaction.dateandtime, style: .date)
+                
+                Spacer()
             }
-            .padding()
+            .padding(.leading)
+            ZStack {
+                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                    .foregroundColor(Color(.systemGray6))
+                VStack {
+                    HStack {
+                        Text(transaction.name)
+                        
+                        Spacer()
+                        
+                        Text(String(transaction.amount))
+                            .foregroundColor(amountcolor)
+                    }
+                    HStack {
+                        Text(transaction.dateandtime, style: .time)
+                        
+                        Spacer()
+                        
+                        Text(String(balance))
+                    }
+                    .foregroundColor(Color(.systemGray))
+                }
+                .padding()
+            }
         }
         .padding()
     }

@@ -21,14 +21,13 @@ struct DataStructure: Hashable, Identifiable {
 
 class Data: ObservableObject {
     @Published var transactions: [DataStructure] = []
-}
 
 func createdatabase() {
     do {
         let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let db = try Connection(path.appendingPathComponent("database.db").absoluteString)
         
-        let transactions = Table("transactions")
+        let transaction_tabel = Table("transactions")
         
         let id = Expression<Int>("id")
         let amount = Expression<Int>("amount")
@@ -39,7 +38,7 @@ func createdatabase() {
         let endrepeat = Expression<Bool>("endrepeat")
         let repeatenddate = Expression<Date>("repeatenddate")
         
-        try db.run(transactions.create { t in
+        try db.run(transaction_tabel.create { t in
             t.column(id, primaryKey: true)
             t.column(amount)
             t.column(name)
@@ -50,11 +49,9 @@ func createdatabase() {
             t.column(repeatenddate)
         })
         
-        for transaction in try db.prepare(transactions) {
-            
-        }
         
     } catch {
         print(error)
     }
+}
 }
