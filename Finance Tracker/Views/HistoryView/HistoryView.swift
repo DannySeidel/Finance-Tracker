@@ -10,11 +10,18 @@ import SwiftUI
 struct HistoryView: View {
     @EnvironmentObject var data: Data
     
+    var sortedtransactions: [DataStructure] {
+        data.transactions.sorted(by: {$0.dateandtime>$1.dateandtime})
+    }
+    
     var body: some View {
-        ForEach(data.transactions) { transaction in
+        ScrollView {
+            ForEach(data.transactions) { transaction in
                 TransactionElement(transaction: transaction)
-                .frame(height: 65)
+                    .frame(height: 130)
+            }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
