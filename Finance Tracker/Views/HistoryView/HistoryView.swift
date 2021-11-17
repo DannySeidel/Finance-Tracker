@@ -10,35 +10,48 @@ import SwiftUI
 struct HistoryView: View {
     @EnvironmentObject var data: Data
     
-//    var transactionDateGroups: [[DataStructure]] {
-//        var groups: [[DataStructure]] = []
-//
-//        for transaction in data.transactions {
-//            for group in groups {
-//                if groups.first?.dateandtime == transaction.dateandtime {
-//                    //if group with transaction date exists add to group
-//                    group.append(contentsOf: transaction.dateandtime)
-//                } else {
-//                    // else create group
-//                    //groups.append(contentsOf: transaction.dateandtime)
-//                }
-//            }
-//        }
-//        return groups
-//    }
+    var transactionDateGroups: [[DataStructure]] {
+        var groups: [[DataStructure]] = []
+
+        for transaction in data.transactions {
+            var groupexists = false
+            for group in groups {
+                if let firstGroup = group.first, Calendar.current.isDate(firstGroup.dateandtime, inSameDayAs: transaction.dateandtime) {
+                    let groupIndex = groups.firstIndex(of: group)!
+                    var newGroup = groups[groupIndex]
+                    newGroup.append(transaction)
+                    groups[groupIndex] = newGroup
+                    groupexists = true
+                }
+            }
+            if !groupexists {
+                groups.append([transaction])
+            }
+        }
+        return groups
+    }
     
-    var sortedtransactions: [DataStructure] {
-        data.transactions.sorted(by: {$0.dateandtime>$1.dateandtime})
+    var sortedgroups: [[DataStructure]] {
+        transactionDateGroups.sorted(by: {$0.first!.dateandtime>$1.first!.dateandtime})
     }
     
     var body: some View {
         ScrollView {
-            ForEach(sortedtransactions) { transaction in
-                TransactionElement(transaction: transaction)
-                    .frame(height: 130)
+            ForEach(sortedgroups, id: \.first?.id) { groups in
+                HStack {
+                    Text(groups.first!.dateandtime, style: .date)
+                    
+                    Spacer()
+                }
+                .padding(.leading)
+                ForEach(groups, id: \.id) { transaction in
+                    TransactionElement(transaction: transaction)
+                        .frame(height: 130)
+                }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: { debugPrint(transactionDateGroups) })
     }
 }
 

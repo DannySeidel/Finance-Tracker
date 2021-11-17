@@ -12,44 +12,36 @@ struct TransactionElement: View {
     @State private var balance = 537.93
     
     var transaction: DataStructure
-
+    
     var amountcolor: Color {
         transaction.amount > 0 ?
         Color(red: 35/255, green: 310/255, blue: 139/255) :
         Color(red: 240/255, green: 60/255, blue: 25/255)
-    }    
+    }
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(transaction.dateandtime, style: .date)
-                
-                Spacer()
-            }
-            .padding(.leading)
-            ZStack {
-                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .foregroundColor(Color(.systemGray6))
-                VStack {
-                    HStack {
-                        Text(transaction.name)
-                        
-                        Spacer()
-                        
-                        Text(String(transaction.amount))
-                            .foregroundColor(amountcolor)
-                    }
-                    HStack {
-                        Text(transaction.dateandtime, style: .time)
-                        
-                        Spacer()
-                        
-                        Text(String(balance))
-                    }
-                    .foregroundColor(Color(.systemGray))
+        ZStack {
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .foregroundColor(Color(.systemGray6))
+            VStack {
+                HStack {
+                    Text(transaction.name)
+                    
+                    Spacer()
+                    
+                    Text(String(transaction.amount))
+                        .foregroundColor(amountcolor)
                 }
-                .padding()
+                HStack {
+                    Text(transaction.dateandtime, style: .time)
+                    
+                    Spacer()
+                    
+                    Text(String(balance))
+                }
+                .foregroundColor(Color(.systemGray))
             }
+            .padding()
         }
         .padding()
     }
