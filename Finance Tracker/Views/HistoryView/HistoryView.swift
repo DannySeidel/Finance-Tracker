@@ -10,6 +10,23 @@ import SwiftUI
 struct HistoryView: View {
     @EnvironmentObject var data: Data
     
+//    var transactionDateGroups: [[DataStructure]] {
+//        var groups: [[DataStructure]] = []
+//
+//        for transaction in data.transactions {
+//            for group in groups {
+//                if groups.first?.dateandtime == transaction.dateandtime {
+//                    //if group with transaction date exists add to group
+//                    group.append(contentsOf: transaction.dateandtime)
+//                } else {
+//                    // else create group
+//                    //groups.append(contentsOf: transaction.dateandtime)
+//                }
+//            }
+//        }
+//        return groups
+//    }
+    
     var sortedtransactions: [DataStructure] {
         data.transactions.sorted(by: {$0.dateandtime>$1.dateandtime})
     }

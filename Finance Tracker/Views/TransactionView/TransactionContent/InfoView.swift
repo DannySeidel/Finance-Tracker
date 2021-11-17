@@ -33,6 +33,8 @@ struct InfoView: View {
     @Binding var categroytemp: String?
     @Binding var transactiontypetemp: Bool
     
+    
+    
     let names = ["1", "2"]
     
     var body: some View {
