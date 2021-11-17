@@ -29,44 +29,46 @@ struct ManageCategoryView: View {
             .padding()
             
             List {
-                ForEach(categories) { category in
+                ForEach(data.categoriesminus) { category in
                     Text(category.title)
                 }
-//                .onMove(perform: onDelete)
-//                .onDelete(perform: onMove)
+                .onDelete(perform: onDelete)
+                .onMove(perform: onMove)
             }
         }
         .navigationTitle("Edit Categories")
-//        .navigationBarItems(leading: EditButton(), trailing: addButton)
-//        .environment(\.editMode, $editMode)
+        .navigationBarItems(leading: EditButton(), trailing: addButton)
+        .environment(\.editMode, $editMode)
     }
-//
-//    var addButton: some View {
-//        switch editMode {
-//        case .inactive:
-//            return AnyView(Button(action: onAdd) { Image(systemName: "plus") })
-//        default:
-//            return AnyView(EmptyView())
-//        }
-//    }
-//
-//    private func onDelete(offsets: IndexSet) {
-//        data.categoriesminus.remove(atOffsets: offsets)
-//    }
-//
-//    private func onMove(source: IndexSet, destination: Int) {
-//        data.categoriesminus.move(fromOffsets: source, toOffset: destination)
-//    }
-//
-//    private func onAdd() {
-//        data.categoriesminus.append(Category(title: "nameless"))
-//    }
+    
+    var addButton: some View {
+        switch editMode {
+        case .inactive:
+            return AnyView(Button(action: onAdd) { Image(systemName: "plus") })
+        default:
+            return AnyView(EmptyView())
+        }
+    }
+
+    private func onDelete(offsets: IndexSet) {
+        data.categoriesminus.remove(atOffsets: offsets)
+    }
+
+    private func onMove(source: IndexSet, destination: Int) {
+        data.categoriesminus.move(fromOffsets: source, toOffset: destination)
+    }
+
+    private func onAdd() {
+        data.categoriesminus.append(Category(title: "nameless"))
+    }
 }
 
 struct ManageCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        ManageCategoryView()
-            .environmentObject(Data())
-            .preferredColorScheme(.dark)
+        NavigationView {
+            ManageCategoryView()
+                .environmentObject(Data())
+                .preferredColorScheme(.dark)
+        }
     }
 }
