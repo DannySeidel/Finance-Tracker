@@ -11,7 +11,6 @@ import SwiftUI
 struct ManageCategoryView: View {
     @EnvironmentObject var data: Data
     @State private var categorytype = false
-    @State private var editMode = EditMode.inactive
     
     var categories: [Category] {
         categorytype ? data.categoriesplus : data.categoriesminus
