@@ -17,6 +17,10 @@ struct ManageCategoryView: View {
         categorytype ? data.categoriesplus : data.categoriesminus
     }
     
+    var sortedCategories: [Category] {
+        categories.sorted(by: {$0.title<$1.title})
+    }
+    
     var body: some View {
         VStack(spacing: -10) {
             Picker("", selection: $categorytype) {
@@ -29,7 +33,7 @@ struct ManageCategoryView: View {
             .padding()
             
             List {
-                ForEach(categories) { category in
+                ForEach(sortedCategories) { category in
                     Text(category.title)
                 }
                 .onDelete(perform: onDelete)

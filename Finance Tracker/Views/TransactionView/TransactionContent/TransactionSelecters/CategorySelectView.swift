@@ -36,6 +36,10 @@ struct CategorySelectView: View {
         transactiontypetemp ? data.categoriesplus : data.categoriesminus
     }
     
+    var sortedCategories: [Category] {
+        categories.sorted(by: {$0.title<$1.title})
+    }
+    
     var body: some View {
         List(categories) { category in
             CategoryElementView(category: category, categroytemp: $categroytemp)
