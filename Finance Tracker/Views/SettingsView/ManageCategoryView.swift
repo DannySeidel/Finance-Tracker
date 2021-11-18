@@ -40,7 +40,7 @@ struct ManageCategoryView: View {
             }
         }
         .navigationTitle("Edit Categories")
-        .navigationBarItems(leading: EditButton(), trailing: addButton)
+        .navigationBarItems(trailing: addButton)
         .environment(\.editMode, $editMode)
     }
     
