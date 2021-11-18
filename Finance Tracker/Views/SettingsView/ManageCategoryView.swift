@@ -38,25 +38,20 @@ struct ManageCategoryView: View {
                 }
                 .onDelete(perform: onDelete)
             }
+            
+            Button("Add Category") {
+                onAdd()
+            }
+            .padding()
+            .offset(y: 7)
         }
         .navigationTitle("Edit Categories")
-        .navigationBarItems(trailing: addButton)
-        .environment(\.editMode, $editMode)
     }
     
-    var addButton: some View {
-        switch editMode {
-        case .inactive:
-            return AnyView(Button(action: onAdd) { Image(systemName: "plus") })
-        default:
-            return AnyView(EmptyView())
-        }
-    }
-
     private func onDelete(offsets: IndexSet) {
         categorytype ? data.categoriesplus.remove(atOffsets: offsets) : data.categoriesminus.remove(atOffsets: offsets)
     }
-
+    
     private func onAdd() {
         categorytype ? data.categoriesplus.append(Category(title: "nameless")) : data.categoriesminus.append(Category(title: "nameless"))
     }
