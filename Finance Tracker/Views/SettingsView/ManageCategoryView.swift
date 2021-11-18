@@ -29,11 +29,10 @@ struct ManageCategoryView: View {
             .padding()
             
             List {
-                ForEach(data.categoriesminus) { category in
+                ForEach(categories) { category in
                     Text(category.title)
                 }
                 .onDelete(perform: onDelete)
-                .onMove(perform: onMove)
             }
         }
         .navigationTitle("Edit Categories")
@@ -51,15 +50,11 @@ struct ManageCategoryView: View {
     }
 
     private func onDelete(offsets: IndexSet) {
-        data.categoriesminus.remove(atOffsets: offsets)
-    }
-
-    private func onMove(source: IndexSet, destination: Int) {
-        data.categoriesminus.move(fromOffsets: source, toOffset: destination)
+        categorytype ? data.categoriesplus.remove(atOffsets: offsets) : data.categoriesminus.remove(atOffsets: offsets)
     }
 
     private func onAdd() {
-        data.categoriesminus.append(Category(title: "nameless"))
+        categorytype ? data.categoriesplus.append(Category(title: "nameless")) : data.categoriesminus.append(Category(title: "nameless"))
     }
 }
 
