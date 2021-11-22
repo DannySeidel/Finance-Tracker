@@ -11,6 +11,7 @@ import SwiftUI
 struct ManageCategoryView: View {
     @EnvironmentObject var data: Data
     @State private var categorytype = false
+    @State private var addCategoryAlert = false
     
     var categories: [Category] {
         categorytype ? data.categoriesplus : data.categoriesminus
@@ -21,38 +22,38 @@ struct ManageCategoryView: View {
     }
     
     var body: some View {
-        VStack(spacing: -10) {
-            Picker("", selection: $categorytype) {
-                Label("Expense", systemImage: "minus")
-                    .tag(false)
-                Label("Income", systemImage: "plus")
-                    .tag(true)
-            }
-            .pickerStyle(.segmented)
-            .padding()
+        
+        CustomAlertView(addCategoryAlert: $addCategoryAlert, categories: categorytype ? $data.categoriesplus : $data.categoriesminus) {
             
-            List {
-                ForEach(sortedCategories) { category in
-                    Text(category.title)
+            VStack {
+                VStack(spacing: -10) {
+                    Picker("", selection: $categorytype) {
+                        Label("Expense", systemImage: "minus")
+                            .tag(false)
+                        Label("Income", systemImage: "plus")
+                            .tag(true)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                    
+                    List {
+                        ForEach(sortedCategories) { category in
+                            Text(category.title)
+                        }
+                        .onDelete(perform: onDelete)
+                    }
+                    
                 }
-                .onDelete(perform: onDelete)
+                Button("Add Category") {
+                    addCategoryAlert.toggle()
+                }
             }
-            
-            Button("Add Category") {
-                onAdd()
-            }
-            .padding()
-            .offset(y: 7)
+            .navigationTitle("Edit Categories")
         }
-        .navigationTitle("Edit Categories")
     }
     
     private func onDelete(offsets: IndexSet) {
         categorytype ? data.categoriesplus.remove(atOffsets: offsets) : data.categoriesminus.remove(atOffsets: offsets)
-    }
-    
-    private func onAdd() {
-        categorytype ? data.categoriesplus.append(Category(title: "nameless")) : data.categoriesminus.append(Category(title: "nameless"))
     }
 }
 
