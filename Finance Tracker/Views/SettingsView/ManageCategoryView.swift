@@ -21,6 +21,10 @@ struct ManageCategoryView: View {
         categories.sorted(by: {$0.title<$1.title})
     }
     
+    var blur: Int {
+        addCategoryAlert ? 1 : 0
+    }
+    
     var body: some View {
         
         CustomAlertView(addCategoryAlert: $addCategoryAlert, categories: categorytype ? $data.categoriesplus : $data.categoriesminus) {
@@ -49,6 +53,7 @@ struct ManageCategoryView: View {
                 }
             }
             .navigationTitle("Edit Categories")
+            .blur(radius: CGFloat(blur))
         }
     }
     

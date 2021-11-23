@@ -12,6 +12,8 @@ struct CustomAlertView<Content:View>: View {
     @Binding var addCategoryAlert : Bool
     @Binding var categories : [Category]
     
+//    @FocusState private var focusTextField: Bool
+    
     @ViewBuilder var content : () -> Content
     
     var body: some View {
@@ -20,28 +22,47 @@ struct CustomAlertView<Content:View>: View {
             if addCategoryAlert {
                 ZStack {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .foregroundColor(Color(.systemGray6))
+                        .fill(.black)
+                        .opacity(0.90)
                     VStack {
                         Text("Enter Category Name")
                         TextField("", text: $alertText)
-                            .background(Color(.systemGray3).cornerRadius(5))
-                        Divider()
+                            .background(Color(.systemGray5).cornerRadius(5))
+//                            .focused($focusTextField)
+
+                        Spacer()
+                        Spacer()
+                        
                         HStack {
+                            Spacer()
                             Button("Cancel") {
                                 addCategoryAlert.toggle()
                                 alertText = ""
                             }
+                            .frame(width: 60)
+                            
+                            Spacer()
+                            
+                            Divider()
+                            
+                            Spacer()
                             Button("Add"){
                                 addCategoryAlert.toggle()
                                 onAdd()
                                 alertText = ""
                             }
+                            .frame(width: 61)
+                            Spacer()
                         }
                     }
                     .padding()
+                    .background(.ultraThinMaterial, in:
+                                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    )
                 }
-                .padding()
+                .padding(25)
                 .frame(height: 150)
+                .offset(y: -30)
             }
         }
     }
