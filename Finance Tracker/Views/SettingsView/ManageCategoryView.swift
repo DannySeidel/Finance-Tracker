@@ -17,12 +17,10 @@ struct ManageCategoryView: View {
         categorytype ? data.categoriesplus : data.categoriesminus
     }
     
-    var sortedCategories: [Category] {
-        categories.sorted(by: {$0.title<$1.title})
-    }
+//    .sorted(by: {$0.title<$1.title})
     
-    var blur: Int {
-        addCategoryAlert ? 1 : 0
+    var opacity: Double {
+        addCategoryAlert ? 0.6 : 1
     }
     
     var body: some View {
@@ -41,7 +39,7 @@ struct ManageCategoryView: View {
                     .padding()
                     
                     List {
-                        ForEach(sortedCategories) { category in
+                        ForEach(categories) { category in
                             Text(category.title)
                         }
                         .onDelete(perform: onDelete)
@@ -53,7 +51,7 @@ struct ManageCategoryView: View {
                 }
             }
             .navigationTitle("Edit Categories")
-            .blur(radius: CGFloat(blur))
+            .opacity(opacity)
         }
     }
     

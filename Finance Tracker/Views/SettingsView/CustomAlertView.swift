@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct CustomAlertView<Content:View>: View {
+    @EnvironmentObject var data : Data
     @State private var alertText = ""
     @Binding var addCategoryAlert : Bool
-    @Binding var categories : [Category]
-    
-//    @FocusState private var focusTextField: Bool
+    @Binding var categories: [Category]
     
     @ViewBuilder var content : () -> Content
     
@@ -28,7 +27,6 @@ struct CustomAlertView<Content:View>: View {
                         Text("Enter Category Name")
                         TextField("", text: $alertText)
                             .background(Color(.systemGray5).cornerRadius(5))
-//                            .focused($focusTextField)
 
                         Spacer()
                         Spacer()
@@ -72,7 +70,7 @@ struct CustomAlertView<Content:View>: View {
     }
 }
 
-struct CustonAlert_Previews: PreviewProvider {
+struct CustomAlertView_Previews: PreviewProvider {
     static var previews: some View {
         CustomAlertView(addCategoryAlert: .constant(true), categories: .constant([]), content: {})
             .preferredColorScheme(.dark)
