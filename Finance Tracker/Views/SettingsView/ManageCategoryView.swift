@@ -12,12 +12,19 @@ struct ManageCategoryView: View {
     @EnvironmentObject var data: Data
     @State private var categorytype = false
     @State private var addCategoryAlert = false
-    
-    var categories: [Category] {
-        categorytype ? data.categoriesplus : data.categoriesminus
-    }
+    @State private var searchText = ""
     
 //    .sorted(by: {$0.title<$1.title})
+    
+    var searchCategories: [String] {
+        if searchText.isEmpty {
+            return categorytype ? data.categoriesplus : data.categoriesminus
+        } else {
+            return categorytype ?
+                    data.categoriesplus.filter { $0.contains(searchText) } :
+                    data.categoriesminus.filter { $0.contains(searchText) }
+        }
+    }
     
     var opacity: Double {
         addCategoryAlert ? 0.6 : 1
@@ -39,8 +46,9 @@ struct ManageCategoryView: View {
                     .padding()
                     
                     List {
-                        ForEach(categories) { category in
-                            Text(category.title)
+                        ForEach(searchCategories, id: \.self) { category in
+                            Text(category)
+                                .searchable(text: $searchText)
                         }
                         .onDelete(perform: onDelete)
                     }

@@ -13,13 +13,15 @@ struct Category: Identifiable {
 }
 
 struct CategoryElementView: View {
-    var category: Category
+    @EnvironmentObject var data: Data
     @Environment(\.presentationMode) var presentationMode
     @Binding var categroytemp: String?
     
+    var category: String
+    
     var body: some View {
-        Button(category.title) {
-            categroytemp = category.title
+        Button(category) {
+            categroytemp = category
             presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Category")
@@ -31,20 +33,23 @@ struct CategorySelectView: View {
     @EnvironmentObject var data: Data
     @Binding var categroytemp: String?
     @Binding var transactiontypetemp: Bool
+    @State private var searchText = ""
     
-    var categories: [Category] {
-        transactiontypetemp ? data.categoriesplus : data.categoriesminus
-    }
-    
-    var sortedCategories: [Category] {
-        categories.sorted(by: {$0.title<$1.title})
+    var searchCategories: [String] {
+        if searchText.isEmpty {
+            return transactiontypetemp ? data.categoriesplus : data.categoriesminus
+        } else {
+            return transactiontypetemp ?
+            data.categoriesplus.filter { $0.contains(searchText) } :
+            data.categoriesminus.filter { $0.contains(searchText) }
+        }
     }
     
     var body: some View {
-        List(categories) { category in
-            CategoryElementView(category: category, categroytemp: $categroytemp)
-            
+        List(searchCategories, id: \.self) { category in
+            CategoryElementView(categroytemp: $categroytemp, category: category)
         }
+        .searchable(text: $searchText)
     }
 }
 

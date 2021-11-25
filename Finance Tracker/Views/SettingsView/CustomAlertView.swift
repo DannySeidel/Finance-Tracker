@@ -11,7 +11,7 @@ struct CustomAlertView<Content:View>: View {
     @EnvironmentObject var data : Data
     @State private var alertText = ""
     @Binding var addCategoryAlert : Bool
-    @Binding var categories: [Category]
+    @Binding var categories: [String]
     
     @ViewBuilder var content : () -> Content
     
@@ -66,7 +66,7 @@ struct CustomAlertView<Content:View>: View {
     }
     
     private func onAdd() {
-        categories.append(Category(title: alertText))
+        categories.append(alertText)
     }
 }
 

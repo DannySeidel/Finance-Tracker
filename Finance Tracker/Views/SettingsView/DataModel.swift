@@ -24,26 +24,26 @@ class Data: ObservableObject {
     @Published var transactions: [DataStructure] = []
     
     @Published var categoriesminus = [
-        Category(title: "Car"),
-        Category(title: "Clothes"),
-        Category(title: "Computers"),
-        Category(title: "Entertainment"),
-        Category(title: "Freetime"),
-        Category(title: "Food & Drinks"),
-        Category(title: "Gifts"),
-        Category(title: "Groceries"),
-        Category(title: "Health"),
-        Category(title: "Household"),
-        Category(title: "Rent"),
-        Category(title: "Restaurants & Cafes"),
-        Category(title: "Transport")
+        "Car",
+        "Clothes",
+        "Computers",
+        "Entertainment",
+        "Freetime",
+        "Food & Drinks",
+        "Gifts",
+        "Groceries",
+        "Health",
+        "Household",
+        "Rent",
+        "Restaurants & Cafes",
+        "Transport"
     ]
     
     @Published var categoriesplus = [
-        Category(title: "Business Income"),
-        Category(title: "Salary"),
-        Category(title: "Stock Market"),
-        Category(title: "Tax Refunds")
+        "Business Income",
+        "Salary",
+        "Stock Market",
+        "Tax Refunds"
     ]
     
     func createdatabase() {
