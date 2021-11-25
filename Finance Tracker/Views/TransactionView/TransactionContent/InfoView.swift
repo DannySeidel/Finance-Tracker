@@ -46,7 +46,8 @@ struct InfoView: View {
                     Text("Name")
                     TextField("Lunch", text: $nametemp.bound)
                     NavigationLink(destination: NameSelectView(nametemp: $nametemp)) {
-                        Image(systemName: "plus")
+                        Image(systemName: "shift.fill")
+                            .rotationEffect(.degrees(90))
                     }
                 }
                 Divider()
@@ -54,7 +55,8 @@ struct InfoView: View {
                     Text("Category")
                     TextField("Food & Drinks", text: $categroytemp.bound)
                     NavigationLink(destination: CategorySelectView(categroytemp: $categroytemp, transactiontypetemp: $transactiontypetemp)) {
-                        Image(systemName: "plus")
+                        Image(systemName: "shift.fill")
+                            .rotationEffect(.degrees(90))
                     }
                 }
             }

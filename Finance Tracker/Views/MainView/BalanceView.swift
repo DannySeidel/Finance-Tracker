@@ -14,14 +14,8 @@ struct BalanceView: View {
         data.transactions.map({$0.amount}).reduce(0, +)
     }
     
-    var arrow: String {
-        if monthlybalance > 0 {
-            return "arrow.up"
-        } else if monthlybalance < 0 {
-            return "arrow.down"
-        } else {
-            return ""
-        }
+    var rotation: Double {
+        monthlybalance > 0 ? 0 : 180
     }
     
     var balancecolor: Color {
@@ -39,7 +33,10 @@ struct BalanceView: View {
             Capsule(style: .continuous)
                 .foregroundColor(Color(.systemGray6))
             NavigationLink(destination: HistoryView()) {
-                Image(systemName: arrow)
+                if monthlybalance != 0 {
+                    Image(systemName: "shift.fill")
+                        .rotationEffect(.degrees(rotation))
+                }
                 Text(String(monthlybalance))
                     .bold()
                 Image(systemName: "eurosign.circle")

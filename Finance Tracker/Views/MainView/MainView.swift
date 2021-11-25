@@ -48,7 +48,7 @@ struct MainView: View {
             AddTransactionView(showTransactionSheet: $showtransactionsheet)
         }
         .sheet(isPresented: $showsettingssheet) {
-            SettingsView()
+            SettingsView(showsettingssheet: $showsettingssheet)
         }
         .background(Color.black)
         .preferredColorScheme(.dark)

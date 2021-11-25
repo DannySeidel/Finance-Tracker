@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Binding var showsettingssheet: Bool
     
     var body: some View {
         NavigationView {
@@ -20,13 +21,20 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .navigationBarItems(
+                trailing:
+                    Button("Done") {
+                        showsettingssheet.toggle()
+                    }
+                    .foregroundColor(.white)
+            )
         }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(showsettingssheet: .constant(true))
             .preferredColorScheme(.dark)
     }
 }

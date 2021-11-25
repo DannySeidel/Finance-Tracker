@@ -67,8 +67,8 @@ struct AddTransactionView: View {
                 .foregroundColor(Color(.white))
             }
         }
-        .preferredColorScheme(.dark)
     }
+    
     func savedata() {
         if let amounttemp = amounttemp, let nametemp = nametemp, let categorytemp = categorytemp {
             data.transactions.append(
@@ -90,5 +90,6 @@ struct AddTransactionView_Previews: PreviewProvider {
     static var previews: some View {
         AddTransactionView(showTransactionSheet: .constant(false))
             .environmentObject(Data())
+            .preferredColorScheme(.dark)
     }
 }

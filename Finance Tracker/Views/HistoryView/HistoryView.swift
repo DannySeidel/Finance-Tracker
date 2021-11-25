@@ -51,7 +51,6 @@ struct HistoryView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear(perform: { debugPrint(transactionDateGroups) })
     }
 }
 
