@@ -35,7 +35,7 @@ struct ManageCategoryView: View {
         CustomAlertView(addCategoryAlert: $addCategoryAlert, categories: categorytype ? $data.categoriesplus : $data.categoriesminus) {
             
             VStack {
-                VStack(spacing: -10) {
+                VStack {
                     Picker("", selection: $categorytype) {
                         Label("Expense", systemImage: "minus")
                             .tag(false)
@@ -43,16 +43,16 @@ struct ManageCategoryView: View {
                             .tag(true)
                     }
                     .pickerStyle(.segmented)
-                    .padding()
+                    .padding(.leading)
+                    .padding(.trailing)
                     
                     List {
                         ForEach(searchCategories, id: \.self) { category in
                             Text(category)
-                                .searchable(text: $searchText)
                         }
                         .onDelete(perform: onDelete)
                     }
-                    
+                    .searchable(text: $searchText)
                 }
                 Button("Add Category") {
                     addCategoryAlert.toggle()
