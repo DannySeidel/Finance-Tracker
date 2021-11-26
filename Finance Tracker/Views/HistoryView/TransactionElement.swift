@@ -43,14 +43,20 @@ struct TransactionElement: View {
             }
             .padding()
         }
-        .padding()
+        .padding(.leading)
+        .padding(.trailing)
     }
 }
 
 struct TransactionElement_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionElement(transaction: DataStructure(amount: -9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
-            .preferredColorScheme(.dark)
-            .frame(width: 400, height: 100)
+        VStack {
+            TransactionElement(transaction: DataStructure(amount: -9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+                .preferredColorScheme(.dark)
+                .frame(width: 400, height: 75)
+            TransactionElement(transaction: DataStructure(amount: -15.73, name: "Diner", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+                .preferredColorScheme(.dark)
+                .frame(width: 400, height: 75)
+        }
     }
 }
