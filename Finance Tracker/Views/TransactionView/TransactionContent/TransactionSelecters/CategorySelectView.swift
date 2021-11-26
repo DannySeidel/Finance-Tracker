@@ -37,11 +37,13 @@ struct CategorySelectView: View {
     
     var searchCategories: [String] {
         if searchText.isEmpty {
-            return transactiontypetemp ? data.categoriesplus : data.categoriesminus
+            return transactiontypetemp ?
+            data.categoriesplus.sorted(by: {$0<$1}) :
+            data.categoriesminus.sorted(by: {$0<$1})
         } else {
             return transactiontypetemp ?
-            data.categoriesplus.filter { $0.contains(searchText) } :
-            data.categoriesminus.filter { $0.contains(searchText) }
+            data.categoriesplus.filter { $0.contains(searchText) }.sorted(by: {$0<$1}) :
+            data.categoriesminus.filter { $0.contains(searchText) }.sorted(by: {$0<$1})
         }
     }
     

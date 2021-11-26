@@ -14,15 +14,15 @@ struct ManageCategoryView: View {
     @State private var addCategoryAlert = false
     @State private var searchText = ""
     
-//    .sorted(by: {$0.title<$1.title})
+//    .sorted(by: {$0<$1})
     
     var searchCategories: [String] {
         if searchText.isEmpty {
-            return categorytype ? data.categoriesplus : data.categoriesminus
+            return categorytype ? data.categoriesplus.sorted(by: {$0<$1}) : data.categoriesminus.sorted(by: {$0<$1})
         } else {
             return categorytype ?
-                    data.categoriesplus.filter { $0.contains(searchText) } :
-                    data.categoriesminus.filter { $0.contains(searchText) }
+            data.categoriesplus.filter { $0.contains(searchText) }.sorted(by: {$0<$1}) :
+                data.categoriesminus.filter { $0.contains(searchText) }.sorted(by: {$0<$1})
         }
     }
     
@@ -64,7 +64,13 @@ struct ManageCategoryView: View {
     }
     
     private func onDelete(offsets: IndexSet) {
-        categorytype ? data.categoriesplus.remove(atOffsets: offsets) : data.categoriesminus.remove(atOffsets: offsets)
+        let categoryname = searchCategories[offsets.first!]
+        
+        if categorytype {
+            data.categoriesplus.remove(at: data.categoriesplus.firstIndex(of: categoryname)!)
+        } else {
+            data.categoriesminus.remove(at: data.categoriesminus.firstIndex(of: categoryname)!)
+        }
     }
 }
 
