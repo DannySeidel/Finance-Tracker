@@ -14,6 +14,10 @@ struct BalanceView: View {
         data.transactions.map({$0.amount}).reduce(0, +)
     }
     
+    var factor: Double {
+        monthlybalance < 0 ? -1 : 1
+    }
+    
     var rotation: Double {
         monthlybalance > 0 ? 0 : 180
     }
@@ -37,7 +41,7 @@ struct BalanceView: View {
                     Image(systemName: "shift.fill")
                         .rotationEffect(.degrees(rotation))
                 }
-                Text(String(monthlybalance))
+                Text(String(monthlybalance * factor))
                     .bold()
                 Image(systemName: "eurosign.circle")
                 
