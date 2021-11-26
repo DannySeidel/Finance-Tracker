@@ -52,7 +52,7 @@ struct ManageCategoryView: View {
                         }
                         .onDelete(perform: onDelete)
                     }
-                    .searchable(text: $searchText)
+                    .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 }
                 Button("Add Category") {
                     addCategoryAlert.toggle()

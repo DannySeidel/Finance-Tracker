@@ -51,7 +51,7 @@ struct CategorySelectView: View {
         List(searchCategories, id: \.self) { category in
             CategoryElementView(categroytemp: $categroytemp, category: category)
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HistoryView: View {
     @EnvironmentObject var data: Data
+    @State var transactionSearchName = ""
     
     var transactionDateGroups: [[DataStructure]] {
         var groups: [[DataStructure]] = []
@@ -54,6 +55,7 @@ struct HistoryView: View {
                 }
                 .padding(.top)
             }
+            .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
         }
         .navigationBarTitleDisplayMode(.inline)
     }
