@@ -61,7 +61,7 @@ struct AddTransactionView: View {
                             if (amounttemp != nil) && (nametemp != nil) && (categorytemp != nil) {
                                 showTransactionSheet.toggle()
                                 amounttemp! *= factor
-                                savedata() 
+                                savedata()
                             }
                         }
                 )

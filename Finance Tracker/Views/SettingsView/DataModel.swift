@@ -69,46 +69,4 @@ class Data: ObservableObject {
         "Airplane",
     
     ]
-    
-    func createdatabase() {
-        do {
-            let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            let db = try Connection(path.appendingPathComponent("database.db").absoluteString)
-            
-            let transactionTable = Table("transactions")
-            
-            let id = Expression<Int>("id")
-            let amount = Expression<Double>("amount")
-            let name = Expression<String>("name")
-            let category = Expression<String>("category")
-            let dateandtime = Expression<Date>("dateandtime")
-            let repeattag = Expression<Int>("repeattag")
-            let endrepeat = Expression<Bool>("endrepeat")
-            let repeatenddate = Expression<Date>("repeatenddate")
-            
-            try db.run(transactionTable.create { t in
-                t.column(id, primaryKey: true)
-                t.column(amount)
-                t.column(name)
-                t.column(category)
-                t.column(dateandtime)
-                t.column(repeattag)
-                t.column(endrepeat)
-                t.column(repeatenddate)
-            })
-            
-            transactions.forEach { transaction in
-                let insert = transactionTable.insert(amount <- transaction.amount )
-                do {
-                    try db.run(insert)
-                } catch {
-                    print(error)
-                }
-            }
-            
-            
-        } catch {
-            print(error)
-        }
-    }
 }

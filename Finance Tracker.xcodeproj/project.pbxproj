@@ -12,6 +12,7 @@
 		2807A7FD272EF66A0052F3E3 /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7FC272EF66A0052F3E3 /* AmountView.swift */; };
 		2807A801272EF6D00052F3E3 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A800272EF6D00052F3E3 /* InfoView.swift */; };
 		2807A803272EF6F90052F3E3 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A802272EF6F90052F3E3 /* DateView.swift */; };
+		28273C00275522420027FB2B /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28273BFF275522420027FB2B /* Database.swift */; };
 		28359A912732DD3F00C984A4 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28359A902732DD3F00C984A4 /* DataModel.swift */; };
 		284722F6273D6D2800D76C1A /* ManageCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284722F5273D6D2800D76C1A /* ManageCategoryView.swift */; };
 		284722F8273D6DFF00D76C1A /* ManageAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284722F7273D6DFF00D76C1A /* ManageAnalyticsView.swift */; };
@@ -56,6 +57,7 @@
 		2807A7FC272EF66A0052F3E3 /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
 		2807A800272EF6D00052F3E3 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		2807A802272EF6F90052F3E3 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
+		28273BFF275522420027FB2B /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		28359A902732DD3F00C984A4 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = Views/SettingsView/DataModel.swift; sourceTree = "<group>"; };
 		284722F5273D6D2800D76C1A /* ManageCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCategoryView.swift; sourceTree = "<group>"; };
 		284722F7273D6DFF00D76C1A /* ManageAnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAnalyticsView.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				2847CA9B272D656300328103 /* Views */,
 				2847CA75272D652300328103 /* Assets.xcassets */,
 				28359A902732DD3F00C984A4 /* DataModel.swift */,
+				28273BFF275522420027FB2B /* Database.swift */,
 				2847CA77272D652300328103 /* Preview Content */,
 			);
 			path = "Finance Tracker";
@@ -386,6 +389,7 @@
 				2807A803272EF6F90052F3E3 /* DateView.swift in Sources */,
 				285A46D62732969500A3996A /* NameSelectView.swift in Sources */,
 				2847CA9D272D658600328103 /* MainView.swift in Sources */,
+				28273C00275522420027FB2B /* Database.swift in Sources */,
 				2847CA72272D652200328103 /* Finance_TrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
