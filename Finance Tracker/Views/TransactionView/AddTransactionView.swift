@@ -58,9 +58,11 @@ struct AddTransactionView: View {
                         },
                     trailing:
                         Button("Add") {
-                            showTransactionSheet.toggle()
-                            amounttemp! *= factor
-                            savedata()
+                            if (amounttemp != nil) && (nametemp != nil) && (categorytemp != nil) {
+                                showTransactionSheet.toggle()
+                                amounttemp! *= factor
+                                savedata() 
+                            }
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
