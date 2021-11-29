@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-struct Category: Identifiable {
-    let id = UUID()
-    let title: String
-}
-
 struct CategoryElementView: View {
     @EnvironmentObject var data: Data
     @Environment(\.presentationMode) var presentationMode
@@ -57,8 +52,10 @@ struct CategorySelectView: View {
 
 struct CategorySelectView_Previews: PreviewProvider {
     static var previews: some View {
-        CategorySelectView(categroytemp: .constant(""), transactiontypetemp: .constant(false))
-            .environmentObject(Data())
-            .preferredColorScheme(.dark)
+        NavigationView {
+            CategorySelectView(categroytemp: .constant(""), transactiontypetemp: .constant(false))
+                .environmentObject(Data())
+                .preferredColorScheme(.dark)            
+        }
     }
 }

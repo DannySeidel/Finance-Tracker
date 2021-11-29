@@ -7,45 +7,50 @@
 
 import SwiftUI
 
-struct Name: Identifiable {
-    let id = UUID()
-    let title: String
-}
-
 struct NameElementView: View {
-    var name: Name
+    @EnvironmentObject var data: Data
     @Environment(\.presentationMode) var presentationMode
     @Binding var nametemp: String?
     
+    var name: String
+    
     var body: some View {
-        Button(name.title) {
-            nametemp = name.title
+        Button(name) {
+            nametemp = name
             presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Name")
+        .foregroundColor(Color(.white))
     }
 }
 
 struct NameSelectView: View {
+    @EnvironmentObject var data: Data
     @Binding var nametemp: String?
+    @State private var searchText = ""
     
-    let names = [
-        Name(title: "1"),
-        Name(title: "2")
-    ]
+    var searchNames: [String] {
+        if searchText.isEmpty {
+            return data.names.sorted(by: {$0<$1})
+        } else {
+            return data.names.filter { $0.contains(searchText) }.sorted(by: {$0<$1})
+        }
+    }
     
     var body: some View {
-        List {
-            ForEach(names) { name in
-                NameElementView(name: name, nametemp: $nametemp)
-            }
+        List(searchNames, id: \.self) { name in
+            NameElementView(nametemp: $nametemp, name: name)
         }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
 }
 
 struct NameSelectView_Previews: PreviewProvider {
     static var previews: some View {
-        NameSelectView(nametemp: .constant(""))
-            .preferredColorScheme(.dark)
+        NavigationView {
+            NameSelectView(nametemp: .constant(""))
+                .environmentObject(Data())
+                .preferredColorScheme(.dark)            
+        }
     }
 }

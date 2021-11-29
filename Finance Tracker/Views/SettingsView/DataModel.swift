@@ -46,6 +46,30 @@ class Data: ObservableObject {
         "Tax Refunds"
     ]
     
+    @Published var names = [
+        "Breakfest",
+        "Lunch",
+        "Coffee",
+        "Dinner",
+        "Theather",
+        "Amusement Park",
+        "Aldi",
+        "Edeka",
+        "Lidl",
+        "tegut",
+        "Netto",
+        "Norma",
+        "Penny",
+        "Car",
+        "Bike",
+        "E-Scooter",
+        "Public Transport",
+        "Taxi",
+        "Train",
+        "Airplane",
+    
+    ]
+    
     func createdatabase() {
         do {
             let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
