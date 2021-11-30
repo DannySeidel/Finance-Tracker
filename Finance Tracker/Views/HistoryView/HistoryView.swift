@@ -10,6 +10,7 @@ import SwiftUI
 struct HistoryView: View {
     @EnvironmentObject var data: Data
     @State var transactionSearchName = ""
+    @State var filterTag = 0
     
     var transactionDateGroups: [[DataStructure]] {
         var groups: [[DataStructure]] = []
@@ -77,6 +78,15 @@ struct HistoryView: View {
             .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(
+            trailing:
+                Picker(selection: $filterTag, label: Text("Filter by")) {
+                    Text("Name").tag(0)
+                    Text("Amount").tag(1)
+                    Text("Date").tag(2)
+                }
+                .pickerStyle(MenuPickerStyle())
+        )
     }
 }
 
