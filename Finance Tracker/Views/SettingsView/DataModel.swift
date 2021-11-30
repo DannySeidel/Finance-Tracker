@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SQLite
 import SwiftUI
 
 struct DataStructure: Hashable, Identifiable {
@@ -67,6 +66,5 @@ class Data: ObservableObject {
         "Taxi",
         "Train",
         "Airplane",
-    
     ]
 }

@@ -13,7 +13,7 @@ struct HistoryView: View {
     
     var transactionDateGroups: [[DataStructure]] {
         var groups: [[DataStructure]] = []
-
+        
         for transaction in data.transactions {
             var groupexists = false
             for group in groups {
@@ -41,19 +41,38 @@ struct HistoryView: View {
     var body: some View {
         ScrollView {
             ForEach(sortedgroups, id: \.first?.id) { groups in
-                VStack {
-                    HStack {
-                        Text(groups.first!.dateandtime, style: .date)
-                        
-                        Spacer()
+                if transactionSearchName.isEmpty {
+                    VStack {
+                        HStack {
+                            Text(groups.first!.dateandtime, style: .date)
+                            
+                            Spacer()
+                        }
+                        .padding(.leading)
+                        ForEach(groups, id: \.id) { transaction in
+                            TransactionElement(transaction: transaction)
+                                .frame(height: 70)
+                        }
                     }
-                    .padding(.leading)
-                    ForEach(groups, id: \.id) { transaction in
-                        TransactionElement(transaction: transaction)
-                            .frame(height: 70)
+                    .padding(.top)
+                } else {
+                    let searchgroups = groups.filter { $0.name.contains(transactionSearchName) }
+                    if searchgroups.first != nil {
+                        VStack {
+                            HStack {
+                                Text(searchgroups.first!.dateandtime, style: .date)
+                                
+                                Spacer()
+                            }
+                            .padding(.leading)
+                            ForEach(searchgroups, id: \.id) { transaction in
+                                TransactionElement(transaction: transaction)
+                                    .frame(height: 70)
+                            }
+                        }
+                        .padding(.top)
                     }
                 }
-                .padding(.top)
             }
             .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
         }
