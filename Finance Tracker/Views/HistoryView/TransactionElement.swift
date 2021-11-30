@@ -13,6 +13,11 @@ struct TransactionElement: View {
     
     var transaction: DataStructure
     
+    var monthlybalance: Double {
+        let filter = data.transactions.filter { transaction.dateandtime >= $0.dateandtime }
+        return filter.map({$0.amount}).reduce(0, +)
+    }
+    
     var amountcolor: Color {
         transaction.amount > 0 ?
         Color(red: 35/255, green: 310/255, blue: 139/255) :
@@ -37,7 +42,7 @@ struct TransactionElement: View {
                     
                     Spacer()
                     
-                    Text(String(balance))
+                    Text(String(monthlybalance))
                 }
                 .foregroundColor(Color(.systemGray))
             }
@@ -51,7 +56,7 @@ struct TransactionElement: View {
 struct TransactionElement_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TransactionElement(transaction: DataStructure(amount: -9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+            TransactionElement(transaction: DataStructure(amount: 9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)
             TransactionElement(transaction: DataStructure(amount: -15.73, name: "Diner", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
