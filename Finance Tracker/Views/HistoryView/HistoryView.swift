@@ -39,34 +39,43 @@ struct HistoryView: View {
         transactionDateGroups.sorted(by: {$0.first!.dateandtime>$1.first!.dateandtime})
     }
     
+//    var searchgroup: [[DataStructure]] {
+//        sortedgroups.compactMap { group in
+//            group.filter()
+//        }
+//    }
+    
+// sort
+//    map
+    
     var body: some View {
         ScrollView {
-            ForEach(sortedgroups, id: \.first?.id) { groups in
+            ForEach(sortedgroups, id: \.first?.id) { group in
                 if transactionSearchName.isEmpty {
                     VStack {
                         HStack {
-                            Text(groups.first!.dateandtime, style: .date)
+                            Text(group.first!.dateandtime, style: .date)
                             
                             Spacer()
                         }
                         .padding(.leading)
-                        ForEach(groups, id: \.id) { transaction in
+                        ForEach(group, id: \.id) { transaction in
                             TransactionElement(transaction: transaction)
                                 .frame(height: 70)
                         }
                     }
                     .padding(.top)
                 } else {
-                    let searchgroups = groups.filter { $0.name.contains(transactionSearchName) }
-                    if searchgroups.first != nil {
+                    let searchgroup = group.filter { $0.name.contains(transactionSearchName) }
+                    if searchgroup.first != nil {
                         VStack {
                             HStack {
-                                Text(searchgroups.first!.dateandtime, style: .date)
+                                Text(searchgroup.first!.dateandtime, style: .date)
                                 
                                 Spacer()
                             }
                             .padding(.leading)
-                            ForEach(searchgroups, id: \.id) { transaction in
+                            ForEach(searchgroup, id: \.id) { transaction in
                                 TransactionElement(transaction: transaction)
                                     .frame(height: 70)
                             }
@@ -80,7 +89,7 @@ struct HistoryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
             trailing:
-                Picker(selection: $filterTag, label: Text("Filter by")) {
+                Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
                     Text("Name").tag(0)
                     Text("Amount").tag(1)
                     Text("Date").tag(2)

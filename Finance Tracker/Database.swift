@@ -28,8 +28,9 @@ class Database {
     
     func connecttoDatabase() {
         do {
+            debugPrint("sucess")
             let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-//            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+            //            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
             let db = try Connection(path.appendingPathComponent("database").appendingPathExtension("sqlite3").absoluteString)
             self.db = db
         } catch {
@@ -56,46 +57,42 @@ class Database {
         }
     }
     
-    func insertTransactionsintoDatabase() {
-        data.transactions.forEach { transaction in
-            let insert = transactionTable.insert(
-                id <- transaction.id,
-                amount <- transaction.amount,
-                name <- transaction.name,
-                category <- transaction.category,
-                dateandtime <- transaction.dateandtime,
-                repeattag <- transaction.repeattag,
-                endrepeat <- transaction.endrepeat,
-                repeatenddate <- transaction.repeatenddate
-            )
-            
-            do {
-                try db.run(insert)
-            } catch {
-                print(error)
-            }
-        }
-        debugPrint(transactionTable)
-    }
-    
-    func loadTransactionsfromDatabase() {
+    func insertTransactionsintoDatabase(transaction: DataStructure) {
+        let insert = transactionTable.insert(
+            id <- transaction.id,
+            amount <- transaction.amount,
+            name <- transaction.name,
+            category <- transaction.category,
+            dateandtime <- transaction.dateandtime,
+            repeattag <- transaction.repeattag,
+            endrepeat <- transaction.endrepeat,
+            repeatenddate <- transaction.repeatenddate
+        )
+        
         do {
-            try db.run(transactionTable.create(ifNotExists: true) { t in
-                t.column(id)
-                t.column(amount)
-                t.column(name)
-                t.column(category)
-                t.column(dateandtime)
-                t.column(repeattag)
-                t.column(endrepeat)
-                t.column(repeatenddate)
-            })
-            
-            let all = Array(try db.prepare(transactionTable))
-            debugPrint(all)
-            
+            try db.run(insert)
+            debugPrint(transaction)
         } catch {
             print(error)
         }
     }
+    
+    //    func loadTransactionsfromDatabase() -> [DataStructure] {
+    //        do {
+    //            try db.run(transactionTable.create(ifNotExists: true) { t in
+    //                t.column(id)
+    //                t.column(amount)
+    //                t.column(name)
+    //                t.column(category)
+    //                t.column(dateandtime)
+    //                t.column(repeattag)
+    //                t.column(endrepeat)
+    //                t.column(repeatenddate)
+    //            })
+    //
+    //        } catch {
+    //            print(error)
+    //        }
+    //    }
+    
 }
