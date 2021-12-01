@@ -30,7 +30,6 @@ class Database {
         do {
             debugPrint("sucess")
             let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            //            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
             let db = try Connection(path.appendingPathComponent("database").appendingPathExtension("sqlite3").absoluteString)
             self.db = db
         } catch {
@@ -57,7 +56,7 @@ class Database {
         }
     }
     
-    func insertTransactionsintoDatabase(transaction: DataStructure) {
+    func insertTransactionsintoDatabase(transaction: Transaction) {
         let insert = transactionTable.insert(
             id <- transaction.id,
             amount <- transaction.amount,

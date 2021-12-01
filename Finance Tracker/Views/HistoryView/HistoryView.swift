@@ -12,8 +12,8 @@ struct HistoryView: View {
     @State var transactionSearchName = ""
     @State var filterTag = 0
     
-    var transactionDateGroups: [[DataStructure]] {
-        var groups: [[DataStructure]] = []
+    var transactionDateGroups: [[Transaction]] {
+        var groups: [[Transaction]] = []
         
         for transaction in data.transactions {
             var groupexists = false
@@ -35,7 +35,7 @@ struct HistoryView: View {
         return groups
     }
     
-    var sortedgroups: [[DataStructure]] {
+    var sortedgroups: [[Transaction]] {
         transactionDateGroups.sorted(by: {$0.first!.dateandtime>$1.first!.dateandtime})
     }
     

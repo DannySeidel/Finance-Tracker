@@ -74,7 +74,7 @@ struct AddTransactionView: View {
     func savedata() {
         if let amounttemp = amounttemp, let nametemp = nametemp, let categorytemp = categorytemp {
             data.transactions.append(
-                DataStructure(
+                Transaction(
                     amount: amounttemp,
                     name: nametemp,
                     category: categorytemp,

@@ -10,7 +10,7 @@ import SwiftUI
 struct TransactionElement: View {
     @EnvironmentObject var data: Data
     
-    var transaction: DataStructure
+    var transaction: Transaction
     
     var balance: Double {
         let filteredData = data.transactions.filter { transaction.dateandtime >= $0.dateandtime }
@@ -55,11 +55,11 @@ struct TransactionElement: View {
 struct TransactionElement_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TransactionElement(transaction: DataStructure(amount: 9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+            TransactionElement(transaction: Transaction(amount: 9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)
-            TransactionElement(transaction: DataStructure(amount: -15.73, name: "Diner", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+            TransactionElement(transaction: Transaction(amount: -15.73, name: "Diner", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)

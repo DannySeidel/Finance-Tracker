@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct DataStructure: Hashable, Identifiable {
+struct Transaction: Hashable, Identifiable {
     var id = UUID().uuidString
     var amount: Double
     var name: String
@@ -20,14 +20,14 @@ struct DataStructure: Hashable, Identifiable {
 }
 
 class Data: ObservableObject {
-    @Published var transactions: [DataStructure] = []
+    @Published var transactions: [Transaction] = []
     
     var db: Database = {
         debugPrint("data")
         var instance = Database()
         instance.connecttoDatabase()
         instance.createTable()
-        instance.insertTransactionsintoDatabase(transaction: DataStructure(amount: 43, name: "fgds", category: "fsdbx", dateandtime: Date.now, repeattag: 0, endrepeat: true, repeatenddate: Date.distantFuture))
+        instance.insertTransactionsintoDatabase(transaction: Transaction(amount: 43, name: "fgds", category: "fsdbx", dateandtime: Date.now, repeattag: 0, endrepeat: true, repeatenddate: Date.distantFuture))
         return instance
     }()
     
