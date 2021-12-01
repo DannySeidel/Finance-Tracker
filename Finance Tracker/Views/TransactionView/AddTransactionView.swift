@@ -61,29 +61,13 @@ struct AddTransactionView: View {
                             if (amounttemp != nil) && (nametemp != nil) && (categorytemp != nil) {
                                 showTransactionSheet.toggle()
                                 amounttemp! *= factor
-                                savedata()
+                                data.database.insertTransactionsintoDatabase(transaction: Transaction(amount: amounttemp!, name: nametemp!, category: categorytemp!, dateandtime: dateandtimetemp, repeattag: repeattagtemp, endrepeat: endrepeattemp, repeatenddate: repeatenddatetemp))
                             }
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color(.white))
             }
-        }
-    }
-    
-    func savedata() {
-        if let amounttemp = amounttemp, let nametemp = nametemp, let categorytemp = categorytemp {
-            data.transactions.append(
-                Transaction(
-                    amount: amounttemp,
-                    name: nametemp,
-                    category: categorytemp,
-                    dateandtime: dateandtimetemp,
-                    repeattag: repeattagtemp,
-                    endrepeat: endrepeattemp,
-                    repeatenddate: repeatenddatetemp
-                )
-            )
         }
     }
 }

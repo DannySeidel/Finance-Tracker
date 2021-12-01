@@ -22,12 +22,11 @@ struct Transaction: Hashable, Identifiable {
 class Data: ObservableObject {
     @Published var transactions: [Transaction] = []
     
-    var db: Database = {
+    var database: Database = {
         debugPrint("data")
         var instance = Database()
         instance.connecttoDatabase()
         instance.createTable()
-        instance.insertTransactionsintoDatabase(transaction: Transaction(amount: 43, name: "fgds", category: "fsdbx", dateandtime: Date.now, repeattag: 0, endrepeat: true, repeatenddate: Date.distantFuture))
         return instance
     }()
     
