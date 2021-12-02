@@ -61,7 +61,7 @@ struct AddTransactionView: View {
                             if (amounttemp != nil) && (nametemp != nil) && (categorytemp != nil) {
                                 showTransactionSheet.toggle()
                                 amounttemp! *= factor
-                                data.database.insertTransactionsintoDatabase(transaction: Transaction(amount: amounttemp!, name: nametemp!, category: categorytemp!, dateandtime: dateandtimetemp, repeattag: repeattagtemp, endrepeat: endrepeattemp, repeatenddate: repeatenddatetemp))
+                                data.database.insertTransaction(transaction: Transaction(amount: amounttemp!, name: nametemp!, category: categorytemp!, dateandtime: dateandtimetemp, repeattag: repeattagtemp, endrepeat: endrepeattemp, repeatenddate: repeatenddatetemp))
                             }
                         }
                 )

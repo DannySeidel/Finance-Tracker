@@ -9,6 +9,16 @@ import Foundation
 import SwiftUI
 import SQLite
 
+extension Date {
+    func startOfMonth() -> Date {
+        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
+    }
+    
+    func endOfMonth() -> Date {
+        return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
+    }
+}
+
 
 class Database {
     @EnvironmentObject var data: Data
@@ -56,7 +66,7 @@ class Database {
         }
     }
     
-    func insertTransactionsintoDatabase(transaction: Transaction) {
+    func insertTransaction(transaction: Transaction) {
         let insert = transactionTable.insert(
             id <- transaction.id,
             amount <- transaction.amount,
@@ -70,28 +80,29 @@ class Database {
         
         do {
             try db.run(insert)
-            debugPrint(transaction)
         } catch {
             print(error)
         }
     }
     
-    //    func loadTransactionsfromDatabase() -> [DataStructure] {
-    //        do {
-    //            try db.run(transactionTable.create(ifNotExists: true) { t in
-    //                t.column(id)
-    //                t.column(amount)
-    //                t.column(name)
-    //                t.column(category)
-    //                t.column(dateandtime)
-    //                t.column(repeattag)
-    //                t.column(endrepeat)
-    //                t.column(repeatenddate)
-    //            })
-    //
-    //        } catch {
-    //            print(error)
-    //        }
-    //    }
+    func loadallTransactions() -> [Transaction] {
+        do {
+            let transactions = Array(try db.prepare(transactionTable))
+            return transactions
+        } catch {
+            print(error)
+        }
+    }
     
+//    func loadAmountsforCurrentMonth() -> [Transaction] {
+//        do {
+//            let transactionAmounts = Array(try db.prepare(transactionTable
+//                                                            .select(amount)
+//                                                            .filter(Date().startOfMonth()...Date().endOfMonth() ~= dateandtime)
+//                                                         ))
+//            return transactionAmounts
+//        } catch {
+//            print(error)
+//        }
+//    }
 }
