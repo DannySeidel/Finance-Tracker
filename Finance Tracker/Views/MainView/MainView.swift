@@ -16,7 +16,6 @@ struct MainView: View {
         NavigationView {
             ScrollView {
                 BalanceView()
-                    .frame(height: 150)
                     .padding()
                 AnalyticsFrameView()
                     .frame(height: 400)

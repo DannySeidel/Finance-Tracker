@@ -12,10 +12,10 @@ struct TransactionElement: View {
     
     var transaction: Transaction
     
-    var balance: Double {
-        let filteredData = data.transactions.filter { transaction.dateandtime >= $0.dateandtime }
-        return filteredData.map({$0.amount}).reduce(0, +)
-    }
+//    var balance: Double {
+//        let filteredData = data.transactions.filter { transaction.dateandtime >= $0.dateandtime }
+//        return filteredData.map({$0.amount}).reduce(0, +)
+//    }
     
     var amountcolor: Color {
         transaction.amount > 0 ?
@@ -41,7 +41,7 @@ struct TransactionElement: View {
                     
                     Spacer()
                     
-                    Text(String(balance))
+                    Text(String(45.2))
                 }
                 .foregroundColor(Color(.systemGray))
             }

@@ -50,6 +50,9 @@ struct HistoryView: View {
     
     var body: some View {
         ScrollView {
+            BalanceView()
+                .padding()
+            
             ForEach(sortedgroups, id: \.first?.id) { group in
                 if transactionSearchName.isEmpty {
                     VStack {
@@ -101,8 +104,10 @@ struct HistoryView: View {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView()
-            .environmentObject(Data())
-            .preferredColorScheme(.dark)
+        NavigationView {
+            HistoryView()
+                .environmentObject(Data())
+                .preferredColorScheme(.dark)            
+        }
     }
 }
