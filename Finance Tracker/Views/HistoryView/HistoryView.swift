@@ -14,7 +14,6 @@ struct HistoryView: View {
     
     var transactionDateGroups: [[Transaction]] {
         var groups: [[Transaction]] = []
-        
         for transaction in data.database.loadAllTransactions() {
             var groupexists = false
             for group in groups {
@@ -36,22 +35,29 @@ struct HistoryView: View {
     }
     
     var sortedgroups: [[Transaction]] {
-        transactionDateGroups.sorted(by: {$0.first!.dateandtime>$1.first!.dateandtime})
+        var sortResult: [[Transaction]] = []
+        for group in transactionDateGroups.sorted(by: {$0.first!.dateandtime>$1.first!.dateandtime}) {
+            sortResult.append(group.sorted(by: {$0.dateandtime>$1.dateandtime}))
+        }
+        return sortResult
     }
     
-//    var searchgroup: [[DataStructure]] {
-//        sortedgroups.compactMap { group in
-//            group.filter()
-//        }
-//    }
-    
-// sort
-//    map
+    var searchgroups: [[Transaction]] {
+        var searchResult: [[Transaction]] = []
+        if transactionSearchName.isEmpty {
+            searchResult = sortedgroups
+        } else {
+            sortedgroups.forEach { group in
+                searchResult.append(group.filter({$0.name.contains(transactionSearchName)}))
+            }
+        }
+        return searchResult
+    }
     
     var body: some View {
         ScrollView {
-            ForEach(sortedgroups, id: \.first?.id) { group in
-                if transactionSearchName.isEmpty {
+            ForEach(searchgroups, id: \.first?.id) { group in
+                if group.first != nil {
                     VStack {
                         HStack {
                             Text(group.first!.dateandtime, style: .date)
@@ -65,23 +71,6 @@ struct HistoryView: View {
                         }
                     }
                     .padding(.top)
-                } else {
-                    let searchgroup = group.filter { $0.name.contains(transactionSearchName) }
-                    if searchgroup.first != nil {
-                        VStack {
-                            HStack {
-                                Text(searchgroup.first!.dateandtime, style: .date)
-                                
-                                Spacer()
-                            }
-                            .padding(.leading)
-                            ForEach(searchgroup, id: \.id) { transaction in
-                                TransactionElement(transaction: transaction)
-                                    .frame(height: 70)
-                            }
-                        }
-                        .padding(.top)
-                    }
                 }
             }
             .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
@@ -104,7 +93,7 @@ struct HistoryView_Previews: PreviewProvider {
         NavigationView {
             HistoryView()
                 .environmentObject(Data())
-                .preferredColorScheme(.dark)            
+                .preferredColorScheme(.dark)
         }
     }
 }
