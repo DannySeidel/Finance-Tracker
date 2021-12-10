@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var showtransactionsheet = false
-    @State private var showsettingssheet = false
+    @State private var showTransactionSheet = false
+    @State private var showSettingsSheet = false
     @EnvironmentObject var data: Data
     
     var body: some View {
@@ -24,7 +24,7 @@ struct MainView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        showsettingssheet.toggle()
+                        showSettingsSheet.toggle()
                     } label: {
                         Image(systemName: "gearshape.fill")
                             .imageScale(.large)
@@ -33,7 +33,7 @@ struct MainView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        showtransactionsheet.toggle()
+                        showTransactionSheet.toggle()
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .imageScale(.large)
@@ -43,11 +43,11 @@ struct MainView: View {
             }
             .navigationTitle("Overview")
         }
-        .sheet(isPresented: $showtransactionsheet) {
-            AddTransactionView(showTransactionSheet: $showtransactionsheet)
+        .sheet(isPresented: $showTransactionSheet) {
+            AddTransactionView(showTransactionSheet: $showTransactionSheet)
         }
-        .sheet(isPresented: $showsettingssheet) {
-            SettingsView(showsettingssheet: $showsettingssheet)
+        .sheet(isPresented: $showSettingsSheet) {
+            SettingsView(showSettingsSheet: $showSettingsSheet)
         }
         .background(Color.black)
         .preferredColorScheme(.dark)

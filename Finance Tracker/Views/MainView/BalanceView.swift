@@ -10,22 +10,22 @@ import SwiftUI
 struct BalanceView: View {
     @EnvironmentObject var data: Data
     
-    var monthlybalance: Double {
+    var monthlyBalance: Double {
         data.transactions.map({$0.amount}).reduce(0, +)
     }
     
     var factor: Double {
-        monthlybalance < 0 ? -1 : 1
+        monthlyBalance < 0 ? -1 : 1
     }
     
     var rotation: Double {
-        monthlybalance > 0 ? 0 : 180
+        monthlyBalance > 0 ? 0 : 180
     }
     
-    var balancecolor: Color {
-        if monthlybalance > 0 {
+    var balanceColor: Color {
+        if monthlyBalance > 0 {
             return Color(red: 35/255, green: 310/255, blue: 139/255)
-        } else if monthlybalance < 0 {
+        } else if monthlyBalance < 0 {
             return Color(red: 240/255, green: 60/255, blue: 25/255)
         } else {
             return Color(.systemGray)
@@ -37,17 +37,17 @@ struct BalanceView: View {
             Capsule(style: .continuous)
                 .foregroundColor(Color(.systemGray6))
             NavigationLink(destination: HistoryView()) {
-                if monthlybalance != 0 {
+                if monthlyBalance != 0 {
                     Image(systemName: "shift.fill")
                         .rotationEffect(.degrees(rotation))
                 }
-                Text(String(monthlybalance * factor))
+                Text(String(monthlyBalance * factor))
                     .bold()
                 Image(systemName: "eurosign.circle")
                 
             }
             .font(.system(size: 42))
-            .foregroundColor(balancecolor)
+            .foregroundColor(balanceColor)
         }
         .frame(height: 125)
     }

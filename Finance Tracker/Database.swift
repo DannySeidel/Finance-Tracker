@@ -105,7 +105,7 @@ class Database {
         let createCategoryTable = categoryTable.create(ifNotExists: true) { table in
             table.column(minusCategory)
             table.column(plusCategory)
-//            insertDefaultCategories(categoriesMinus: data.categoriesminus)
+//            insertDefaultCategories
         }
         
         do {
@@ -116,18 +116,6 @@ class Database {
             print(error)
         }
     }
-    
-//    func insertDefaultCategories(categoriesMinus: [String]) {
-//        let insertCategories = categoryTable.insertMany(
-//
-//        )
-//
-//        do {
-//            try db.run(insertCategories)
-//        } catch {
-//            print(error)
-//        }
-//    }
     
     func insertTransaction(transaction: Transaction) {
         let insert = transactionTable.insert(

@@ -10,13 +10,13 @@ import SwiftUI
 struct CategoryElementView: View {
     @EnvironmentObject var data: Data
     @Environment(\.presentationMode) var presentationMode
-    @Binding var categroytemp: String?
+    @Binding var categroyTemp: String?
     
     var category: String
     
     var body: some View {
         Button(category) {
-            categroytemp = category
+            categroyTemp = category
             presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Category")
@@ -26,17 +26,17 @@ struct CategoryElementView: View {
 
 struct CategorySelectView: View {
     @EnvironmentObject var data: Data
-    @Binding var categroytemp: String?
-    @Binding var transactiontypetemp: Bool
+    @Binding var categroyTemp: String?
+    @Binding var transactionTypeTemp: Bool
     @State private var searchText = ""
     
     var searchCategories: [String] {
         if searchText.isEmpty {
-            return transactiontypetemp ?
+            return transactionTypeTemp ?
             data.categoriesplus.sorted(by: {$0<$1}) :
             data.categoriesminus.sorted(by: {$0<$1})
         } else {
-            return transactiontypetemp ?
+            return transactionTypeTemp ?
             data.categoriesplus.filter { $0.contains(searchText) }.sorted(by: {$0<$1}) :
             data.categoriesminus.filter { $0.contains(searchText) }.sorted(by: {$0<$1})
         }
@@ -44,7 +44,7 @@ struct CategorySelectView: View {
     
     var body: some View {
         List(searchCategories, id: \.self) { category in
-            CategoryElementView(categroytemp: $categroytemp, category: category)
+            CategoryElementView(categroyTemp: $categroyTemp, category: category)
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
@@ -53,7 +53,7 @@ struct CategorySelectView: View {
 struct CategorySelectView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CategorySelectView(categroytemp: .constant(""), transactiontypetemp: .constant(false))
+            CategorySelectView(categroyTemp: .constant(""), transactionTypeTemp: .constant(false))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)            
         }

@@ -11,18 +11,18 @@ struct AddTransactionView: View {
     @Binding var showTransactionSheet: Bool
     
     @EnvironmentObject var data: Data
-    @State private var amounttemp: Double?
-    @State private var nametemp: String?
-    @State private var categorytemp: String?
-    @State private var dateandtimetemp = Date()
-    @State private var repeattagtemp = 0
-    @State private var endrepeattemp = false
-    @State private var repeatenddatetemp = Date()
+    @State private var amountTemp: Double?
+    @State private var nameTemp: String?
+    @State private var categoryTemp: String?
+    @State private var dateAndTimeTemp = Date()
+    @State private var repeatTagTemp = 0
+    @State private var endRepeatTemp = false
+    @State private var repeatEndDateTemp = Date()
     
-    @State private var transactiontypetemp = false
+    @State private var transactionTypeTemp = false
     
     var factor: Double {
-        transactiontypetemp ? 1 : -1
+        transactionTypeTemp ? 1 : -1
     }
     
     var body: some View {
@@ -30,12 +30,9 @@ struct AddTransactionView: View {
             NavigationView {
                 VStack {
                     ScrollView {
-                        AmountView(amounttemp: $amounttemp)
-                        
-                        InfoView(nametemp: $nametemp, categroytemp: $categorytemp, transactiontypetemp: $transactiontypetemp)
-                        
-                        DateView(dateandtime: $dateandtimetemp, repeattag: $repeattagtemp, endrepeat: $endrepeattemp, repeatenddate: $repeatenddatetemp)
-                        
+                        AmountView(amountTemp: $amountTemp)
+                        InfoView(nameTemp: $nameTemp, categroyTemp: $categoryTemp, transactionTypeTemp: $transactionTypeTemp)
+                        DateView(dateAndTime: $dateAndTimeTemp, repeatTag: $repeatTagTemp, endRepeat: $endRepeatTemp, repeatEndDate: $repeatEndDateTemp)
                         MapView()
                     }
                 }
@@ -46,7 +43,7 @@ struct AddTransactionView: View {
                                 showTransactionSheet.toggle()
                             }
                             VStack {
-                                Picker("", selection: $transactiontypetemp) {
+                                Picker("", selection: $transactionTypeTemp) {
                                     Image(systemName: "minus").tag(false)
                                     Image(systemName: "plus").tag(true)
                                 }
@@ -58,10 +55,20 @@ struct AddTransactionView: View {
                         },
                     trailing:
                         Button("Add") {
-                            if (amounttemp != nil) && (nametemp != nil) && (categorytemp != nil) {
+                            if (amountTemp != nil) && (nameTemp != nil) && (categoryTemp != nil) {
                                 showTransactionSheet.toggle()
-                                amounttemp! *= factor
-                                data.database.insertTransaction(transaction: Transaction(amount: amounttemp!, name: nametemp!, category: categorytemp!, dateandtime: dateandtimetemp, repeattag: repeattagtemp, endrepeat: endrepeattemp, repeatenddate: repeatenddatetemp))
+                                amountTemp! *= factor
+                                data.database.insertTransaction(
+                                    transaction: Transaction(
+                                        amount: amountTemp!,
+                                        name: nameTemp!,
+                                        category: categoryTemp!,
+                                        dateandtime: dateAndTimeTemp,
+                                        repeattag: repeatTagTemp,
+                                        endrepeat: endRepeatTemp,
+                                        repeatenddate: repeatEndDateTemp
+                                    )
+                                )
                             }
                         }
                 )

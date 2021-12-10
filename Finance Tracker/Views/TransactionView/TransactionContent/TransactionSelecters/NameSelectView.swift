@@ -10,13 +10,13 @@ import SwiftUI
 struct NameElementView: View {
     @EnvironmentObject var data: Data
     @Environment(\.presentationMode) var presentationMode
-    @Binding var nametemp: String?
+    @Binding var nameTemp: String?
     
     var name: String
     
     var body: some View {
         Button(name) {
-            nametemp = name
+            nameTemp = name
             presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Name")
@@ -26,7 +26,7 @@ struct NameElementView: View {
 
 struct NameSelectView: View {
     @EnvironmentObject var data: Data
-    @Binding var nametemp: String?
+    @Binding var nameTemp: String?
     @State private var searchText = ""
     
     var searchNames: [String] {
@@ -39,7 +39,7 @@ struct NameSelectView: View {
     
     var body: some View {
         List(searchNames, id: \.self) { name in
-            NameElementView(nametemp: $nametemp, name: name)
+            NameElementView(nameTemp: $nameTemp, name: name)
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
@@ -48,7 +48,7 @@ struct NameSelectView: View {
 struct NameSelectView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            NameSelectView(nametemp: .constant(""))
+            NameSelectView(nameTemp: .constant(""))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)            
         }

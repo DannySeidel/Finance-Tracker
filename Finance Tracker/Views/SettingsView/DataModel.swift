@@ -22,7 +22,6 @@ struct Transaction: Hashable, Identifiable {
 
 
 class Data: ObservableObject {
-    @Published var transactions: [Transaction] = []
     
     var database: Database = {
         var instance = Database()

@@ -29,13 +29,9 @@ extension Optional where Wrapped == String {
 struct InfoView: View {
     @EnvironmentObject var data: Data
     
-    @Binding var nametemp: String?
-    @Binding var categroytemp: String?
-    @Binding var transactiontypetemp: Bool
-    
-    
-    
-    let names = ["1", "2"]
+    @Binding var nameTemp: String?
+    @Binding var categroyTemp: String?
+    @Binding var transactionTypeTemp: Bool
     
     var body: some View {
         ZStack {
@@ -44,8 +40,8 @@ struct InfoView: View {
             VStack {
                 HStack {
                     Text("Name")
-                    TextField("Lunch", text: $nametemp.bound)
-                    NavigationLink(destination: NameSelectView(nametemp: $nametemp)) {
+                    TextField("Lunch", text: $nameTemp.bound)
+                    NavigationLink(destination: NameSelectView(nameTemp: $nameTemp)) {
                         Image(systemName: "shift.fill")
                             .rotationEffect(.degrees(90))
                     }
@@ -53,8 +49,8 @@ struct InfoView: View {
                 Divider()
                 HStack {
                     Text("Category")
-                    TextField("Food & Drinks", text: $categroytemp.bound)
-                    NavigationLink(destination: CategorySelectView(categroytemp: $categroytemp, transactiontypetemp: $transactiontypetemp)) {
+                    TextField("Food & Drinks", text: $categroyTemp.bound)
+                    NavigationLink(destination: CategorySelectView(categroyTemp: $categroyTemp, transactionTypeTemp: $transactionTypeTemp)) {
                         Image(systemName: "shift.fill")
                             .rotationEffect(.degrees(90))
                     }
@@ -68,7 +64,7 @@ struct InfoView: View {
 
 struct TransactionInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoView(nametemp: .constant(""), categroytemp: .constant(""), transactiontypetemp: .constant(false))
+        InfoView(nameTemp: .constant(""), categroyTemp: .constant(""), transactionTypeTemp: .constant(false))
             .previewLayout(.fixed(width: 400, height: 150))
             .preferredColorScheme(.dark)
     }

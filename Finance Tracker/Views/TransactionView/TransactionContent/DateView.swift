@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct DateView: View {
-    @Binding var dateandtime: Date
-    @Binding var repeattag: Int
-    @Binding var endrepeat: Bool
-    @Binding var repeatenddate: Date
+    @Binding var dateAndTime: Date
+    @Binding var repeatTag: Int
+    @Binding var endRepeat: Bool
+    @Binding var repeatEndDate: Date
     
     var body: some View {
         ZStack {
@@ -20,7 +20,7 @@ struct DateView: View {
             VStack {
                 HStack {
                     Text("Date")
-                    DatePicker(selection: $dateandtime, in: ...Date()) {
+                    DatePicker(selection: $dateAndTime, in: ...Date()) {
                         
                     }
                     .datePickerStyle(CompactDatePickerStyle())
@@ -33,7 +33,7 @@ struct DateView: View {
                     
                     Spacer()
                     
-                    Picker("Repeat", selection: $repeattag) {
+                    Picker("Repeat", selection: $repeatTag) {
                         Image(systemName: "nosign").tag(0)
                         Image(systemName: "d.square.fill").tag(1)
                         Image(systemName: "w.square.fill").tag(2)
@@ -44,17 +44,17 @@ struct DateView: View {
                     .padding(.leading)
                 }
                 
-                if repeattag != 0 {
+                if repeatTag != 0 {
                     Divider()
                     
                     HStack {
                         Text("End Repeat")
                                                 
-                        if endrepeat == true {
-                            DatePicker("", selection: $repeatenddate, in: Date()..., displayedComponents: .date)
+                        if endRepeat == true {
+                            DatePicker("", selection: $repeatEndDate, in: Date()..., displayedComponents: .date)
                                 .padding(-2)
                         }
-                        Toggle("", isOn: $endrepeat)
+                        Toggle("", isOn: $endRepeat)
                     }
                 }
             }
@@ -67,7 +67,7 @@ struct DateView: View {
 struct TransactionDateView_Previews: PreviewProvider {
     static var previews: some View {
         DateView(
-            dateandtime: .constant(Date.now), repeattag: .constant(0), endrepeat: .constant(false), repeatenddate: .constant(Date.now)
+            dateAndTime: .constant(Date.now), repeatTag: .constant(0), endRepeat: .constant(false), repeatEndDate: .constant(Date.now)
         )
             .preferredColorScheme(.dark)
     }
