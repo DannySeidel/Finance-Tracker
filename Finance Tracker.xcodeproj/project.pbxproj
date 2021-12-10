@@ -164,9 +164,9 @@
 			children = (
 				2847CA71272D652200328103 /* Finance_TrackerApp.swift */,
 				2847CA9B272D656300328103 /* Views */,
-				2847CA75272D652300328103 /* Assets.xcassets */,
 				28359A902732DD3F00C984A4 /* DataModel.swift */,
 				28273BFF275522420027FB2B /* Database.swift */,
+				2847CA75272D652300328103 /* Assets.xcassets */,
 				2847CA77272D652300328103 /* Preview Content */,
 			);
 			path = "Finance Tracker";
