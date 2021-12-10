@@ -34,11 +34,9 @@ class Data: ObservableObject {
         return instance
     }()
     
-    @Published var balance = 1.0
+    @Published var balance = 0.0
 
-    init() {
-        refreshBalance()
-    }
+    init() {refreshBalance()}
     
     func refreshBalance() {
         balance = database.getMonthlyBalance()
