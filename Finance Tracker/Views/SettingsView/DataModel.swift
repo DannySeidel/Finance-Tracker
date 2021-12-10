@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SQLite
 
 struct Transaction: Hashable, Identifiable {
     var id = UUID().uuidString
@@ -19,17 +20,16 @@ struct Transaction: Hashable, Identifiable {
     var repeatenddate: Date
 }
 
+
 class Data: ObservableObject {
     @Published var transactions: [Transaction] = []
     
-//    var db: Database = {
-//        debugPrint("data")
-//        var instance = Database()
-//        instance.connecttoDatabase()
-//        instance.createTable()
-//        instance.insertTransactionsintoDatabase(transaction: Transaction(amount: 43, name: "fgds", category: "fsdbx", dateandtime: Date.now, repeattag: 0, endrepeat: true, repeatenddate: Date.distantFuture))
-//        return instance
-//    }()
+    var database: Database = {
+        var instance = Database()
+        instance.connectToDatabase()
+        instance.createTables()
+        return instance
+    }()
     
     @Published var categoriesminus = [
         "Car",

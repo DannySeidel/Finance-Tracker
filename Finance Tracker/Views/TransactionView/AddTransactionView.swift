@@ -62,6 +62,7 @@ struct AddTransactionView: View {
                                 showTransactionSheet.toggle()
                                 amounttemp! *= factor
                                 savedata()
+                                data.database.insertTransaction(transaction: Transaction(amount: amounttemp!, name: nametemp!, category: categorytemp!, dateandtime: dateandtimetemp, repeattag: repeattagtemp, endrepeat: endrepeattemp, repeatenddate: repeatenddatetemp))
                             }
                         }
                 )
