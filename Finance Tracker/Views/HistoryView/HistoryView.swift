@@ -15,7 +15,7 @@ struct HistoryView: View {
     var transactionDateGroups: [[Transaction]] {
         var groups: [[Transaction]] = []
         
-        for transaction in data.transactions {
+        for transaction in data.database.loadAllTransactions() {
             var groupexists = false
             for group in groups {
                 if let firstGroup = group.first, Calendar.current.isDate(
@@ -50,9 +50,6 @@ struct HistoryView: View {
     
     var body: some View {
         ScrollView {
-            BalanceView()
-                .padding()
-            
             ForEach(sortedgroups, id: \.first?.id) { group in
                 if transactionSearchName.isEmpty {
                     VStack {

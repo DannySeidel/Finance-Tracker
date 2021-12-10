@@ -37,11 +37,11 @@ struct TransactionElement: View {
                         .foregroundColor(amountcolor)
                 }
                 HStack {
-                    Text(transaction.dateandtime, style: .time)
+                    Text(transaction.category)
                     
                     Spacer()
                     
-                    Text(String(45.2))
+                    Text(transaction.dateandtime, style: .time)
                 }
                 .foregroundColor(Color(.systemGray))
             }
@@ -59,7 +59,7 @@ struct TransactionElement_Previews: PreviewProvider {
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)
-            TransactionElement(transaction: Transaction(amount: -15.73, name: "Diner", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+            TransactionElement(transaction: Transaction(amount: -15.73, name: "Dinner", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)

@@ -11,7 +11,7 @@ struct BalanceView: View {
     @EnvironmentObject var data: Data
     
     var monthlybalance: Double {
-        data.transactions.map({$0.amount}).reduce(0, +)
+        data.database.loadAllTransactions().map({$0.amount}).reduce(0, +)
     }
     
     var factor: Double {
