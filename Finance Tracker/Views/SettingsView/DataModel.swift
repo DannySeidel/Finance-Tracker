@@ -34,6 +34,16 @@ class Data: ObservableObject {
         return instance
     }()
     
+    @Published var balance = 1.0
+
+    init() {
+        refreshBalance()
+    }
+    
+    func refreshBalance() {
+        balance = database.getMonthlyBalance()
+    }
+    
     @Published var categoriesminus = [
         "Car",
         "Clothes",

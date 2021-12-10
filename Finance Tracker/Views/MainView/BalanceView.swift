@@ -11,17 +11,17 @@ struct BalanceView: View {
     @EnvironmentObject var data: Data
     
     var factor: Double {
-        data.database.loadAmountsforCurrentMonth() < 0 ? -1 : 1
+        data.balance < 0 ? -1 : 1
     }
     
     var rotation: Double {
-        data.database.loadAmountsforCurrentMonth() > 0 ? 0 : 180
+        data.balance > 0 ? 0 : 180
     }
     
     var balanceColor: Color {
-        if data.database.loadAmountsforCurrentMonth() > 0 {
+        if data.balance > 0 {
             return Color(red: 35/255, green: 310/255, blue: 139/255)
-        } else if data.database.loadAmountsforCurrentMonth() < 0 {
+        } else if data.balance < 0 {
             return Color(red: 240/255, green: 60/255, blue: 25/255)
         } else {
             return Color(.systemGray)
@@ -33,11 +33,11 @@ struct BalanceView: View {
             Capsule(style: .continuous)
                 .foregroundColor(Color(.systemGray6))
             NavigationLink(destination: HistoryView()) {
-                if data.database.loadAmountsforCurrentMonth() != 0 {
+                if data.balance != 0 {
                     Image(systemName: "shift.fill")
                         .rotationEffect(.degrees(rotation))
                 }
-                Text(String(data.database.loadAmountsforCurrentMonth() * factor))
+                Text(String(data.balance * factor))
                     .bold()
                 Image(systemName: "eurosign.circle")
                 

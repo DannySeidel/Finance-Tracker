@@ -163,7 +163,7 @@ class Database {
         return transactions
     }
     
-    func loadAmountsforCurrentMonth() -> Double {
+    func getMonthlyBalance() -> Double {
         var monthlyBalance: Double
         var amounts: [Amount] = []
         do {
