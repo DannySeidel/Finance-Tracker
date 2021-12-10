@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SQLite
 
 struct Transaction: Hashable, Identifiable {
     var id = UUID().uuidString
@@ -19,14 +20,14 @@ struct Transaction: Hashable, Identifiable {
     var repeatenddate: Date
 }
 
+
 class Data: ObservableObject {
     @Published var transactions: [Transaction] = []
     
     var database: Database = {
-        debugPrint("data")
         var instance = Database()
-        instance.connecttoDatabase()
-        instance.createTable()
+        instance.connectToDatabase()
+        instance.createTables()
         return instance
     }()
     
