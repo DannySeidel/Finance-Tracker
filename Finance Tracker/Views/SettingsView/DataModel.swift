@@ -20,6 +20,10 @@ struct Transaction: Hashable, Identifiable {
     var repeatenddate: Date
 }
 
+struct Amount: Hashable {
+    var amount: Double
+}
+
 
 class Data: ObservableObject {
     

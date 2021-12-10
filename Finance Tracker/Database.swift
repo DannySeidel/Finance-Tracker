@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SQLite
 
+
 extension Date {
     func startOfMonth() -> Date {
         return Calendar.current.date(
@@ -39,13 +40,25 @@ extension Transaction {
             try self.repeatenddate = row.get(Expression<Date>("repeatenddate"))
         } catch {
             self.id = ""
-            self.amount = 0.0
+            self.amount = 1.0
             self.name = ""
             self.category = ""
             self.dateandtime = Date.now
             self.repeattag = 0
             self.endrepeat = false
             self.repeatenddate = Date.now
+            print(error)
+        }
+    }
+}
+
+extension Amount {
+    init(row: Row) {
+        do {
+            try self.amount = row.get(Expression<Double>("amount"))
+        } catch {
+            self.amount = 1.0
+            print(error)
         }
     }
 }
@@ -139,10 +152,10 @@ class Database {
     func loadAllTransactions() -> [Transaction]  {
         var transactions: [Transaction] = []
         do {
-            let transactionsRow = Array(try db.prepare(transactionTable))
-            for transaction in transactionsRow {
-                let test = Transaction.init(row: transaction)
-                transactions.append(test)
+            let transactionRows = Array(try db.prepare(transactionTable))
+            for transactionRow in transactionRows {
+                let transaction = Transaction.init(row: transactionRow)
+                transactions.append(transaction)
             }
         } catch {
             print(error)
@@ -150,15 +163,22 @@ class Database {
         return transactions
     }
     
-//    func loadAmountsforCurrentMonth() -> [Transaction] {
-//        do {
-//            let transactionAmounts = Array(try db.prepare(transactionTable
-//                                                            .select(amount)
-//                                                            .filter(Date().startOfMonth()...Date().endOfMonth() ~= dateandtime)
-//                                                         ))
-//            return transactionAmounts
-//        } catch {
-//            print(error)
-//        }
-//    }
+    func loadAmountsforCurrentMonth() -> Double {
+        var monthlyBalance: Double
+        var amounts: [Amount] = []
+        do {
+            let amountRows = Array(try db.prepare(transactionTable
+                                                            .select(amount)
+                                                            .filter(Date().startOfMonth()...Date().endOfMonth() ~= dateandtime)
+                                                         ))
+            for amountRow in amountRows {
+                let amount  = Amount.init(row: amountRow)
+                amounts.append(amount)
+            }
+        } catch {
+            print(error)
+        }
+        monthlyBalance = amounts.map({$0.amount}).reduce(0, +)
+        return monthlyBalance
+    }
 }
