@@ -48,7 +48,12 @@ struct HistoryView: View {
             searchResult = sortedgroups
         } else {
             sortedgroups.forEach { group in
-                searchResult.append(group.filter({$0.name.contains(transactionSearchName)}))
+                switch filterTag {
+                case 1:
+                    searchResult.append(group.filter({$0.category.contains(transactionSearchName)}))
+                default:
+                    searchResult.append(group.filter({$0.name.contains(transactionSearchName)}))
+                }
             }
         }
         return searchResult
@@ -80,8 +85,9 @@ struct HistoryView: View {
             trailing:
                 Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
                     Text("Name").tag(0)
-                    Text("Amount").tag(1)
-                    Text("Date").tag(2)
+                    Text("Category").tag(1)
+                    Text("Amount").tag(2)
+                    Text("Date").tag(3)
                 }
                 .pickerStyle(MenuPickerStyle())
         )
