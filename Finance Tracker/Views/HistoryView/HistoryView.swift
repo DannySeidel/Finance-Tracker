@@ -35,28 +35,24 @@ struct HistoryView: View {
     }
     
     var sortedgroups: [[Transaction]] {
-        var sortResult: [[Transaction]] = []
-        for group in transactionDateGroups.sorted(by: {$0.first!.dateandtime>$1.first!.dateandtime}) {
-            sortResult.append(group.sorted(by: {$0.dateandtime>$1.dateandtime}))
+        return transactionDateGroups.map { group in
+            group.sorted(by: {$0.dateandtime>$1.dateandtime})
         }
-        return sortResult
     }
     
     var searchgroups: [[Transaction]] {
-        var searchResult: [[Transaction]] = []
         if transactionSearchName.isEmpty {
-            searchResult = sortedgroups
+            return sortedgroups
         } else {
-            sortedgroups.forEach { group in
+            return sortedgroups.map { group in
                 switch filterTag {
                 case 1:
-                    searchResult.append(group.filter({$0.category.contains(transactionSearchName)}))
+                    return group.filter({$0.category.contains(transactionSearchName)})
                 default:
-                    searchResult.append(group.filter({$0.name.contains(transactionSearchName)}))
+                    return group.filter({$0.name.contains(transactionSearchName)})
                 }
             }
         }
-        return searchResult
     }
     
     var body: some View {
