@@ -48,6 +48,12 @@ struct HistoryView: View {
                 switch filterTag {
                 case 1:
                     return group.filter({$0.category.contains(transactionSearchName)})
+                case 2:
+                    return group.filter({String($0.amount).contains(transactionSearchName)})
+                case 3:
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd.MM.yy"
+                    return group.filter({dateFormatter.string(from: $0.dateandtime).contains(transactionSearchName)})
                 default:
                     return group.filter({$0.name.contains(transactionSearchName)})
                 }

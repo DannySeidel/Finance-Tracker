@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SQLite
 
+
 struct Transaction: Hashable, Identifiable {
     var id = UUID().uuidString
     var amount: Double
@@ -19,6 +20,7 @@ struct Transaction: Hashable, Identifiable {
     var endrepeat: Bool
     var repeatenddate: Date
 }
+
 
 struct Amount: Hashable {
     var amount: Double
