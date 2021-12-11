@@ -9,11 +9,12 @@ import SwiftUI
 
 struct SettingsView: View {
     @Binding var showSettingsSheet: Bool
+    @EnvironmentObject var data: Data
     
     var body: some View {
         NavigationView {
             List {
-                NavigationLink(destination: ManageCategoryView()) {
+                NavigationLink(destination: ManageCategoryView().environmentObject(data)) {
                     Text("Manage Categories")
                 }
                 NavigationLink(destination: ManageAnalyticsView()) {
