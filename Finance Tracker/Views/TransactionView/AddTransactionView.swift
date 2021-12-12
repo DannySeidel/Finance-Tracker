@@ -68,6 +68,11 @@ struct AddTransactionView: View {
                                         repeatenddate: repeatEndDateTemp
                                     )
                                 )
+                                if transactionTypeTemp {
+                                    data.database.insertPlusCategory(category: categoryTemp!)
+                                } else {
+                                    data.database.insertMinusCategory(category: categoryTemp!)
+                                }
                             }
                             data.refreshBalance()
                         }

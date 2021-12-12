@@ -30,21 +30,21 @@ struct CategorySelectView: View {
     @Binding var transactionTypeTemp: Bool
     @State private var searchText = ""
     
-    var searchCategories: [String] {
+    var searchCategories: [Category] {
         if searchText.isEmpty {
             return transactionTypeTemp ?
-            data.categoriesplus.sorted(by: {$0<$1}) :
-            data.categoriesminus.sorted(by: {$0<$1})
+            data.database.getPlusCategories() :
+            data.database.getMinusCategories()
         } else {
             return transactionTypeTemp ?
-            data.categoriesplus.filter { $0.contains(searchText) }.sorted(by: {$0<$1}) :
-            data.categoriesminus.filter { $0.contains(searchText) }.sorted(by: {$0<$1})
+            data.database.getPlusCategories().filter { $0.name.contains(searchText) } :
+            data.database.getMinusCategories().filter { $0.name.contains(searchText) }
         }
     }
     
     var body: some View {
         List(searchCategories, id: \.self) { category in
-            CategoryElementView(categroyTemp: $categroyTemp, category: category)
+            CategoryElementView(categroyTemp: $categroyTemp, category: category.name)
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }

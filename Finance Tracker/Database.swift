@@ -282,6 +282,7 @@ class Database {
         do {
             let transactionRows = Array(try db.prepare(transactionTable
                                                         .select(id, amount, name, category, dateandtime)
+                                                        .order(dateandtime.desc)
                                                       ))
             for transactionRow in transactionRows {
                 let transaction = HistoryTransaction.init(row: transactionRow)
