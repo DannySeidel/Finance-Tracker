@@ -89,12 +89,12 @@ extension Category {
     init(row: Row, type: Bool) {
         do {
             if type {
-                try self.category = row.get(Expression<String>("plusCategory"))
+                try self.name = row.get(Expression<String>("plusCategory"))
             } else {
-                try self.category = row.get(Expression<String>("minusCategory"))
+                try self.name = row.get(Expression<String>("minusCategory"))
             }
         } catch {
-            self.category = "fail"
+            self.name = "fail"
             print(error)
         }
     }
@@ -200,6 +200,15 @@ class Database {
         return categories
     }
     
+    func deleteMinusCategory(name: String) {
+        let category = minusCategoryTable.filter(minusCategory == name)
+        do {
+            try db.run(category.delete())
+        } catch {
+            print(error)
+        }
+    }
+    
     func insertPlusCategory(category: String) {
         let insert = plusCategoryTable.insert(
             plusCategory <-  category
@@ -225,6 +234,15 @@ class Database {
             print(error)
         }
         return categories
+    }
+    
+    func deletePlusCategory(name: String) {
+        let category = plusCategoryTable.filter(plusCategory == name)
+        do {
+            try db.run(category.delete())
+        } catch {
+            print(error)
+        }
     }
     
     func insertTransaction(transaction: Transaction) {

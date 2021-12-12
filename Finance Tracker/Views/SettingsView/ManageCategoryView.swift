@@ -19,8 +19,8 @@ struct ManageCategoryView: View {
             return categoryType ? data.database.getPlusCategories() : data.database.getMinusCategories()
         } else {
             return categoryType ?
-            data.database.getPlusCategories().filter { $0.category.contains(searchText) } :
-            data.database.getMinusCategories().filter { $0.category.contains(searchText) }
+            data.database.getPlusCategories().filter { $0.name.contains(searchText) } :
+            data.database.getMinusCategories().filter { $0.name.contains(searchText) }
         }
     }
     
@@ -44,7 +44,7 @@ struct ManageCategoryView: View {
                     
                     List {
                         ForEach(searchCategories, id: \.self) { category in
-                            Text(category.category)
+                            Text(category.name)
                         }
                         .onDelete(perform: onDelete)
                     }
@@ -60,12 +60,12 @@ struct ManageCategoryView: View {
     }
     
     private func onDelete(offsets: IndexSet) {
-        let categoryName = searchCategories[offsets.first!]
+        let category = searchCategories[offsets.first!]
         
         if categoryType {
-            data.categoriesplus.remove(at: data.categoriesplus.firstIndex(of: categoryName.category)!)
+            data.database.deletePlusCategory(name: category.name)
         } else {
-            data.categoriesminus.remove(at: data.categoriesminus.firstIndex(of: categoryName.category)!)
+            data.database.deleteMinusCategory(name: category.name)
         }
     }
 }

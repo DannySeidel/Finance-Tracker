@@ -37,7 +37,7 @@ struct Amount: Hashable {
 
 
 struct Category: Hashable {
-    var category: String
+    var name: String
 }
 
 
