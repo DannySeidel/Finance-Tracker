@@ -114,9 +114,10 @@ class Database {
     
     let nameTable = Table("names")
     
-    let categoryTable = Table("categories")
-    
+    let minusCategoryTable = Table("minusCategories")
     let minusCategory = Expression<String>("minusCategory")
+
+    let plusCategoryTable = Table("plusCategories")
     let plusCategory = Expression<String>("plusCategory")
     
     func connectToDatabase() {
@@ -147,23 +148,28 @@ class Database {
             table.column(name)
         }
         
-        let createCategoryTable = categoryTable.create(ifNotExists: true) { table in
-            table.column(minusCategory)
-            table.column(plusCategory)
+        let createMinusCategoryTable = minusCategoryTable.create(ifNotExists: true) { table in
+            table.column(minusCategory, unique: true)
+//            insertDefaultCategories
+        }
+        
+        let createPlusCategoryTable = plusCategoryTable.create(ifNotExists: true) { table in
+            table.column(plusCategory, unique: true)
 //            insertDefaultCategories
         }
         
         do {
             try db.run(createTransactionTable)
             try db.run(createNameTable)
-            try db.run(createCategoryTable)
+            try db.run(createMinusCategoryTable)
+            try db.run(createPlusCategoryTable)
         } catch {
             print(error)
         }
     }
     
     func insertMinusCategory(category: String) {
-        let insert = categoryTable.insert(
+        let insert = minusCategoryTable.insert(
             minusCategory <- category
         )
         do {
@@ -176,7 +182,10 @@ class Database {
     func getMinusCategories() -> [Category] {
         var categories: [Category] = []
         do {
-            let categoryRows = Array(try db.prepare(categoryTable.select(minusCategory)))
+            let categoryRows = Array(try db.prepare(minusCategoryTable
+                                                        .select(minusCategory)
+                                                        .order(minusCategory.asc)
+                                                   ))
             for categoryRow in categoryRows {
                 let category = Category.init(row: categoryRow)
                 categories.append(category)
@@ -188,7 +197,7 @@ class Database {
     }
     
     func insertPlusCategory(category: String) {
-        let insert = categoryTable.insert(
+        let insert = plusCategoryTable.insert(
             plusCategory <-  category
         )
         do {
@@ -201,7 +210,10 @@ class Database {
     func getPlusCategories() -> [Category] {
         var categories: [Category] = []
         do {
-            let categoryRows = Array(try db.prepare(categoryTable.select(plusCategory)))
+            let categoryRows = Array(try db.prepare(plusCategoryTable
+                                                        .select(plusCategory)
+                                                        .order(plusCategory.asc)
+                                                   ))
             for categoryRow in categoryRows {
                 let category = Category.init(row: categoryRow)
                 categories.append(category)

@@ -10,6 +10,7 @@ import SwiftUI
 struct CustomAlertView<Content:View>: View {
     @EnvironmentObject var data : Data
     @State private var alertText = ""
+    @Binding var categoryType: Bool
     @Binding var addCategoryAlert : Bool
     @Binding var categories: [String]
     
@@ -67,12 +68,13 @@ struct CustomAlertView<Content:View>: View {
     
     private func onAdd() {
         categories.append(alertText)
+        categoryType ? data.database.insertPlusCategory(category: alertText) : data.database.insertMinusCategory(category: alertText)
     }
 }
 
 struct CustomAlertView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomAlertView(addCategoryAlert: .constant(true), categories: .constant([]), content: {})
+        CustomAlertView(categoryType: .constant(false), addCategoryAlert: .constant(true), categories: .constant([]), content: {})
             .preferredColorScheme(.dark)
         
     }

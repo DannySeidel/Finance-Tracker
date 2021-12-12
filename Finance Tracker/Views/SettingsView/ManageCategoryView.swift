@@ -29,7 +29,7 @@ struct ManageCategoryView: View {
     }
     
     var body: some View {
-        CustomAlertView(addCategoryAlert: $addCategoryAlert, categories: categoryType ? $data.categoriesplus : $data.categoriesminus) {
+        CustomAlertView(categoryType: $categoryType, addCategoryAlert: $addCategoryAlert, categories: categoryType ? $data.categoriesplus : $data.categoriesminus) {
             VStack {
                 VStack {
                     Picker("", selection: $categoryType) {
