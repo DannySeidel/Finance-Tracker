@@ -52,6 +52,27 @@ extension Transaction {
     }
 }
 
+
+extension HistoryTransaction {
+    init(row: Row) {
+        do {
+            try self.id = row.get(Expression<String>("id"))
+            try self.amount = row.get(Expression<Double>("amount"))
+            try self.name = row.get(Expression<String>("name"))
+            try self.category = row.get(Expression<String>("category"))
+            try self.dateandtime = row.get(Expression<Date>("dateandtime"))
+        } catch {
+            self.id = ""
+            self.amount = 1.0
+            self.name = ""
+            self.category = ""
+            self.dateandtime = Date.now
+            print(error)
+        }
+    }
+}
+
+
 extension Amount {
     init(row: Row) {
         do {
@@ -149,12 +170,29 @@ class Database {
         }
     }
     
-    func loadAllTransactions() -> [Transaction]  {
+    func getAllTransactions() -> [Transaction] {
         var transactions: [Transaction] = []
         do {
             let transactionRows = Array(try db.prepare(transactionTable))
             for transactionRow in transactionRows {
                 let transaction = Transaction.init(row: transactionRow)
+                transactions.append(transaction)
+            }
+        } catch {
+            print(error)
+        }
+        return transactions
+    }
+    
+    
+    func getTransactionsForHistory() -> [HistoryTransaction] {
+        var transactions: [HistoryTransaction] = []
+        do {
+            let transactionRows = Array(try db.prepare(transactionTable
+                                                        .select(id, amount, name, category, dateandtime)
+                                                      ))
+            for transactionRow in transactionRows {
+                let transaction = HistoryTransaction.init(row: transactionRow)
                 transactions.append(transaction)
             }
         } catch {

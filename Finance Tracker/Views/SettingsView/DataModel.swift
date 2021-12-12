@@ -22,6 +22,15 @@ struct Transaction: Hashable, Identifiable {
 }
 
 
+struct HistoryTransaction: Hashable, Identifiable {
+    var id: String
+    var amount: Double
+    var name: String
+    var category: String
+    var dateandtime: Date
+}
+
+
 struct Amount: Hashable {
     var amount: Double
 }

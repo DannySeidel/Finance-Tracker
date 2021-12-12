@@ -10,12 +10,7 @@ import SwiftUI
 struct TransactionElement: View {
     @EnvironmentObject var data: Data
     
-    var transaction: Transaction
-    
-//    var balance: Double {
-//        let filteredData = data.transactions.filter { transaction.dateandtime >= $0.dateandtime }
-//        return filteredData.map({$0.amount}).reduce(0, +)
-//    }
+    var transaction: HistoryTransaction
     
     var amountcolor: Color {
         transaction.amount > 0 ?
@@ -55,11 +50,11 @@ struct TransactionElement: View {
 struct TransactionElement_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TransactionElement(transaction: Transaction(amount: 9.11, name: "Lunch", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateandtime: Date.now))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)
-            TransactionElement(transaction: Transaction(amount: -15.73, name: "Dinner", category: "", dateandtime: Date.now, repeattag: 0, endrepeat: false, repeatenddate: Date.now))
+            TransactionElement(transaction: HistoryTransaction(id: "53ef26c9-009b-4b41-ba66-99405bf775d9", amount: -15.73, name: "Dinner", category: "", dateandtime: Date.now))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)

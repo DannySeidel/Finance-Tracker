@@ -12,9 +12,9 @@ struct HistoryView: View {
     @State var transactionSearchName = ""
     @State var filterTag = 0
     
-    var transactionDateGroups: [[Transaction]] {
-        var groups: [[Transaction]] = []
-        for transaction in data.database.loadAllTransactions() {
+    var transactionDateGroups: [[HistoryTransaction]] {
+        var groups: [[HistoryTransaction]] = []
+        for transaction in data.database.getTransactionsForHistory() {
             var groupexists = false
             for group in groups {
                 if let firstGroup = group.first, Calendar.current.isDate(
@@ -34,13 +34,13 @@ struct HistoryView: View {
         return groups
     }
     
-    var sortedgroups: [[Transaction]] {
+    var sortedgroups: [[HistoryTransaction]] {
         return transactionDateGroups.map { group in
             group.sorted(by: {$0.dateandtime>$1.dateandtime})
         }
     }
     
-    var searchgroups: [[Transaction]] {
+    var searchgroups: [[HistoryTransaction]] {
         if transactionSearchName.isEmpty {
             return sortedgroups
         } else {
@@ -71,7 +71,7 @@ struct HistoryView: View {
                             
                             Spacer()
                         }
-                        .padding(.leading)
+                        .padding(.leading, 30)
                         ForEach(group, id: \.id) { transaction in
                             TransactionElement(transaction: transaction)
                                 .frame(height: 70)
