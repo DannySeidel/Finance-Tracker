@@ -36,6 +36,11 @@ struct Amount: Hashable {
 }
 
 
+struct Category: Hashable {
+    var category: String
+}
+
+
 class Data: ObservableObject {
     
     var database: Database = {

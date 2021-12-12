@@ -84,6 +84,17 @@ extension Amount {
     }
 }
 
+extension Category {
+    init(row: Row) {
+        do {
+            try self.category = row.get(Expression<String>("category"))
+        } catch {
+            self.category = ""
+            print(error)
+        }
+    }
+}
+
 
 class Database {
     @EnvironmentObject var data: Data
@@ -151,6 +162,56 @@ class Database {
         }
     }
     
+    func insertMinusCategory(category: String) {
+        let insert = categoryTable.insert(
+            minusCategory <- category
+        )
+        do {
+            try db.run(insert)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getMinusCategories() -> [Category] {
+        var categories: [Category] = []
+        do {
+            let categoryRows = Array(try db.prepare(categoryTable.select(minusCategory)))
+            for categoryRow in categoryRows {
+                let category = Category.init(row: categoryRow)
+                categories.append(category)
+            }
+        } catch {
+            print(error)
+        }
+        return categories
+    }
+    
+    func insertPlusCategory(category: String) {
+        let insert = categoryTable.insert(
+            plusCategory <-  category
+        )
+        do {
+            try db.run(insert)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getPlusCategories() -> [Category] {
+        var categories: [Category] = []
+        do {
+            let categoryRows = Array(try db.prepare(categoryTable.select(plusCategory)))
+            for categoryRow in categoryRows {
+                let category = Category.init(row: categoryRow)
+                categories.append(category)
+            }
+        } catch {
+            print(error)
+        }
+        return categories
+    }
+    
     func insertTransaction(transaction: Transaction) {
         let insert = transactionTable.insert(
             id <- transaction.id,
@@ -162,7 +223,6 @@ class Database {
             endrepeat <- transaction.endrepeat,
             repeatenddate <- transaction.repeatenddate
         )
-        
         do {
             try db.run(insert)
         } catch {
@@ -183,7 +243,6 @@ class Database {
         }
         return transactions
     }
-    
     
     func getTransactionsForHistory() -> [HistoryTransaction] {
         var transactions: [HistoryTransaction] = []
