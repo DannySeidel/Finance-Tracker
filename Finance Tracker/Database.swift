@@ -84,12 +84,17 @@ extension Amount {
     }
 }
 
+
 extension Category {
-    init(row: Row) {
+    init(row: Row, type: Bool) {
         do {
-            try self.category = row.get(Expression<String>("category"))
+            if type {
+                try self.category = row.get(Expression<String>("plusCategory"))
+            } else {
+                try self.category = row.get(Expression<String>("minusCategory"))
+            }
         } catch {
-            self.category = ""
+            self.category = "fail"
             print(error)
         }
     }
@@ -183,11 +188,10 @@ class Database {
         var categories: [Category] = []
         do {
             let categoryRows = Array(try db.prepare(minusCategoryTable
-                                                        .select(minusCategory)
                                                         .order(minusCategory.asc)
                                                    ))
             for categoryRow in categoryRows {
-                let category = Category.init(row: categoryRow)
+                let category = Category.init(row: categoryRow, type: false)
                 categories.append(category)
             }
         } catch {
@@ -211,11 +215,10 @@ class Database {
         var categories: [Category] = []
         do {
             let categoryRows = Array(try db.prepare(plusCategoryTable
-                                                        .select(plusCategory)
                                                         .order(plusCategory.asc)
                                                    ))
             for categoryRow in categoryRows {
-                let category = Category.init(row: categoryRow)
+                let category = Category.init(row: categoryRow, type: true)
                 categories.append(category)
             }
         } catch {

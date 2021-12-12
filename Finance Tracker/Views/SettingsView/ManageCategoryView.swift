@@ -14,13 +14,13 @@ struct ManageCategoryView: View {
     @State private var addCategoryAlert = false
     @State private var searchText = ""
     
-    var searchCategories: [String] {
+    var searchCategories: [Category] {
         if searchText.isEmpty {
-            return categoryType ? data.categoriesplus.sorted(by: {$0<$1}) : data.categoriesminus.sorted(by: {$0<$1})
+            return categoryType ? data.database.getPlusCategories() : data.database.getMinusCategories()
         } else {
             return categoryType ?
-            data.categoriesplus.filter { $0.contains(searchText) }.sorted(by: {$0<$1}) :
-                data.categoriesminus.filter { $0.contains(searchText) }.sorted(by: {$0<$1})
+            data.database.getPlusCategories().filter { $0.category.contains(searchText) } :
+            data.database.getMinusCategories().filter { $0.category.contains(searchText) }
         }
     }
     
@@ -44,7 +44,7 @@ struct ManageCategoryView: View {
                     
                     List {
                         ForEach(searchCategories, id: \.self) { category in
-                            Text(category)
+                            Text(category.category)
                         }
                         .onDelete(perform: onDelete)
                     }
@@ -63,9 +63,9 @@ struct ManageCategoryView: View {
         let categoryName = searchCategories[offsets.first!]
         
         if categoryType {
-            data.categoriesplus.remove(at: data.categoriesplus.firstIndex(of: categoryName)!)
+            data.categoriesplus.remove(at: data.categoriesplus.firstIndex(of: categoryName.category)!)
         } else {
-            data.categoriesminus.remove(at: data.categoriesminus.firstIndex(of: categoryName)!)
+            data.categoriesminus.remove(at: data.categoriesminus.firstIndex(of: categoryName.category)!)
         }
     }
 }
