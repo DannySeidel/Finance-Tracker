@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("storeNewCategoriesByDefault") var storeNewCategoriesByDefault: Bool = true
+    
     @Binding var showSettingsSheet: Bool
     
     var body: some View {
         NavigationView {
             List {
+                Toggle("Save new Categories automatically", isOn: $storeNewCategoriesByDefault)
                 NavigationLink(destination: ManageCategoryView()) {
-                    Text("Manage Categories")
+                    Text("Edit saved Categories")
                 }
                 NavigationLink(destination: ManageAnalyticsView()) {
                     Text("Standart Diagram Type")
