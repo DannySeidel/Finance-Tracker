@@ -14,6 +14,8 @@ struct ManageCategoryView: View {
     @State private var addCategoryAlert = false
     @State private var searchText = ""
     
+    @AppStorage("storeNewCategoriesByDefault") var storeNewCategoriesByDefault: Bool = true
+    
     var searchCategories: [Category] {
         if searchText.isEmpty {
             return categoryType ? data.database.getPlusCategories() : data.database.getMinusCategories()
@@ -32,6 +34,11 @@ struct ManageCategoryView: View {
         CustomAlertView(categoryType: $categoryType, addCategoryAlert: $addCategoryAlert, categories: categoryType ? $data.categoriesplus : $data.categoriesminus) {
             VStack {
                 VStack {
+                    Toggle("Add new Categories automatically", isOn: $storeNewCategoriesByDefault)
+                        .padding(.leading)
+                        .padding(.trailing)
+                        .padding(.bottom, 5)
+                    
                     Picker("", selection: $categoryType) {
                         Label("Expense", systemImage: "minus")
                             .tag(false)

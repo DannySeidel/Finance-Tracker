@@ -21,6 +21,8 @@ struct AddTransactionView: View {
     
     @State private var transactionTypeTemp = false
     
+    @AppStorage("storeNewCategoriesByDefault") var storeNewCategoriesByDefault = true
+    
     var factor: Double {
         transactionTypeTemp ? 1 : -1
     }
@@ -68,10 +70,8 @@ struct AddTransactionView: View {
                                         repeatenddate: repeatEndDateTemp
                                     )
                                 )
-                                if transactionTypeTemp {
-                                    data.database.insertPlusCategory(category: categoryTemp!)
-                                } else {
-                                    data.database.insertMinusCategory(category: categoryTemp!)
+                                if storeNewCategoriesByDefault {
+                                    transactionTypeTemp ? data.database.insertPlusCategory(category: categoryTemp!) : data.database.insertMinusCategory(category: categoryTemp!)
                                 }
                             }
                             data.refreshBalance()
