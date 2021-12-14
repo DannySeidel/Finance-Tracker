@@ -64,14 +64,14 @@ struct AddTransactionView: View {
                                         amount: amountTemp! * factor,
                                         name: nameTemp!,
                                         category: categoryTemp!,
-                                        dateandtime: dateAndTimeTemp,
-                                        repeattag: repeatTagTemp,
-                                        endrepeat: endRepeatTemp,
-                                        repeatenddate: repeatEndDateTemp
+                                        dateAndTime: dateAndTimeTemp,
+                                        repeatTag: repeatTagTemp,
+                                        endRepeat: endRepeatTemp,
+                                        repeatEndDate: repeatEndDateTemp
                                     )
                                 )
                                 if storeNewCategoriesByDefault {
-                                    transactionTypeTemp ? data.database.insertPlusCategory(category: categoryTemp!) : data.database.insertMinusCategory(category: categoryTemp!)
+                                    transactionTypeTemp ? data.database.insertIncomeCategory(newCategory: categoryTemp!) : data.database.insertExpenseCategory(newCategory: categoryTemp!)
                                 }
                             }
                             data.refreshBalance()

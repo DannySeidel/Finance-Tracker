@@ -25,7 +25,7 @@ struct HistoryView: View {
                 case 3:
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "dd.MM.yy"
-                    return group.filter({dateFormatter.string(from: $0.dateandtime).contains(transactionSearchName)})
+                    return group.filter({dateFormatter.string(from: $0.dateAndTime).contains(transactionSearchName)})
                 default:
                     return group.filter({$0.name.contains(transactionSearchName)})
                 }
@@ -39,7 +39,7 @@ struct HistoryView: View {
                 if group.first != nil {
                     VStack {
                         HStack {
-                            Text(group.first!.dateandtime, style: .date)
+                            Text(group.first!.dateAndTime, style: .date)
                             
                             Spacer()
                         }

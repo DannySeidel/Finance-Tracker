@@ -36,7 +36,7 @@ struct TransactionElement: View {
                     
                     Spacer()
                     
-                    Text(transaction.dateandtime, style: .time)
+                    Text(transaction.dateAndTime, style: .time)
                 }
                 .foregroundColor(Color(.systemGray))
             }
@@ -50,11 +50,11 @@ struct TransactionElement: View {
 struct TransactionElement_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateandtime: Date.now))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)
-            TransactionElement(transaction: HistoryTransaction(id: "53ef26c9-009b-4b41-ba66-99405bf775d9", amount: -15.73, name: "Dinner", category: "", dateandtime: Date.now))
+            TransactionElement(transaction: HistoryTransaction(id: "53ef26c9-009b-4b41-ba66-99405bf775d9", amount: -15.73, name: "Dinner", category: "", dateAndTime: Date.now))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
                 .frame(width: 400, height: 75)

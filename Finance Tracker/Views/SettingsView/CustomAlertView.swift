@@ -12,7 +12,6 @@ struct CustomAlertView<Content:View>: View {
     @State private var alertText = ""
     @Binding var categoryType: Bool
     @Binding var addCategoryAlert : Bool
-    @Binding var categories: [String]
     
     @ViewBuilder var content : () -> Content
     
@@ -67,14 +66,13 @@ struct CustomAlertView<Content:View>: View {
     }
     
     private func onAdd() {
-        categories.append(alertText)
-        categoryType ? data.database.insertPlusCategory(category: alertText) : data.database.insertMinusCategory(category: alertText)
+        categoryType ? data.database.insertIncomeCategory(newCategory: alertText) : data.database.insertExpenseCategory(newCategory: alertText)
     }
 }
 
 struct CustomAlertView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomAlertView(categoryType: .constant(false), addCategoryAlert: .constant(true), categories: .constant([]), content: {})
+        CustomAlertView(categoryType: .constant(false), addCategoryAlert: .constant(true), content: {})
             .preferredColorScheme(.dark)
         
     }

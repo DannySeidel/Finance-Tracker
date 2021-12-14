@@ -15,10 +15,10 @@ struct Transaction: Hashable, Identifiable {
     var amount: Double
     var name: String
     var category: String
-    var dateandtime: Date
-    var repeattag: Int
-    var endrepeat: Bool
-    var repeatenddate: Date
+    var dateAndTime: Date
+    var repeatTag: Int
+    var endRepeat: Bool
+    var repeatEndDate: Date
 }
 
 
@@ -27,7 +27,7 @@ struct HistoryTransaction: Hashable, Identifiable {
     var amount: Double
     var name: String
     var category: String
-    var dateandtime: Date
+    var dateAndTime: Date
 }
 
 
@@ -69,7 +69,7 @@ class Data: ObservableObject {
             var groupexists = false
             for group in groups {
                 if let firstGroup = group.first, Calendar.current.isDate(
-                    firstGroup.dateandtime, inSameDayAs: transaction.dateandtime
+                    firstGroup.dateAndTime, inSameDayAs: transaction.dateAndTime
                 ) {
                     let groupIndex = groups.firstIndex(of: group)!
                     var newGroup = groups[groupIndex]
@@ -85,7 +85,7 @@ class Data: ObservableObject {
         transactionGroups = groups
     }
     
-    @Published var categoriesminus = [
+    @Published var categoriesExpense = [
         "Car",
         "Clothes",
         "Computers",
@@ -101,7 +101,7 @@ class Data: ObservableObject {
         "Transport"
     ]
     
-    @Published var categoriesplus = [
+    @Published var categoriesIncome = [
         "Business Income",
         "Salary",
         "Stock Market",

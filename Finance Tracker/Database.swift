@@ -34,19 +34,19 @@ extension Transaction {
             try self.amount = row.get(Expression<Double>("amount"))
             try self.name = row.get(Expression<String>("name"))
             try self.category = row.get(Expression<String>("category"))
-            try self.dateandtime = row.get(Expression<Date>("dateandtime"))
-            try self.repeattag = row.get(Expression<Int>("repeattag"))
-            try self.endrepeat = row.get(Expression<Bool>("endrepeat"))
-            try self.repeatenddate = row.get(Expression<Date>("repeatenddate"))
+            try self.dateAndTime = row.get(Expression<Date>("dateAndTime"))
+            try self.repeatTag = row.get(Expression<Int>("repeatTag"))
+            try self.endRepeat = row.get(Expression<Bool>("endRepeat"))
+            try self.repeatEndDate = row.get(Expression<Date>("repeatEndDate"))
         } catch {
             self.id = ""
             self.amount = 1.0
             self.name = ""
             self.category = ""
-            self.dateandtime = Date.now
-            self.repeattag = 0
-            self.endrepeat = false
-            self.repeatenddate = Date.now
+            self.dateAndTime = Date.now
+            self.repeatTag = 0
+            self.endRepeat = false
+            self.repeatEndDate = Date.now
             print(error)
         }
     }
@@ -60,13 +60,13 @@ extension HistoryTransaction {
             try self.amount = row.get(Expression<Double>("amount"))
             try self.name = row.get(Expression<String>("name"))
             try self.category = row.get(Expression<String>("category"))
-            try self.dateandtime = row.get(Expression<Date>("dateandtime"))
+            try self.dateAndTime = row.get(Expression<Date>("dateAndTime"))
         } catch {
             self.id = ""
             self.amount = 1.0
             self.name = ""
             self.category = ""
-            self.dateandtime = Date.now
+            self.dateAndTime = Date.now
             print(error)
         }
     }
@@ -86,13 +86,9 @@ extension Amount {
 
 
 extension Category {
-    init(row: Row, type: Bool) {
+    init(row: Row) {
         do {
-            if type {
-                try self.name = row.get(Expression<String>("plusCategory"))
-            } else {
-                try self.name = row.get(Expression<String>("minusCategory"))
-            }
+            try self.name = row.get(Expression<String>("category"))
         } catch {
             self.name = "fail"
             print(error)
@@ -112,22 +108,19 @@ class Database {
     let amount = Expression<Double>("amount")
     let name = Expression<String>("name")
     let category = Expression<String>("category")
-    let dateandtime = Expression<Date>("dateandtime")
-    let repeattag = Expression<Int>("repeattag")
-    let endrepeat = Expression<Bool>("endrepeat")
-    let repeatenddate = Expression<Date>("repeatenddate")
+    let dateAndTime = Expression<Date>("dateAndTime")
+    let repeatTag = Expression<Int>("repeatTag")
+    let endRepeat = Expression<Bool>("endRepeat")
+    let repeatEndDate = Expression<Date>("repeatEndDate")
     
     let nameTable = Table("names")
     
-    let minusCategoryTable = Table("minusCategories")
-    let minusCategory = Expression<String>("minusCategory")
+    let expenseCategoryTable = Table("expenseCategories")
 
-    let plusCategoryTable = Table("plusCategories")
-    let plusCategory = Expression<String>("plusCategory")
+    let incomeCategoryTable = Table("incomeCategories")
     
     func connectToDatabase() {
         do {
-            debugPrint("sucess")
             let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
             try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
             let db = try Connection(path.appendingPathComponent("database").appendingPathExtension("sqlite3").absoluteString)
@@ -143,39 +136,37 @@ class Database {
             table.column(amount)
             table.column(name)
             table.column(category)
-            table.column(dateandtime)
-            table.column(repeattag)
-            table.column(endrepeat)
-            table.column(repeatenddate)
+            table.column(dateAndTime)
+            table.column(repeatTag)
+            table.column(endRepeat)
+            table.column(repeatEndDate)
         }
             
         let createNameTable = nameTable.create(ifNotExists: true) { table in
-            table.column(name)
+            table.column(name, unique: true)
         }
         
-        let createMinusCategoryTable = minusCategoryTable.create(ifNotExists: true) { table in
-            table.column(minusCategory, unique: true)
-//            insertDefaultCategories
+        let createExpenseCategoryTable = expenseCategoryTable.create(ifNotExists: true) { table in
+            table.column(category, unique: true)
         }
         
-        let createPlusCategoryTable = plusCategoryTable.create(ifNotExists: true) { table in
-            table.column(plusCategory, unique: true)
-//            insertDefaultCategories
+        let createIncomeCategoryTable = incomeCategoryTable.create(ifNotExists: true) { table in
+            table.column(category, unique: true)
         }
         
         do {
             try db.run(createTransactionTable)
             try db.run(createNameTable)
-            try db.run(createMinusCategoryTable)
-            try db.run(createPlusCategoryTable)
+            try db.run(createExpenseCategoryTable)
+            try db.run(createIncomeCategoryTable)
         } catch {
             print(error)
         }
     }
     
-    func insertMinusCategory(category: String) {
-        let insert = minusCategoryTable.insert(
-            minusCategory <- category
+    func insertExpenseCategory(newCategory: String) {
+        let insert = expenseCategoryTable.insert(
+            category <- newCategory
         )
         do {
             try db.run(insert)
@@ -184,14 +175,14 @@ class Database {
         }
     }
     
-    func getMinusCategories() -> [Category] {
+    func getExpenseCategories() -> [Category] {
         var categories: [Category] = []
         do {
-            let categoryRows = Array(try db.prepare(minusCategoryTable
-                                                        .order(minusCategory.asc)
+            let categoryRows = Array(try db.prepare(expenseCategoryTable
+                                                        .order(category.asc)
                                                    ))
             for categoryRow in categoryRows {
-                let category = Category.init(row: categoryRow, type: false)
+                let category = Category.init(row: categoryRow)
                 categories.append(category)
             }
         } catch {
@@ -200,8 +191,8 @@ class Database {
         return categories
     }
     
-    func deleteMinusCategory(name: String) {
-        let category = minusCategoryTable.filter(minusCategory == name)
+    func deleteExpenseCategory(name: String) {
+        let category = expenseCategoryTable.filter(category == name)
         do {
             try db.run(category.delete())
         } catch {
@@ -209,9 +200,9 @@ class Database {
         }
     }
     
-    func insertPlusCategory(category: String) {
-        let insert = plusCategoryTable.insert(
-            plusCategory <-  category
+    func insertIncomeCategory(newCategory: String) {
+        let insert = incomeCategoryTable.insert(
+            category <-  newCategory
         )
         do {
             try db.run(insert)
@@ -220,14 +211,14 @@ class Database {
         }
     }
     
-    func getPlusCategories() -> [Category] {
+    func getIncomeCategories() -> [Category] {
         var categories: [Category] = []
         do {
-            let categoryRows = Array(try db.prepare(plusCategoryTable
-                                                        .order(plusCategory.asc)
+            let categoryRows = Array(try db.prepare(incomeCategoryTable
+                                                        .order(category.asc)
                                                    ))
             for categoryRow in categoryRows {
-                let category = Category.init(row: categoryRow, type: true)
+                let category = Category.init(row: categoryRow)
                 categories.append(category)
             }
         } catch {
@@ -236,8 +227,8 @@ class Database {
         return categories
     }
     
-    func deletePlusCategory(name: String) {
-        let category = plusCategoryTable.filter(plusCategory == name)
+    func deleteIncomeCategory(name: String) {
+        let category = incomeCategoryTable.filter(category == name)
         do {
             try db.run(category.delete())
         } catch {
@@ -251,10 +242,10 @@ class Database {
             amount <- transaction.amount,
             name <- transaction.name,
             category <- transaction.category,
-            dateandtime <- transaction.dateandtime,
-            repeattag <- transaction.repeattag,
-            endrepeat <- transaction.endrepeat,
-            repeatenddate <- transaction.repeatenddate
+            dateAndTime <- transaction.dateAndTime,
+            repeatTag <- transaction.repeatTag,
+            endRepeat <- transaction.endRepeat,
+            repeatEndDate <- transaction.repeatEndDate
         )
         do {
             try db.run(insert)
@@ -281,8 +272,8 @@ class Database {
         var transactions: [HistoryTransaction] = []
         do {
             let transactionRows = Array(try db.prepare(transactionTable
-                                                        .select(id, amount, name, category, dateandtime)
-                                                        .order(dateandtime.desc)
+                                                        .select(id, amount, name, category, dateAndTime)
+                                                        .order(dateAndTime.desc)
                                                       ))
             for transactionRow in transactionRows {
                 let transaction = HistoryTransaction.init(row: transactionRow)
@@ -309,7 +300,7 @@ class Database {
         do {
             let amountRows = Array(try db.prepare(transactionTable
                                                             .select(amount)
-                                                            .filter(Date().startOfMonth()...Date().endOfMonth() ~= dateandtime)
+                                                            .filter(Date().startOfMonth()...Date().endOfMonth() ~= dateAndTime)
                                                          ))
             for amountRow in amountRows {
                 let amount  = Amount.init(row: amountRow)

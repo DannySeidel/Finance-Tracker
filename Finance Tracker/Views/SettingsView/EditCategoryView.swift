@@ -16,11 +16,11 @@ struct EditCategoryView: View {
     
     var searchCategories: [Category] {
         if searchText.isEmpty {
-            return categoryType ? data.database.getPlusCategories() : data.database.getMinusCategories()
+            return categoryType ? data.database.getIncomeCategories() : data.database.getExpenseCategories()
         } else {
             return categoryType ?
-            data.database.getPlusCategories().filter { $0.name.contains(searchText) } :
-            data.database.getMinusCategories().filter { $0.name.contains(searchText) }
+            data.database.getIncomeCategories().filter { $0.name.contains(searchText) } :
+            data.database.getExpenseCategories().filter { $0.name.contains(searchText) }
         }
     }
     
@@ -29,7 +29,7 @@ struct EditCategoryView: View {
     }
     
     var body: some View {
-        CustomAlertView(categoryType: $categoryType, addCategoryAlert: $addCategoryAlert, categories: categoryType ? $data.categoriesplus : $data.categoriesminus) {
+        CustomAlertView(categoryType: $categoryType, addCategoryAlert: $addCategoryAlert) {
             VStack {
                 VStack {
                     Picker("", selection: $categoryType) {
@@ -63,9 +63,9 @@ struct EditCategoryView: View {
         let category = searchCategories[offsets.first!]
         
         if categoryType {
-            data.database.deletePlusCategory(name: category.name)
+            data.database.deleteIncomeCategory(name: category.name)
         } else {
-            data.database.deleteMinusCategory(name: category.name)
+            data.database.deleteExpenseCategory(name: category.name)
         }
     }
 }
