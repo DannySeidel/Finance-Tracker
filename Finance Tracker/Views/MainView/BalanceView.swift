@@ -37,7 +37,7 @@ struct BalanceView: View {
                     Image(systemName: "shift.fill")
                         .rotationEffect(.degrees(rotation))
                 }
-                Text(String(data.balance * factor))
+                Text(String(String(format: "%.2f", data.balance * factor)))
                     .bold()
                 Image(systemName: "eurosign.circle")
                 

@@ -34,17 +34,11 @@ struct HistoryView: View {
         return groups
     }
     
-    var sortedgroups: [[HistoryTransaction]] {
-        return transactionDateGroups.map { group in
-            group.sorted(by: {$0.dateandtime>$1.dateandtime})
-        }
-    }
-    
     var searchgroups: [[HistoryTransaction]] {
         if transactionSearchName.isEmpty {
-            return sortedgroups
+            return transactionDateGroups
         } else {
-            return sortedgroups.map { group in
+            return transactionDateGroups.map { group in
                 switch filterTag {
                 case 1:
                     return group.filter({$0.category.contains(transactionSearchName)})
@@ -75,6 +69,13 @@ struct HistoryView: View {
                         ForEach(group, id: \.id) { transaction in
                             TransactionElement(transaction: transaction)
                                 .frame(height: 70)
+                                .contextMenu {
+                                    Button {
+                                        onDelete(id: transaction.id)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
                         }
                     }
                     .padding(.top)
@@ -87,7 +88,7 @@ struct HistoryView: View {
             trailing:
                 HStack {
                     Text("Filter by:")
-                        .offset(y: -1.5)
+                        .offset(y: -1)
                     Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
                         Text("Name").tag(0)
                         Text("Category").tag(1)
@@ -97,6 +98,11 @@ struct HistoryView: View {
                     .pickerStyle(MenuPickerStyle())
                 }
         )
+    }
+    
+    private func onDelete(id: String) {
+        data.database.deleteTransaction(uuid: id)
+        data.refreshBalance()
     }
 }
 

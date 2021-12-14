@@ -294,6 +294,15 @@ class Database {
         return transactions
     }
     
+    func deleteTransaction(uuid: String) {
+        let transaction = transactionTable.filter(id == uuid)
+        do {
+            try db.run(transaction.delete())
+        } catch {
+            print(error)
+        }
+    }
+    
     func getMonthlyBalance() -> Double {
         var monthlyBalance: Double
         var amounts: [Amount] = []
