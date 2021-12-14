@@ -29,7 +29,7 @@ struct EditCategoryView: View {
     }
     
     var body: some View {
-        CustomAlertView(categoryType: $categoryType, addCategoryAlert: $addCategoryAlert) {
+        CustomAlertView(categoryType: $categoryType, addCategoryAlert: $addCategoryAlert, categories: categoryType ? $data.categoriesIncome : $data.categoriesExpense) {
             VStack {
                 VStack {
                     Picker("", selection: $categoryType) {
