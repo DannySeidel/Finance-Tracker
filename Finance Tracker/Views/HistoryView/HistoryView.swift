@@ -12,7 +12,7 @@ struct HistoryView: View {
     @State var transactionSearchName = ""
     @State var filterTag = 0
     
-    var transactionDateGroups: [[HistoryTransaction]] {
+    var searchGroups: [[HistoryTransaction]] {
         var groups: [[HistoryTransaction]] = []
         for transaction in data.database.getTransactionsForHistory() {
             var groupexists = false
@@ -31,14 +31,10 @@ struct HistoryView: View {
                 groups.append([transaction])
             }
         }
-        return groups
-    }
-    
-    var searchgroups: [[HistoryTransaction]] {
         if transactionSearchName.isEmpty {
-            return transactionDateGroups
+            return groups
         } else {
-            return transactionDateGroups.map { group in
+            return groups.map { group in
                 switch filterTag {
                 case 1:
                     return group.filter({$0.category.contains(transactionSearchName)})
@@ -57,7 +53,7 @@ struct HistoryView: View {
     
     var body: some View {
         ScrollView {
-            ForEach(searchgroups, id: \.first?.id) { group in
+            ForEach(searchGroups, id: \.first?.id) { group in
                 if group.first != nil {
                     VStack {
                         HStack {
