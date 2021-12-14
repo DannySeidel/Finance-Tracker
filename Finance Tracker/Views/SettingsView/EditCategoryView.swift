@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct ManageCategoryView: View {
+struct EditCategoryView: View {
     @EnvironmentObject var data: Data
     @State private var categoryType = false
     @State private var addCategoryAlert = false
@@ -73,7 +73,7 @@ struct ManageCategoryView: View {
 struct ManageCategoryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ManageCategoryView()
+            EditCategoryView()
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
         }

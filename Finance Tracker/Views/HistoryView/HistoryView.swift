@@ -85,13 +85,17 @@ struct HistoryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
             trailing:
-                Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
-                    Text("Name").tag(0)
-                    Text("Category").tag(1)
-                    Text("Amount").tag(2)
-                    Text("Date").tag(3)
+                HStack {
+                    Text("Filter by:")
+                        .offset(y: -1.5)
+                    Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
+                        Text("Name").tag(0)
+                        Text("Category").tag(1)
+                        Text("Amount").tag(2)
+                        Text("Date").tag(3)
+                    }
+                    .pickerStyle(MenuPickerStyle())
                 }
-                .pickerStyle(MenuPickerStyle())
         )
     }
 }

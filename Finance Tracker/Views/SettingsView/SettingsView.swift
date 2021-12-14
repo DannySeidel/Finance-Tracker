@@ -15,8 +15,8 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                Toggle("Save new Categories automatically", isOn: $storeNewCategoriesByDefault)
-                NavigationLink(destination: ManageCategoryView()) {
+                Toggle("Save new Categories", isOn: $storeNewCategoriesByDefault)
+                NavigationLink(destination: EditCategoryView()) {
                     Text("Edit saved Categories")
                 }
                 NavigationLink(destination: ManageAnalyticsView()) {
