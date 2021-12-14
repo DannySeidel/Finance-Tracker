@@ -13,28 +13,10 @@ struct HistoryView: View {
     @State var filterTag = 0
     
     var searchGroups: [[HistoryTransaction]] {
-        var groups: [[HistoryTransaction]] = []
-        for transaction in data.database.getTransactionsForHistory() {
-            var groupexists = false
-            for group in groups {
-                if let firstGroup = group.first, Calendar.current.isDate(
-                    firstGroup.dateandtime, inSameDayAs: transaction.dateandtime
-                ) {
-                    let groupIndex = groups.firstIndex(of: group)!
-                    var newGroup = groups[groupIndex]
-                    newGroup.append(transaction)
-                    groups[groupIndex] = newGroup
-                    groupexists = true
-                }
-            }
-            if !groupexists {
-                groups.append([transaction])
-            }
-        }
         if transactionSearchName.isEmpty {
-            return groups
+            return data.transactionGroups
         } else {
-            return groups.map { group in
+            return data.transactionGroups.map { group in
                 switch filterTag {
                 case 1:
                     return group.filter({$0.category.contains(transactionSearchName)})
@@ -98,6 +80,7 @@ struct HistoryView: View {
     
     private func onDelete(id: String) {
         data.database.deleteTransaction(uuid: id)
+        data.refreshTransactionGroups()
         data.refreshBalance()
     }
 }

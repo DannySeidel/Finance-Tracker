@@ -51,11 +51,38 @@ class Data: ObservableObject {
     }()
     
     @Published var balance = 0.0
+    
+    @Published var transactionGroups: [[HistoryTransaction]] = [[]]
 
-    init() {refreshBalance()}
+    init() {
+        refreshBalance()
+        refreshTransactionGroups()
+    }
     
     func refreshBalance() {
         balance = database.getMonthlyBalance()
+    }
+    
+    func refreshTransactionGroups() {
+        var groups: [[HistoryTransaction]] = []
+        for transaction in database.getTransactionsForHistory() {
+            var groupexists = false
+            for group in groups {
+                if let firstGroup = group.first, Calendar.current.isDate(
+                    firstGroup.dateandtime, inSameDayAs: transaction.dateandtime
+                ) {
+                    let groupIndex = groups.firstIndex(of: group)!
+                    var newGroup = groups[groupIndex]
+                    newGroup.append(transaction)
+                    groups[groupIndex] = newGroup
+                    groupexists = true
+                }
+            }
+            if !groupexists {
+                groups.append([transaction])
+            }
+        }
+        transactionGroups = groups
     }
     
     @Published var categoriesminus = [

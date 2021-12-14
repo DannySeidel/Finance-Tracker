@@ -75,6 +75,7 @@ struct AddTransactionView: View {
                                 }
                             }
                             data.refreshBalance()
+                            data.refreshTransactionGroups()
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
