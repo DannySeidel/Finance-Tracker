@@ -13,7 +13,7 @@
 		2807A801272EF6D00052F3E3 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A800272EF6D00052F3E3 /* InfoView.swift */; };
 		2807A803272EF6F90052F3E3 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A802272EF6F90052F3E3 /* DateView.swift */; };
 		28273C00275522420027FB2B /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28273BFF275522420027FB2B /* Database.swift */; };
-		28359A912732DD3F00C984A4 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28359A902732DD3F00C984A4 /* DataModel.swift */; };
+		28284228276A8A9200837F72 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28284227276A8A9200837F72 /* DataModel.swift */; };
 		284722F6273D6D2800D76C1A /* EditCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284722F5273D6D2800D76C1A /* EditCategoryView.swift */; };
 		284722F8273D6DFF00D76C1A /* ManageAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284722F7273D6DFF00D76C1A /* ManageAnalyticsView.swift */; };
 		2847CA72272D652200328103 /* Finance_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2847CA71272D652200328103 /* Finance_TrackerApp.swift */; };
@@ -59,7 +59,7 @@
 		2807A800272EF6D00052F3E3 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		2807A802272EF6F90052F3E3 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		28273BFF275522420027FB2B /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
-		28359A902732DD3F00C984A4 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = Views/SettingsView/DataModel.swift; sourceTree = "<group>"; };
+		28284227276A8A9200837F72 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		284722F5273D6D2800D76C1A /* EditCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryView.swift; sourceTree = "<group>"; };
 		284722F7273D6DFF00D76C1A /* ManageAnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAnalyticsView.swift; sourceTree = "<group>"; };
 		2847CA6E272D652200328103 /* Finance Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Finance Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,7 +166,7 @@
 			children = (
 				2847CA71272D652200328103 /* Finance_TrackerApp.swift */,
 				2847CA9B272D656300328103 /* Views */,
-				28359A902732DD3F00C984A4 /* DataModel.swift */,
+				28284227276A8A9200837F72 /* DataModel.swift */,
 				28273BFF275522420027FB2B /* Database.swift */,
 				2847CA75272D652300328103 /* Assets.xcassets */,
 				2847CA77272D652300328103 /* Preview Content */,
@@ -380,9 +380,9 @@
 				28B31769272FFC2600A848F0 /* MapView.swift in Sources */,
 				2847CAA3272D76F100328103 /* BalanceView.swift in Sources */,
 				2807A801272EF6D00052F3E3 /* InfoView.swift in Sources */,
+				28284228276A8A9200837F72 /* DataModel.swift in Sources */,
 				284722F6273D6D2800D76C1A /* EditCategoryView.swift in Sources */,
 				2874A94E274BDAF3006C51B2 /* CustomAlertView.swift in Sources */,
-				28359A912732DD3F00C984A4 /* DataModel.swift in Sources */,
 				285A46DA2732CD8C00A3996A /* TransactionElement.swift in Sources */,
 				28C7CC02272DD0A100D0FF33 /* AnalyticsFrameView.swift in Sources */,
 				2807A7F5272EB2E60052F3E3 /* AddTransactionView.swift in Sources */,
