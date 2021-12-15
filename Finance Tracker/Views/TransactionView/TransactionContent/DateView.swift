@@ -43,13 +43,11 @@ struct DateView: View {
                     .pickerStyle(.segmented)
                     .padding(.leading)
                 }
-                
                 if repeatTag != 0 {
                     Divider()
                     
                     HStack {
                         Text("End Repeat")
-                                                
                         if endRepeat == true {
                             DatePicker("", selection: $repeatEndDate, in: Date()..., displayedComponents: .date)
                                 .padding(-2)

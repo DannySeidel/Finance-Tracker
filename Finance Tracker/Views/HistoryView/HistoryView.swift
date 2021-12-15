@@ -61,7 +61,7 @@ struct HistoryView: View {
             }
             .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("History")
         .navigationBarItems(
             trailing:
                 HStack {

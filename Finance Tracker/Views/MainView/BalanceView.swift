@@ -45,7 +45,7 @@ struct BalanceView: View {
             .font(.system(size: 42))
             .foregroundColor(balanceColor)
         }
-        .frame(height: 125)
+        .frame(height: 140)
     }
 }
 
