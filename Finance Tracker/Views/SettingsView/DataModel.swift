@@ -47,6 +47,7 @@ class Data: ObservableObject {
         var instance = Database()
         instance.connectToDatabase()
         instance.createTables()
+        instance.insertDefaults()
         return instance
     }()
     

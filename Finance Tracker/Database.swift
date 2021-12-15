@@ -98,6 +98,29 @@ extension Category {
 
 
 class Database {
+    var categoriesExpense = [
+        "Car",
+        "Clothes",
+        "Computers",
+        "Entertainment",
+        "Freetime",
+        "Food & Drinks",
+        "Gifts",
+        "Groceries",
+        "Health",
+        "Household",
+        "Rent",
+        "Restaurants & Cafes",
+        "Transport"
+    ]
+    
+    var categoriesIncome = [
+        "Business Income",
+        "Salary",
+        "Stock Market",
+        "Tax Refunds"
+    ]
+    
     @EnvironmentObject var data: Data
     
     var db: Connection!
@@ -161,6 +184,15 @@ class Database {
             try db.run(createIncomeCategoryTable)
         } catch {
             print(error)
+        }
+    }
+    
+    func insertDefaults() {
+        categoriesExpense.forEach { category in
+            insertExpenseCategory(newCategory: category)
+        }
+        categoriesIncome.forEach { category in
+            insertIncomeCategory(newCategory: category)
         }
     }
     
