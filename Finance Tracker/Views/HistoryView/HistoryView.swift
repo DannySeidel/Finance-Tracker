@@ -11,6 +11,7 @@ struct HistoryView: View {
     @EnvironmentObject var data: Data
     @State var transactionSearchName = ""
     @State var filterTag = 0
+    @State var showingSheet = false
     
     var searchGroups: [[HistoryTransaction]] {
         if transactionSearchName.isEmpty {
@@ -49,6 +50,11 @@ struct HistoryView: View {
                                 .frame(height: 70)
                                 .contextMenu {
                                     Button {
+                                        showingSheet.toggle()
+                                    } label: {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
+                                    Button(role: .destructive) {
                                         onDelete(id: transaction.id)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
@@ -60,6 +66,9 @@ struct HistoryView: View {
                 }
             }
             .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
+        }
+        .sheet(isPresented: $showingSheet) {
+            EditTransactionView(showingSheet: $showingSheet, transactionTypeTemp: false)
         }
         .navigationTitle("History")
         .navigationBarItems(
@@ -88,7 +97,7 @@ struct HistoryView: View {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HistoryView()
+            HistoryView(showingSheet: false)
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)
         }

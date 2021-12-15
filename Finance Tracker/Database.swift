@@ -286,6 +286,21 @@ class Database {
         }
     }
     
+    func getTransactionFromId(uuid: String) -> Transaction {
+        var transaction: Transaction = Transaction(amount: 1.0, name: "", category: "", dateAndTime: Date(), repeatTag: 0, endRepeat: true, repeatEndDate: Date())
+        do {
+            let transactionRows = Array(try db.prepare(transactionTable
+                                                        .filter(uuid == id)
+                                                      ))
+            for transactionRow in transactionRows {
+                transaction = Transaction.init(row: transactionRow)
+            }
+        } catch {
+            print(error)
+        }
+        return transaction
+    }
+    
     func getAllTransactions() -> [Transaction] {
         var transactions: [Transaction] = []
         do {
