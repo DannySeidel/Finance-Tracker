@@ -58,7 +58,6 @@ struct AddTransactionView: View {
                     trailing:
                         Button("Add") {
                             if (amountTemp != nil) && (nameTemp != nil) && (categoryTemp != nil) {
-                                showTransactionSheet.toggle()
                                 data.database.insertTransaction(
                                     transaction: Transaction(
                                         amount: amountTemp! * factor,
@@ -76,6 +75,7 @@ struct AddTransactionView: View {
                             }
                             data.refreshBalance()
                             data.refreshTransactionGroups()
+                            showTransactionSheet.toggle()
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)

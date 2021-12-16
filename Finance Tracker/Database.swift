@@ -196,6 +196,7 @@ class Database {
         }
     }
     
+    
     func insertExpenseCategory(newCategory: String) {
         let insert = expenseCategoryTable.insert(
             category <- newCategory
@@ -231,6 +232,7 @@ class Database {
             print(error)
         }
     }
+    
     
     func insertIncomeCategory(newCategory: String) {
         let insert = incomeCategoryTable.insert(
@@ -268,6 +270,7 @@ class Database {
         }
     }
     
+    
     func insertTransaction(transaction: Transaction) {
         let insert = transactionTable.insert(
             id <- transaction.id,
@@ -299,6 +302,23 @@ class Database {
             print(error)
         }
         return transaction
+    }
+    
+    func updateTransaction(transaction: Transaction) {
+        let updateTransaction = transactionTable.filter(id == transaction.id)
+        do {
+            try db.run(updateTransaction.update(
+                amount <- transaction.amount,
+                name <- transaction.name,
+                category <- transaction.category,
+                dateAndTime <- transaction.dateAndTime,
+                repeatTag <- transaction.repeatTag,
+                endRepeat <- transaction.endRepeat,
+                repeatEndDate <- transaction.repeatEndDate
+            ))
+        } catch {
+            print(error)
+        }
     }
     
     func getAllTransactions() -> [Transaction] {

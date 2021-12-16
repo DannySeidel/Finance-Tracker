@@ -12,6 +12,8 @@ struct HistoryView: View {
     @State var transactionSearchName = ""
     @State var filterTag = 0
     @State var showingSheet = false
+    @State var uuid = ""
+    @State var transactionType = false
     
     var searchGroups: [[HistoryTransaction]] {
         if transactionSearchName.isEmpty {
@@ -51,6 +53,12 @@ struct HistoryView: View {
                                 .contextMenu {
                                     Button {
                                         showingSheet.toggle()
+                                        uuid = transaction.id
+                                        if transaction.amount < 0 {
+                                            transactionType = false
+                                        } else {
+                                            transactionType = true
+                                        }
                                     } label: {
                                         Label("Edit", systemImage: "pencil")
                                     }
@@ -68,7 +76,7 @@ struct HistoryView: View {
             .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
         }
         .sheet(isPresented: $showingSheet) {
-            EditTransactionView(showingSheet: $showingSheet, transactionTypeTemp: false)
+            EditTransactionView(showingSheet: $showingSheet, uuid: $uuid, transactionType: $transactionType)
         }
         .navigationTitle("History")
         .navigationBarItems(
