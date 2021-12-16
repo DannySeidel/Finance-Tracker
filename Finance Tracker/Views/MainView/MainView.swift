@@ -16,6 +16,7 @@ struct MainView: View {
         NavigationView {
             ScrollView {
                 BalanceView()
+                    .frame(height: 140)
                     .padding()
                 AnalyticsFrameView()
                     .frame(height: 400)
@@ -41,7 +42,7 @@ struct MainView: View {
                     .foregroundColor(.primary)
                 }
             }
-            .navigationTitle("Overview")
+            .navigationTitle("This Month")
         }
         .sheet(isPresented: $showTransactionSheet) {
             AddTransactionView(showTransactionSheet: $showTransactionSheet)

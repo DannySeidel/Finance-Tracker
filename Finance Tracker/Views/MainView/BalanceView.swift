@@ -45,14 +45,13 @@ struct BalanceView: View {
             .font(.system(size: 42))
             .foregroundColor(balanceColor)
         }
-        .frame(height: 140)
     }
 }
 
 struct BalanceView_Previews: PreviewProvider {
     static var previews: some View {
         BalanceView()
-            .previewLayout(.fixed(width: 400, height: 150))
+            .previewLayout(.fixed(width: 400, height: 140))
             .preferredColorScheme(.dark)
             .environmentObject(Data())
     }

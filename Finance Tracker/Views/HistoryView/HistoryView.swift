@@ -37,6 +37,11 @@ struct HistoryView: View {
     }
     
     var body: some View {
+        BalanceView()
+            .frame(height: 70)
+            .padding(.leading)
+            .padding(.trailing)
+            .disabled(true)
         ScrollView {
             ForEach(searchGroups, id: \.first?.id) { group in
                 if group.first != nil {
