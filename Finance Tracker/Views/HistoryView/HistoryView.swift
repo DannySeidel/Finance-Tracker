@@ -79,6 +79,7 @@ struct HistoryView: View {
             EditTransactionView(showingSheet: $showingSheet, uuid: $uuid, transactionType: $transactionType)
         }
         .navigationTitle("History")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
             trailing:
                 HStack {

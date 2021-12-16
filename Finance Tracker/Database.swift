@@ -142,6 +142,7 @@ class Database {
 
     let incomeCategoryTable = Table("incomeCategories")
     
+    
     func connectToDatabase() {
         do {
             let path = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -304,21 +305,21 @@ class Database {
         return transaction
     }
     
-    func updateTransaction(transaction: Transaction) {
-        let updateTransaction = transactionTable.filter(id == transaction.id)
+    func getTransactionsForHistory() -> [HistoryTransaction] {
+        var transactions: [HistoryTransaction] = []
         do {
-            try db.run(updateTransaction.update(
-                amount <- transaction.amount,
-                name <- transaction.name,
-                category <- transaction.category,
-                dateAndTime <- transaction.dateAndTime,
-                repeatTag <- transaction.repeatTag,
-                endRepeat <- transaction.endRepeat,
-                repeatEndDate <- transaction.repeatEndDate
-            ))
+            let transactionRows = Array(try db.prepare(transactionTable
+                                                        .select(id, amount, name, category, dateAndTime)
+                                                        .order(dateAndTime.desc)
+                                                      ))
+            for transactionRow in transactionRows {
+                let transaction = HistoryTransaction.init(row: transactionRow)
+                transactions.append(transaction)
+            }
         } catch {
             print(error)
         }
+        return transactions
     }
     
     func getAllTransactions() -> [Transaction] {
@@ -335,21 +336,21 @@ class Database {
         return transactions
     }
     
-    func getTransactionsForHistory() -> [HistoryTransaction] {
-        var transactions: [HistoryTransaction] = []
+    func updateTransaction(transaction: Transaction) {
+        let updateTransaction = transactionTable.filter(id == transaction.id)
         do {
-            let transactionRows = Array(try db.prepare(transactionTable
-                                                        .select(id, amount, name, category, dateAndTime)
-                                                        .order(dateAndTime.desc)
-                                                      ))
-            for transactionRow in transactionRows {
-                let transaction = HistoryTransaction.init(row: transactionRow)
-                transactions.append(transaction)
-            }
+            try db.run(updateTransaction.update(
+                amount <- transaction.amount,
+                name <- transaction.name,
+                category <- transaction.category,
+                dateAndTime <- transaction.dateAndTime,
+                repeatTag <- transaction.repeatTag,
+                endRepeat <- transaction.endRepeat,
+                repeatEndDate <- transaction.repeatEndDate
+            ))
         } catch {
             print(error)
         }
-        return transactions
     }
     
     func deleteTransaction(uuid: String) {
