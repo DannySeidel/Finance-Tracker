@@ -10,13 +10,13 @@ import SwiftUI
 struct EditTransactionView: View {
     @EnvironmentObject var data: Data
     
-    @State private var amountTemp: Double?
-    @State private var nameTemp: String?
-    @State private var categoryTemp: String?
-    @State private var dateAndTimeTemp = Date()
-    @State private var repeatTagTemp = 0
-    @State private var endRepeatTemp = false
-    @State private var repeatEndDateTemp = Date()
+    @State private var amount: Double?
+    @State private var name: String?
+    @State private var category: String?
+    @State private var dateAndTime = Date()
+    @State private var repeatTag = 0
+    @State private var endRepeat = false
+    @State private var repeatEndDate = Date()
     
     @Binding var showingSheet: Bool
     @Binding var uuid: String
@@ -37,9 +37,9 @@ struct EditTransactionView: View {
             NavigationView {
                 VStack {
                     ScrollView {
-                        AmountView(amountTemp: $amountTemp)
-                        InfoView(nameTemp: $nameTemp, categroyTemp: $categoryTemp, transactionTypeTemp: $transactionType)
-                        DateView(dateAndTime: $dateAndTimeTemp, repeatTag: $repeatTagTemp, endRepeat: $endRepeatTemp, repeatEndDate: $repeatEndDateTemp)
+                        AmountView(amountTemp: $amount)
+                        InfoView(nameTemp: $name, categroyTemp: $category, transactionTypeTemp: $transactionType)
+                        DateView(dateAndTime: $dateAndTime, repeatTag: $repeatTag, endRepeat: $endRepeat, repeatEndDate: $repeatEndDate)
                         MapView()
                     }
                 }
@@ -65,17 +65,17 @@ struct EditTransactionView: View {
                             data.database.updateTransaction(
                                 transaction: Transaction(
                                     id: uuid,
-                                    amount: amountTemp! * factor,
-                                    name: nameTemp!,
-                                    category: categoryTemp!,
-                                    dateAndTime: dateAndTimeTemp,
-                                    repeatTag: repeatTagTemp,
-                                    endRepeat: endRepeatTemp,
-                                    repeatEndDate: repeatEndDateTemp
+                                    amount: amount! * factor,
+                                    name: name!,
+                                    category: category!,
+                                    dateAndTime: dateAndTime,
+                                    repeatTag: repeatTag,
+                                    endRepeat: endRepeat,
+                                    repeatEndDate: repeatEndDate
                                 )
                             )
                             if storeNewCategoriesByDefault {
-                                transactionType ? data.database.insertIncomeCategory(newCategory: categoryTemp!) : data.database.insertExpenseCategory(newCategory: categoryTemp!)
+                                transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
                             }
                             data.refreshTransactionGroups()
                             data.refreshBalance()
@@ -87,13 +87,13 @@ struct EditTransactionView: View {
             }
             .onAppear(perform: {
                 transactionType = transactionType
-                amountTemp = transaction.amount * factor
-                nameTemp = transaction.name
-                categoryTemp = transaction.category
-                dateAndTimeTemp = transaction.dateAndTime
-                repeatTagTemp = transaction.repeatTag
-                endRepeatTemp = transaction.endRepeat
-                repeatEndDateTemp = transaction.repeatEndDate
+                amount = transaction.amount * factor
+                name = transaction.name
+                category = transaction.category
+                dateAndTime = transaction.dateAndTime
+                repeatTag = transaction.repeatTag
+                endRepeat = transaction.endRepeat
+                repeatEndDate = transaction.repeatEndDate
             })
         }
     }
