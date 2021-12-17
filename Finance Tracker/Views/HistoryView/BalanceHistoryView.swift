@@ -1,13 +1,13 @@
 //
-//  BalanceView.swift
+//  BalanceHistoryView.swift
 //  Finance Tracker
 //
-//  Created by Danny Seidel on 30.10.21.
+//  Created by Danny Seidel on 17.12.21.
 //
 
 import SwiftUI
 
-struct BalanceView: View {
+struct BalanceHistoryView: View {
     @EnvironmentObject var data: Data
     
     var factor: Double {
@@ -30,9 +30,9 @@ struct BalanceView: View {
     
     var body: some View {
         ZStack {
-            Capsule(style: .continuous)
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
                 .foregroundColor(Color(.systemGray6))
-            NavigationLink(destination: HistoryView()) {
+            HStack {
                 if data.balance != 0 {
                     Image(systemName: "shift.fill")
                         .rotationEffect(.degrees(rotation))
@@ -41,17 +41,14 @@ struct BalanceView: View {
                     .bold()
                 Image(systemName: "eurosign.circle")
             }
-            .font(.system(size: 42))
+            .font(.system(size: 32))
             .foregroundColor(balanceColor)
         }
     }
 }
 
-struct BalanceView_Previews: PreviewProvider {
+struct BalanceHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        BalanceView()
-            .previewLayout(.fixed(width: 400, height: 140))
-            .preferredColorScheme(.dark)
-            .environmentObject(Data())
+        BalanceHistoryView()
     }
 }

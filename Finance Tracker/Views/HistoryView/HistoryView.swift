@@ -37,11 +37,10 @@ struct HistoryView: View {
     }
     
     var body: some View {
-        BalanceView()
-            .frame(height: 70)
+        BalanceHistoryView()
+            .frame(height: 60)
             .padding(.leading)
             .padding(.trailing)
-            .disabled(true)
         ScrollView {
             ForEach(searchGroups, id: \.first?.id) { group in
                 if group.first != nil {
@@ -54,7 +53,7 @@ struct HistoryView: View {
                         .padding(.leading, 30)
                         ForEach(group, id: \.id) { transaction in
                             TransactionElement(transaction: transaction)
-                                .frame(height: 70)
+                                .frame(height: 60)
                                 .contextMenu {
                                     Button {
                                         showingSheet.toggle()
