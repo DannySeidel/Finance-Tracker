@@ -88,7 +88,6 @@ struct HistoryView: View {
             trailing:
                 HStack {
                     Text("Filter by:")
-                        .offset(y: -1)
                     Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
                         Text("Name").tag(0)
                         Text("Category").tag(1)
@@ -96,6 +95,7 @@ struct HistoryView: View {
                         Text("Date").tag(3)
                     }
                     .pickerStyle(MenuPickerStyle())
+                    .offset(y: 1)
                 }
         )
     }

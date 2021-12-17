@@ -76,7 +76,7 @@ struct AddTransactionView: View {
                                         repeatEndDate: repeatEndDate
                                     )
                                 )
-                                if storeNewCategoriesByDefault {
+                                if storeNewCategoriesByDefault && category != "no Category" {
                                     transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
                                 }
                             } else {
