@@ -22,6 +22,8 @@ struct EditTransactionView: View {
     @Binding var uuid: String
     @Binding var transactionType: Bool
     
+    @State private var showingAlert = false
+    
     @AppStorage("storeNewCategoriesByDefault") var storeNewCategoriesByDefault = true
     
     var transaction: Transaction {
@@ -62,24 +64,37 @@ struct EditTransactionView: View {
                         },
                     trailing:
                         Button("Save") {
-                            data.database.updateTransaction(
-                                transaction: Transaction(
-                                    id: uuid,
-                                    amount: amount! * factor,
-                                    name: name!,
-                                    category: category!,
-                                    dateAndTime: dateAndTime,
-                                    repeatTag: repeatTag,
-                                    endRepeat: endRepeat,
-                                    repeatEndDate: repeatEndDate
+                            if amount != nil {
+                                if name == nil {
+                                    name = "unnamed Transaction"
+                                }
+                                if category == nil {
+                                    category = "no Category"
+                                }
+                                data.database.updateTransaction(
+                                    transaction: Transaction(
+                                        id: uuid,
+                                        amount: amount! * factor,
+                                        name: name!,
+                                        category: category!,
+                                        dateAndTime: dateAndTime,
+                                        repeatTag: repeatTag,
+                                        endRepeat: endRepeat,
+                                        repeatEndDate: repeatEndDate
+                                    )
                                 )
-                            )
-                            if storeNewCategoriesByDefault {
-                                transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
+                                if storeNewCategoriesByDefault {
+                                    transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
+                                }
+                                data.refreshTransactionGroups()
+                                data.refreshBalance()
+                                showingSheet.toggle()
+                            } else {
+                                showingAlert.toggle()
                             }
-                            data.refreshTransactionGroups()
-                            data.refreshBalance()
-                            showingSheet.toggle()
+                        }
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Missing an amount"))
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
@@ -89,7 +104,13 @@ struct EditTransactionView: View {
                 transactionType = transactionType
                 amount = transaction.amount * factor
                 name = transaction.name
+                if name == "unnamed Transaction" {
+                    name = nil
+                }
                 category = transaction.category
+                if category == "no Category" {
+                    category = nil
+                }
                 dateAndTime = transaction.dateAndTime
                 repeatTag = transaction.repeatTag
                 endRepeat = transaction.endRepeat

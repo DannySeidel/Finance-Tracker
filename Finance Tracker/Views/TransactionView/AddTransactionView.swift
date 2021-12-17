@@ -20,6 +20,7 @@ struct AddTransactionView: View {
     @State private var repeatEndDate = Date()
     
     @State private var transactionType = false
+    @State private var showingAlert = false
     
     @AppStorage("storeNewCategoriesByDefault") var storeNewCategoriesByDefault = true
     
@@ -57,7 +58,13 @@ struct AddTransactionView: View {
                         },
                     trailing:
                         Button("Add") {
-                            if (amount != nil) && (name != nil) && (category != nil) {
+                            if (amount != nil) {
+                                if name == nil {
+                                    name = "unnamed Transaction"
+                                }
+                                if category == nil {
+                                    category = "no Category"
+                                }
                                 data.database.insertTransaction(
                                     transaction: Transaction(
                                         amount: amount! * factor,
@@ -72,10 +79,15 @@ struct AddTransactionView: View {
                                 if storeNewCategoriesByDefault {
                                     transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
                                 }
+                            } else {
+                                showingAlert.toggle()
                             }
                             data.refreshBalance()
                             data.refreshTransactionGroups()
                             showTransactionSheet.toggle()
+                        }
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Missing an amount"))
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)

@@ -28,7 +28,7 @@ struct TransactionElement: View {
                     
                     Spacer()
                     
-                    Text(String(format: "%.2f", transaction.amount))
+                    Text(String(format: "%.2f", transaction.amount) + "€")
                         .foregroundColor(amountcolor)
                 }
                 HStack {
