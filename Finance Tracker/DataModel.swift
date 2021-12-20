@@ -42,7 +42,6 @@ struct Category: Hashable {
 
 
 class Data: ObservableObject {
-    
     var database: Database = {
         var instance = Database()
         instance.connectToDatabase()

@@ -98,6 +98,9 @@ extension Category {
 
 
 class Database {
+    
+    @AppStorage("firstUse") var firstUse = true
+    
     var categoriesExpense = [
         "Car",
         "Clothes",
@@ -189,12 +192,15 @@ class Database {
     }
     
     func insertDefaults() {
-        categoriesExpense.forEach { category in
-            insertExpenseCategory(newCategory: category)
+        if firstUse {
+            categoriesExpense.forEach { category in
+                insertExpenseCategory(newCategory: category)
+            }
+            categoriesIncome.forEach { category in
+                insertIncomeCategory(newCategory: category)
+            }
         }
-        categoriesIncome.forEach { category in
-            insertIncomeCategory(newCategory: category)
-        }
+        firstUse = false
     }
     
     
@@ -322,20 +328,6 @@ class Database {
         return transactions
     }
     
-    func getAllTransactions() -> [Transaction] {
-        var transactions: [Transaction] = []
-        do {
-            let transactionRows = Array(try db.prepare(transactionTable))
-            for transactionRow in transactionRows {
-                let transaction = Transaction.init(row: transactionRow)
-                transactions.append(transaction)
-            }
-        } catch {
-            print(error)
-        }
-        return transactions
-    }
-    
     func updateTransaction(transaction: Transaction) {
         let updateTransaction = transactionTable.filter(id == transaction.id)
         do {
@@ -368,7 +360,7 @@ class Database {
         do {
             let amountRows = Array(try db.prepare(transactionTable
                                                             .select(amount)
-                                                            .filter(Date().startOfMonth()...Date().endOfMonth() ~= dateAndTime)
+                                                    .filter(Date().startOfMonth()...Date.now ~= dateAndTime)
                                                          ))
             for amountRow in amountRows {
                 let amount  = Amount.init(row: amountRow)

@@ -86,12 +86,12 @@ struct AddTransactionView: View {
                             data.refreshTransactionGroups()
                             showTransactionSheet.toggle()
                         }
-                        .alert(isPresented: $showingAlert) {
-                            Alert(title: Text("Missing an amount"))
-                        }
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color(.white))
+            }
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text("Missing an amount"))
             }
         }
     }

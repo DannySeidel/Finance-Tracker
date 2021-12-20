@@ -53,7 +53,7 @@ struct HistoryView: View {
                         .padding(.leading, 30)
                         ForEach(group, id: \.id) { transaction in
                             TransactionElement(transaction: transaction)
-                                .frame(height: 60)
+                                .frame(height: 70)
                                 .contextMenu {
                                     Button {
                                         showingSheet.toggle()
@@ -87,7 +87,7 @@ struct HistoryView: View {
         .navigationBarItems(
             trailing:
                 HStack {
-                    Text("Filter by:")
+                    Image(systemName: "line.3.horizontal.decrease.circle")
                     Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
                         Text("Name").tag(0)
                         Text("Category").tag(1)
