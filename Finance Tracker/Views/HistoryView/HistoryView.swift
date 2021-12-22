@@ -87,8 +87,9 @@ struct HistoryView: View {
         .navigationBarItems(
             trailing:
                 HStack {
+                    Spacer()
                     Image(systemName: "line.3.horizontal.decrease.circle")
-                    Picker("Filter by \(Image(systemName: "shift"))", selection: $filterTag) {
+                    Picker("\(Image(systemName: "line.3.horizontal.decrease.circle"))", selection: $filterTag) {
                         Text("Name").tag(0)
                         Text("Category").tag(1)
                         Text("Amount").tag(2)

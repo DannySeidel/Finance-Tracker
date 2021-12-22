@@ -10,7 +10,7 @@ import SQLite
 
 
 extension Date {
-    func startOfMonth() -> Date {
+    func startOfCurrentMonth() -> Date {
         return Calendar.current.date(
             from: Calendar.current.dateComponents(
                 [.year, .month],from: Calendar.current.startOfDay(for: self)
@@ -18,9 +18,65 @@ extension Date {
         )!
     }
     
-    func endOfMonth() -> Date {
+    func endOfCurrentMonth() -> Date {
         return Calendar.current.date(
-            byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth()
+            byAdding: DateComponents(month: 1, day: -1), to: self.startOfCurrentMonth()
+        )!
+    }
+    
+    func startOfLastMonth() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(month: -1), to: self.startOfCurrentMonth()
+        )!
+    }
+    
+    func endOfLastMonth() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(month: 1, day: -1), to: self.startOfLastMonth()
+        )!
+    }
+    
+    func todayOneMonthAgo() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(month: -1), to: Date()
+        )!
+    }
+    
+    func startOfMonthThreeMonthsAgo() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(month: -3), to: self.startOfCurrentMonth()
+        )!
+    }
+    
+    func startOfMonthSixMonthsAgo() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(month: -6), to: self.startOfCurrentMonth()
+        )!
+    }
+    
+    func startOfCurrentYear() -> Date {
+        return Calendar.current.date(
+            from: Calendar.current.dateComponents(
+                [.year],from: Calendar.current.startOfDay(for: self)
+            )
+        )!
+    }
+    
+    func startOfLastYear() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(year: -1), to: self.startOfCurrentYear()
+        )!
+    }
+    
+    func endOfLastYear() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(year: 1, month: -1), to: self.startOfLastYear()
+        )!
+    }
+    
+    func todayOneYearAgo() -> Date {
+        return Calendar.current.date(
+            byAdding: DateComponents(year: -1), to: Date()
         )!
     }
 }

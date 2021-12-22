@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var data: Data
     @AppStorage("storeNewCategoriesByDefault") var storeNewCategoriesByDefault: Bool = true
+    @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
     
     @Binding var showSettingsSheet: Bool
     
@@ -19,6 +21,16 @@ struct SettingsView: View {
                 NavigationLink(destination: EditCategoryView()) {
                     Text("Edit saved Categories")
                 }
+                Picker("Default Timespan", selection: $defaultTimespan) {
+                    Text("Current Month").tag(0)
+                    Text("Previous 30 Days").tag(1)
+                    Text("Last Month").tag(2)
+                    Text("Last 3 Months").tag(3)
+                    Text("Last 6 Months").tag(4)
+                    Text("Current Year").tag(5)
+                    Text("Last Year").tag(6)
+                    Text("Previous 365 Days").tag(7)
+                }
                 NavigationLink(destination: ManageAnalyticsView()) {
                     Text("Standart Diagram Type")
                 }
@@ -27,6 +39,7 @@ struct SettingsView: View {
             .navigationBarItems(
                 trailing:
                     Button("Done") {
+                        data.refreshBalance()
                         showSettingsSheet.toggle()
                     }
                     .foregroundColor(.white)

@@ -42,6 +42,8 @@ struct Category: Hashable {
 
 
 class Data: ObservableObject {
+    @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
+    
     var database: Database = {
         var instance = Database()
         instance.connectToDatabase()
@@ -60,7 +62,24 @@ class Data: ObservableObject {
     }
     
     func refreshBalance() {
-        balance = database.getMonthlyBalance()
+        switch defaultTimespan {
+        case 1:
+            balance = database.getBalance(startDate: Date().startOfLastMonth(), endDate: Date().endOfLastMonth())
+        case 2:
+            balance = database.getBalance(startDate: Date().todayOneMonthAgo(), endDate: Date())
+        case 3:
+            balance = database.getBalance(startDate: Date().startOfMonthThreeMonthsAgo(), endDate: Date().endOfLastMonth())
+        case 4:
+            balance = database.getBalance(startDate: Date().startOfMonthSixMonthsAgo(), endDate: Date().endOfLastMonth())
+        case 5:
+            balance = database.getBalance(startDate: Date().startOfCurrentYear(), endDate: Date())
+        case 6:
+            balance = database.getBalance(startDate: Date().startOfLastYear(), endDate: Date().endOfLastYear())
+        case 7:
+            balance = database.getBalance(startDate: Date().todayOneYearAgo(), endDate: Date())
+        default:
+            balance = database.getBalance(startDate: Date().startOfCurrentMonth(), endDate: Date())
+        }
     }
     
     func refreshTransactionGroups() {

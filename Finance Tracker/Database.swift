@@ -267,13 +267,13 @@ class Database {
         }
     }
     
-    func getMonthlyBalance() -> Double {
+    func getBalance(startDate: Date, endDate: Date) -> Double {
         var monthlyBalance: Double
         var amounts: [Amount] = []
         do {
             let amountRows = Array(try db.prepare(transactionTable
                                                             .select(amount)
-                                                    .filter(Date().startOfMonth()...Date.now ~= dateAndTime)
+                                                    .filter(startDate...endDate ~= dateAndTime)
                                                          ))
             for amountRow in amountRows {
                 let amount  = Amount.init(row: amountRow)

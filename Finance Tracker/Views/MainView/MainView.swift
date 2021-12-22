@@ -12,6 +12,29 @@ struct MainView: View {
     @State private var showSettingsSheet = false
     @EnvironmentObject var data: Data
     
+    @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
+    
+    var navigationTitle: String {
+        switch defaultTimespan {
+        case 1:
+            return "Previous 30 days"
+        case 2:
+            return "Last Month"
+        case 3:
+            return "Last 3 Months"
+        case 4:
+            return "Last 6 Months"
+        case 5:
+            return "Current Year"
+        case 6:
+            return "Last Year"
+        case 7:
+            return "Previous 365 Days"
+        default:
+            return "Current Month"
+        }
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -42,7 +65,7 @@ struct MainView: View {
                     .foregroundColor(.primary)
                 }
             }
-            .navigationTitle("This Month")
+            .navigationTitle(navigationTitle)
         }
         .sheet(isPresented: $showTransactionSheet) {
             AddTransactionView(showTransactionSheet: $showTransactionSheet)
