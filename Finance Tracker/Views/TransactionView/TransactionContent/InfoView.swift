@@ -18,7 +18,7 @@ struct InfoView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .foregroundColor(Color(.systemGray5))
+                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
             VStack {
                 HStack {
                     Text("Name")
@@ -47,7 +47,10 @@ struct InfoView: View {
 struct TransactionInfoView_Previews: PreviewProvider {
     static var previews: some View {
         InfoView(nameTemp: .constant(""), categroyTemp: .constant(""), transactionTypeTemp: .constant(false))
-            .previewLayout(.fixed(width: 400, height: 150))
+            .previewLayout(.fixed(width: 400, height: 120))
+            .background(Color.init(UIColor(named: "AppBackground")!))
+        InfoView(nameTemp: .constant(""), categroyTemp: .constant(""), transactionTypeTemp: .constant(false))
+            .previewLayout(.fixed(width: 400, height: 120))
             .preferredColorScheme(.dark)
     }
 }

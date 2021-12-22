@@ -20,7 +20,7 @@ struct CategoryElementView: View {
             presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Category")
-        .foregroundColor(Color(.white))
+        .foregroundColor(Color.init(UIColor(named: "AppText")!))
     }
 }
 
@@ -55,7 +55,10 @@ struct CategorySelectView_Previews: PreviewProvider {
         NavigationView {
             CategorySelectView(categroyTemp: .constant(""), transactionTypeTemp: .constant(false))
                 .environmentObject(Data())
-                .preferredColorScheme(.dark)            
+            CategorySelectView(categroyTemp: .constant(""), transactionTypeTemp: .constant(false))
+                .environmentObject(Data())
+                .preferredColorScheme(.dark)
+            
         }
     }
 }

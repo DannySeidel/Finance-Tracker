@@ -11,7 +11,7 @@ struct AnalyticsFrameView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .fill(Color(.systemGray6))
+                .fill(Color.init(UIColor(named: "AppElement")!))
             
             VStack {
                 Spacer()
@@ -20,11 +20,9 @@ struct AnalyticsFrameView: View {
                 
                 HStack {
                     Image(systemName: "chart.line.uptrend.xyaxis")
-                    
                     Button("Show analytics") {
-                        
                     }
-                    .foregroundColor(Color(.white))
+                    .foregroundColor(Color.init(UIColor(named: "AppText")!))
 
                     Spacer()
                 }
@@ -37,7 +35,10 @@ struct AnalyticsFrameView: View {
 struct AnalyticsOverviewView_Previews: PreviewProvider {
     static var previews: some View {
         AnalyticsFrameView()
-            .frame(height: 400)
+            .previewLayout(.fixed(width: 400, height: 400))
+            .background(Color.init(UIColor(named: "AppBackground")!))
+        AnalyticsFrameView()
+            .previewLayout(.fixed(width: 400, height: 400))
             .preferredColorScheme(.dark)
     }
 }

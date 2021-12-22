@@ -88,7 +88,8 @@ struct AddTransactionView: View {
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
-                .foregroundColor(Color(.white))
+                .foregroundColor(Color.init(UIColor(named: "AppText")!))
+                .background(Color.init(UIColor(named: "AppBackground")!))
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text("Missing an amount"))
@@ -99,6 +100,8 @@ struct AddTransactionView: View {
 
 struct AddTransactionView_Previews: PreviewProvider {
     static var previews: some View {
+        AddTransactionView(showTransactionSheet: .constant(false))
+            .environmentObject(Data())
         AddTransactionView(showTransactionSheet: .constant(false))
             .environmentObject(Data())
             .preferredColorScheme(.dark)

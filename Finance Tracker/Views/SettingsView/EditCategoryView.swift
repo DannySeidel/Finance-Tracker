@@ -75,6 +75,8 @@ struct ManageCategoryView_Previews: PreviewProvider {
         NavigationView {
             EditCategoryView()
                 .environmentObject(Data())
+            EditCategoryView()
+                .environmentObject(Data())
                 .preferredColorScheme(.dark)
         }
     }

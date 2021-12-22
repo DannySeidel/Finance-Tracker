@@ -14,7 +14,6 @@ struct Finance_TrackerApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(data)
-                .background(Color.black)
         }
     }
 }

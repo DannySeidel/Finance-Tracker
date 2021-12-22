@@ -13,6 +13,7 @@ struct MainView: View {
     @EnvironmentObject var data: Data
     
     @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
+    @Environment(\.colorScheme) var colorScheme
     
     var navigationTitle: String {
         switch defaultTimespan {
@@ -66,6 +67,10 @@ struct MainView: View {
                 }
             }
             .navigationTitle(navigationTitle)
+            .background(
+                Color.init(UIColor(named: "AppBackground")!)
+                    .ignoresSafeArea()
+            )
         }
         .sheet(isPresented: $showTransactionSheet) {
             AddTransactionView(showTransactionSheet: $showTransactionSheet)
@@ -73,8 +78,6 @@ struct MainView: View {
         .sheet(isPresented: $showSettingsSheet) {
             SettingsView(showSettingsSheet: $showSettingsSheet)
         }
-        .background(Color.black)
-        .preferredColorScheme(.dark)
     }
 }
 
@@ -82,5 +85,8 @@ struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
             .environmentObject(Data())
+        MainView()
+            .environmentObject(Data())
+            .preferredColorScheme(.dark)
     }
 }

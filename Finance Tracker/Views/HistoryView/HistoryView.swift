@@ -77,6 +77,7 @@ struct HistoryView: View {
                     .padding(.top)
                 }
             }
+            .background(Color.init(UIColor(named: "AppBackground")!))
             .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
         }
         .sheet(isPresented: $showingSheet) {
@@ -99,6 +100,7 @@ struct HistoryView: View {
                     .offset(y: 1)
                 }
         )
+        .background(Color.init(UIColor(named: "AppBackground")!))
     }
     
     private func onDelete(id: String) {
@@ -113,6 +115,12 @@ struct HistoryView_Previews: PreviewProvider {
         NavigationView {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now))
+        }
+        NavigationView {
+            HistoryView(showingSheet: false)
+                .environmentObject(Data())
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now))
                 .preferredColorScheme(.dark)
         }
     }

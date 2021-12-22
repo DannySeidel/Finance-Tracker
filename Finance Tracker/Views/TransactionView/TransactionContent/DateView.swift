@@ -16,7 +16,7 @@ struct DateView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .foregroundColor(Color(.systemGray5))
+                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
             VStack {
                 HStack {
                     Text("Date")
@@ -64,9 +64,11 @@ struct DateView: View {
 
 struct TransactionDateView_Previews: PreviewProvider {
     static var previews: some View {
-        DateView(
-            dateAndTime: .constant(Date.now), repeatTag: .constant(0), endRepeat: .constant(false), repeatEndDate: .constant(Date.now)
-        )
+        DateView(dateAndTime: .constant(Date.now), repeatTag: .constant(0), endRepeat: .constant(false), repeatEndDate: .constant(Date.now))
+            .previewLayout(.fixed(width: 400, height: 200))
+            .background(Color.init(UIColor(named: "AppBackground")!))
+        DateView(dateAndTime: .constant(Date.now), repeatTag: .constant(0), endRepeat: .constant(false), repeatEndDate: .constant(Date.now))
+            .previewLayout(.fixed(width: 400, height: 200))
             .preferredColorScheme(.dark)
     }
 }

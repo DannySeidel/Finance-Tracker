@@ -98,7 +98,8 @@ struct EditTransactionView: View {
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
-                .foregroundColor(Color(.white))
+                .foregroundColor(Color.init(UIColor(named: "AppText")!))
+                .background(Color.init(UIColor(named: "AppBackground")!))
             }
             .onAppear(perform: {
                 transactionType = transactionType
@@ -123,5 +124,9 @@ struct EditTransactionView: View {
 struct EditTransactionView_Previews: PreviewProvider {
     static var previews: some View {
         EditTransactionView(showingSheet: .constant(true), uuid: .constant(""), transactionType: .constant(false))
+            .environmentObject(Data())
+        EditTransactionView(showingSheet: .constant(true), uuid: .constant(""), transactionType: .constant(false))
+            .environmentObject(Data())
+            .preferredColorScheme(.dark)
     }
 }

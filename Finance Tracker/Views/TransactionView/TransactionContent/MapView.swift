@@ -11,7 +11,7 @@ struct MapView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .foregroundColor(Color(.systemGray5))
+                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
             Text("MapView")
         }
         .padding()
@@ -21,5 +21,10 @@ struct MapView: View {
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         MapView()
+            .previewLayout(.fixed(width: 400, height: 200))
+            .background(Color.init(UIColor(named: "AppBackground")!))
+        MapView()
+            .previewLayout(.fixed(width: 400, height: 200))
+            .preferredColorScheme(.dark)
     }
 }

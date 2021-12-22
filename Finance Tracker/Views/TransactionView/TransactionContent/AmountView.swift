@@ -14,7 +14,7 @@ struct AmountView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .foregroundColor(Color(.systemGray5))
+                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
             HStack {
                 Text("Amount")
                 TextField("9,11", value: $amountTemp, format: .number)
@@ -28,6 +28,10 @@ struct AmountView: View {
 
 struct TransactionAmountView_Previews: PreviewProvider {
     static var previews: some View {
+        AmountView(amountTemp: .constant(9.11))
+            .environmentObject(Data())
+            .previewLayout(.fixed(width: 400, height: 100))
+            .background(Color.init(UIColor(named: "AppBackground")!))
         AmountView(amountTemp: .constant(9.11))
             .environmentObject(Data())
             .previewLayout(.fixed(width: 400, height: 100))

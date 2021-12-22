@@ -20,9 +20,9 @@ struct BalanceView: View {
     
     var balanceColor: Color {
         if data.balance > 0 {
-            return Color(red: 35/255, green: 310/255, blue: 139/255)
+            return Color.init(UIColor(named: "AppGreen")!)
         } else if data.balance < 0 {
-            return Color(red: 240/255, green: 60/255, blue: 25/255)
+            return Color.init(UIColor(named: "AppRed")!)
         } else {
             return Color(.systemGray)
         }
@@ -31,7 +31,7 @@ struct BalanceView: View {
     var body: some View {
         ZStack {
             Capsule(style: .continuous)
-                .foregroundColor(Color(.systemGray6))
+                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
             NavigationLink(destination: HistoryView()) {
                 if data.balance != 0 {
                     Image(systemName: "shift.fill")
@@ -51,7 +51,11 @@ struct BalanceView_Previews: PreviewProvider {
     static var previews: some View {
         BalanceView()
             .previewLayout(.fixed(width: 400, height: 140))
-            .preferredColorScheme(.dark)
             .environmentObject(Data())
+            .background(Color.init(UIColor(named: "AppBackground")!))
+        BalanceView()
+            .previewLayout(.fixed(width: 400, height: 140))
+            .environmentObject(Data())
+            .preferredColorScheme(.dark)
     }
 }

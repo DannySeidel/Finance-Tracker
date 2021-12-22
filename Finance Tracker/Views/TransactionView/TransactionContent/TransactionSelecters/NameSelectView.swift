@@ -20,7 +20,7 @@ struct NameElementView: View {
             presentationMode.wrappedValue.dismiss()
         }
         .navigationTitle("Select Name")
-        .foregroundColor(Color(.white))
+        .foregroundColor(Color.init(UIColor(named: "AppText")!))
     }
 }
 
@@ -33,7 +33,7 @@ struct NameSelectView: View {
         if searchText.isEmpty {
             return data.names.sorted(by: {$0<$1})
         } else {
-            return data.names.filter { $0.contains(searchText) }.sorted(by: {$0<$1})
+            return data.names.filter{ $0.contains(searchText) }.sorted(by: {$0<$1})
         }
     }
     
@@ -48,6 +48,8 @@ struct NameSelectView: View {
 struct NameSelectView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
+            NameSelectView(nameTemp: .constant(""))
+                .environmentObject(Data())
             NameSelectView(nameTemp: .constant(""))
                 .environmentObject(Data())
                 .preferredColorScheme(.dark)            

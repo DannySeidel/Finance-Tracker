@@ -42,7 +42,7 @@ struct SettingsView: View {
                         data.refreshBalance()
                         showSettingsSheet.toggle()
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.init(UIColor(named: "AppText")!))
             )
         }
     }
@@ -50,6 +50,7 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
+        SettingsView(showSettingsSheet: .constant(true))
         SettingsView(showSettingsSheet: .constant(true))
             .preferredColorScheme(.dark)
     }

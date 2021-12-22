@@ -20,9 +20,9 @@ struct BalanceHistoryView: View {
     
     var balanceColor: Color {
         if data.balance > 0 {
-            return Color(red: 35/255, green: 310/255, blue: 139/255)
+            return Color.init(UIColor(named: "AppGreen")!)
         } else if data.balance < 0 {
-            return Color(red: 240/255, green: 60/255, blue: 25/255)
+            return Color.init(UIColor(named: "AppRed")!)
         } else {
             return Color(.systemGray)
         }
@@ -31,7 +31,7 @@ struct BalanceHistoryView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .foregroundColor(Color(.systemGray6))
+                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
             HStack {
                 if data.balance != 0 {
                     Image(systemName: "shift.fill")
@@ -50,5 +50,12 @@ struct BalanceHistoryView: View {
 struct BalanceHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         BalanceHistoryView()
+            .environmentObject(Data())
+            .previewLayout(.fixed(width: 400, height: 60))
+            .background(Color.init(UIColor(named: "AppBackground")!))
+        BalanceHistoryView()
+            .environmentObject(Data())
+            .previewLayout(.fixed(width: 400, height: 60))
+            .preferredColorScheme(.dark)
     }
 }

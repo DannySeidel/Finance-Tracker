@@ -22,12 +22,12 @@ struct CustomAlertView<Content:View>: View {
             if addCategoryAlert {
                 ZStack {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(.black)
+                        .fill(Color.init(UIColor(named: "AppBackground")!))
                         .opacity(0.90)
                     VStack {
                         Text("Enter Category Name")
                         TextField("", text: $alertText)
-                            .background(Color(.systemGray5).cornerRadius(5))
+                            .background(Color.init(UIColor(named: "AppElement")!).cornerRadius(5))
 
                         Spacer()
                         Spacer()
@@ -74,6 +74,7 @@ struct CustomAlertView<Content:View>: View {
 
 struct CustomAlertView_Previews: PreviewProvider {
     static var previews: some View {
+        CustomAlertView(categoryType: .constant(false), addCategoryAlert: .constant(true), categories: .constant([]), content: {})
         CustomAlertView(categoryType: .constant(false), addCategoryAlert: .constant(true), categories: .constant([]), content: {})
             .preferredColorScheme(.dark)
         
