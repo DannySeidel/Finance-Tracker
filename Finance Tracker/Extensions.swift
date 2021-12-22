@@ -30,15 +30,9 @@ extension Date {
         )!
     }
     
-    func endOfLastMonth() -> Date {
-        return Calendar.current.date(
-            byAdding: DateComponents(month: 1, day: -1), to: self.startOfLastMonth()
-        )!
-    }
-    
     func todayOneMonthAgo() -> Date {
         return Calendar.current.date(
-            byAdding: DateComponents(month: -1), to: Date()
+            byAdding: DateComponents(month: -1), to: Calendar.current.startOfDay(for: self)
         )!
     }
     
@@ -68,15 +62,9 @@ extension Date {
         )!
     }
     
-    func endOfLastYear() -> Date {
-        return Calendar.current.date(
-            byAdding: DateComponents(year: 1, month: -1), to: self.startOfLastYear()
-        )!
-    }
-    
     func todayOneYearAgo() -> Date {
         return Calendar.current.date(
-            byAdding: DateComponents(year: -1), to: Date()
+            byAdding: DateComponents(year: -1), to: Calendar.current.startOfDay(for: self)
         )!
     }
 }
