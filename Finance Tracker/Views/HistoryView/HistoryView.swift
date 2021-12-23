@@ -37,69 +37,70 @@ struct HistoryView: View {
     }
     
     var body: some View {
-        BalanceHistoryView()
-            .frame(height: 60)
-            .padding(.leading)
-            .padding(.trailing)
-        ScrollView {
-            ForEach(searchGroups, id: \.first?.id) { group in
-                if group.first != nil {
-                    VStack {
-                        HStack {
-                            Text(group.first!.dateAndTime, style: .date)
-                            
-                            Spacer()
-                        }
-                        .padding(.leading, 30)
-                        ForEach(group, id: \.id) { transaction in
-                            TransactionElement(transaction: transaction)
-                                .frame(height: 70)
-                                .contextMenu {
-                                    Button {
-                                        showingSheet.toggle()
-                                        uuid = transaction.id
-                                        if transaction.amount < 0 {
-                                            transactionType = false
-                                        } else {
-                                            transactionType = true
+        VStack {
+            BalanceHistoryView()
+                .frame(height: 60)
+                .padding(.leading)
+                .padding(.trailing)
+            ScrollView {
+                ForEach(searchGroups, id: \.first?.id) { group in
+                    if group.first != nil {
+                        VStack {
+                            HStack {
+                                Text(group.first!.dateAndTime, style: .date)
+                                
+                                Spacer()
+                            }
+                            .padding(.leading, 30)
+                            ForEach(group, id: \.id) { transaction in
+                                TransactionElement(transaction: transaction)
+                                    .frame(height: 70)
+                                    .contextMenu {
+                                        Button {
+                                            showingSheet.toggle()
+                                            uuid = transaction.id
+                                            if transaction.amount < 0 {
+                                                transactionType = false
+                                            } else {
+                                                transactionType = true
+                                            }
+                                        } label: {
+                                            Label("Edit", systemImage: "pencil")
                                         }
-                                    } label: {
-                                        Label("Edit", systemImage: "pencil")
+                                        Button(role: .destructive) {
+                                            onDelete(id: transaction.id)
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
                                     }
-                                    Button(role: .destructive) {
-                                        onDelete(id: transaction.id)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
+                            }
                         }
+                        .padding(.top)
                     }
-                    .padding(.top)
                 }
+                .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
             }
-            .background(Color.init(UIColor(named: "AppBackground")!))
-            .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
-        }
-        .sheet(isPresented: $showingSheet) {
-            EditTransactionView(showingSheet: $showingSheet, uuid: $uuid, transactionType: $transactionType)
-        }
-        .navigationTitle("History")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(
-            trailing:
-                HStack {
-                    Spacer()
-                    Image(systemName: "line.3.horizontal.decrease.circle")
-                    Picker("\(Image(systemName: "line.3.horizontal.decrease.circle"))", selection: $filterTag) {
-                        Text("Name").tag(0)
-                        Text("Category").tag(1)
-                        Text("Amount").tag(2)
-                        Text("Date").tag(3)
+            .sheet(isPresented: $showingSheet) {
+                EditTransactionView(showingSheet: $showingSheet, uuid: $uuid, transactionType: $transactionType)
+            }
+            .navigationTitle("History")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                trailing:
+                    HStack {
+                        Spacer()
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                        Picker("\(Image(systemName: "line.3.horizontal.decrease.circle"))", selection: $filterTag) {
+                            Text("Name").tag(0)
+                            Text("Category").tag(1)
+                            Text("Amount").tag(2)
+                            Text("Date").tag(3)
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .offset(y: 1)
                     }
-                    .pickerStyle(MenuPickerStyle())
-                    .offset(y: 1)
-                }
-        )
+            )
+        }
         .background(Color.init(UIColor(named: "AppBackground")!))
     }
     
@@ -121,7 +122,7 @@ struct HistoryView_Previews: PreviewProvider {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
             TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now))
-                .preferredColorScheme(.dark)
         }
+        .preferredColorScheme(.dark)
     }
 }

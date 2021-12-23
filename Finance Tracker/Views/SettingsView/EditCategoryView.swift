@@ -50,6 +50,7 @@ struct EditCategoryView: View {
                     }
                     .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 }
+                .background(Color.init(UIColor(named: "AppBackground")!))
                 Button("Add Category") {
                     addCategoryAlert.toggle()
                 }

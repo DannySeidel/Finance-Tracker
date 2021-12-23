@@ -24,7 +24,7 @@ struct BalanceView: View {
         } else if data.balance < 0 {
             return Color.init(UIColor(named: "AppRed")!)
         } else {
-            return Color(.systemGray)
+            return Color.init(UIColor(named: "AppTextGray")!)
         }
     }
     

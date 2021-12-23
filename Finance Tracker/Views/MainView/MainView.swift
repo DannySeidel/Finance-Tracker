@@ -13,7 +13,6 @@ struct MainView: View {
     @EnvironmentObject var data: Data
     
     @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
-    @Environment(\.colorScheme) var colorScheme
     
     var navigationTitle: String {
         switch defaultTimespan {
@@ -68,8 +67,7 @@ struct MainView: View {
             }
             .navigationTitle(navigationTitle)
             .background(
-                Color.init(UIColor(named: "AppBackground")!)
-                    .ignoresSafeArea()
+                Color.init(UIColor(named: "AppBackground")!).ignoresSafeArea()
             )
         }
         .sheet(isPresented: $showTransactionSheet) {

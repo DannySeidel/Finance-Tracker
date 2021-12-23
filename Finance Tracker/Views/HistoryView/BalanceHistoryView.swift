@@ -24,7 +24,7 @@ struct BalanceHistoryView: View {
         } else if data.balance < 0 {
             return Color.init(UIColor(named: "AppRed")!)
         } else {
-            return Color(.systemGray)
+            return Color.init(UIColor(named: "AppTextGray")!)
         }
     }
     
@@ -52,7 +52,6 @@ struct BalanceHistoryView_Previews: PreviewProvider {
         BalanceHistoryView()
             .environmentObject(Data())
             .previewLayout(.fixed(width: 400, height: 60))
-            .background(Color.init(UIColor(named: "AppBackground")!))
         BalanceHistoryView()
             .environmentObject(Data())
             .previewLayout(.fixed(width: 400, height: 60))

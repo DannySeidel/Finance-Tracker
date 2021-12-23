@@ -22,7 +22,7 @@ struct CustomAlertView<Content:View>: View {
             if addCategoryAlert {
                 ZStack {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(Color.init(UIColor(named: "AppBackground")!))
+                        .fill(Color.init(UIColor(named: "AppElement")!))
                         .opacity(0.90)
                     VStack {
                         Text("Enter Category Name")

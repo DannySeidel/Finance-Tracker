@@ -44,6 +44,7 @@ struct EditTransactionView: View {
                         DateView(dateAndTime: $dateAndTime, repeatTag: $repeatTag, endRepeat: $endRepeat, repeatEndDate: $repeatEndDate)
                         MapView()
                     }
+                    .background(Color.init(UIColor(named: "AppBackground")!))
                 }
                 .navigationBarItems(
                     leading:
@@ -99,7 +100,6 @@ struct EditTransactionView: View {
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.init(UIColor(named: "AppText")!))
-                .background(Color.init(UIColor(named: "AppBackground")!))
             }
             .onAppear(perform: {
                 transactionType = transactionType
