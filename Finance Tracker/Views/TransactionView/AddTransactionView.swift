@@ -58,33 +58,7 @@ struct AddTransactionView: View {
                         },
                     trailing:
                         Button("Add") {
-                            if (amount != nil) {
-                                if name == nil {
-                                    name = "unnamed Transaction"
-                                }
-                                if category == nil {
-                                    category = "no Category"
-                                }
-                                data.database.insertTransaction(
-                                    transaction: Transaction(
-                                        amount: amount! * factor,
-                                        name: name!,
-                                        category: category!,
-                                        dateAndTime: dateAndTime,
-                                        repeatTag: repeatTag,
-                                        endRepeat: endRepeat,
-                                        repeatEndDate: repeatEndDate
-                                    )
-                                )
-                                if storeNewCategoriesByDefault && category != "no Category" {
-                                    transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
-                                }
-                            } else {
-                                showingAlert.toggle()
-                            }
-                            data.refreshBalance()
-                            data.refreshTransactionGroups()
-                            showTransactionSheet.toggle()
+                            addTransaction()
                         }
                 )
                 .navigationBarTitleDisplayMode(.inline)
@@ -95,6 +69,32 @@ struct AddTransactionView: View {
                 Alert(title: Text("Missing an amount"))
             }
         }
+    }
+    
+    private func addTransaction() {
+        if (amount != nil) {
+            name == nil ? name = "unnamed Transaction" : nil
+            category == nil ? category = "no Category" : nil
+            data.database.insertTransaction(
+                transaction: Transaction(
+                    amount: amount! * factor,
+                    name: name!,
+                    category: category!,
+                    dateAndTime: dateAndTime,
+                    repeatTag: repeatTag,
+                    endRepeat: endRepeat,
+                    repeatEndDate: repeatEndDate
+                )
+            )
+            if storeNewCategoriesByDefault && category != "no Category" {
+                transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
+            }
+        } else {
+            showingAlert.toggle()
+        }
+        data.refreshBalance()
+        data.refreshTransactionGroups()
+        showTransactionSheet.toggle()
     }
 }
 
