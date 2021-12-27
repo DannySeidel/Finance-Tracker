@@ -12,7 +12,7 @@ struct MainView: View {
     @State private var showSettingsSheet = false
     @EnvironmentObject var data: Data
     
-    @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
+    @AppStorage("defaultTimespan") var defaultTimespan: Int = 0
     
     var navigationTitle: String {
         switch defaultTimespan {

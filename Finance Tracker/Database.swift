@@ -11,7 +11,6 @@ import SQLite
 
 
 class Database {
-    
     @AppStorage("firstUse") var firstUse = true
     
     var categoriesExpense = [
@@ -42,6 +41,7 @@ class Database {
     var db: Connection!
     
     let transactionTable = Table("transactions")
+    let repeatTransactionTable = Table("repeatTransactions")
     
     let id = Expression<String>("id")
     let amount = Expression<Double>("amount")
@@ -56,7 +56,7 @@ class Database {
     let nameTable = Table("names")
     
     let expenseCategoryTable = Table("expenseCategories")
-
+    
     let incomeCategoryTable = Table("incomeCategories")
     
     
@@ -83,7 +83,19 @@ class Database {
             table.column(repeatEndDate)
             table.column(repeatId)
         }
-            
+        
+        let createRepeatTransactionTable = repeatTransactionTable.create(ifNotExists: true) { table in
+            table.column(id)
+            table.column(amount)
+            table.column(name)
+            table.column(category)
+            table.column(dateAndTime)
+            table.column(repeatTag)
+            table.column(endRepeat)
+            table.column(repeatEndDate)
+            table.column(repeatId)
+        }
+        
         let createNameTable = nameTable.create(ifNotExists: true) { table in
             table.column(name, unique: true)
         }
@@ -98,6 +110,7 @@ class Database {
         
         do {
             try db.run(createTransactionTable)
+            try db.run(createRepeatTransactionTable)
             try db.run(createNameTable)
             try db.run(createExpenseCategoryTable)
             try db.run(createIncomeCategoryTable)
@@ -212,6 +225,39 @@ class Database {
         }
     }
     
+    func insertNextRepeatingTransaction(transaction: Transaction) {
+        var transactionDate = transaction.dateAndTime
+        while transactionDate <= Date().StartOfNextMonth() {
+            switch transaction.repeatTag {
+            case 1:
+                transactionDate = Calendar.current.date(byAdding: .day, value: 1, to: transactionDate)!
+            case 2:
+                transactionDate = Calendar.current.date(byAdding: .day, value: 7, to: transactionDate)!
+            case 3:
+                transactionDate = Calendar.current.date(byAdding: .month, value: 1, to: transactionDate)!
+            default:
+                transactionDate = Calendar.current.date(byAdding: .year, value: 1, to: transactionDate)!
+            }
+        }
+        
+        let insert = repeatTransactionTable.insert(
+            id <- transaction.id,
+            amount <- transaction.amount,
+            name <- transaction.name,
+            category <- transaction.category,
+            dateAndTime <- transactionDate,
+            repeatTag <- transaction.repeatTag,
+            endRepeat <- transaction.endRepeat,
+            repeatEndDate <- transaction.repeatEndDate,
+            repeatId <- transaction.repeatId
+        )
+        do {
+            try db.run(insert)
+        } catch {
+            print(error)
+        }
+    }
+    
     func getTransactionFromId(uuid: String) -> Transaction {
         var transaction: Transaction = Transaction(amount: 1.0, name: "", category: "", dateAndTime: Date(), repeatTag: 0, endRepeat: true, repeatEndDate: Date())
         do {
@@ -232,10 +278,25 @@ class Database {
         do {
             let transactionRows = Array(try db.prepare(transactionTable
                                                         .select(id, amount, name, category, dateAndTime, repeatId)
+                                                        .filter(dateAndTime < Date())
                                                         .order(dateAndTime.desc)
                                                       ))
             for transactionRow in transactionRows {
                 let transaction = HistoryTransaction.init(row: transactionRow)
+                transactions.append(transaction)
+            }
+        } catch {
+            print(error)
+        }
+        return transactions
+    }
+    
+    func getRepeatingTransactions() -> [Transaction] {
+        var transactions: [Transaction] = []
+        do {
+            let transactionRows = Array(try db.prepare(repeatTransactionTable))
+            for transactionRow in transactionRows {
+                let transaction = Transaction.init(row: transactionRow)
                 transactions.append(transaction)
             }
         } catch {
@@ -270,14 +331,23 @@ class Database {
         }
     }
     
+    func deleteRepeatingTransaction(uuid: String) {
+        let transaction = repeatTransactionTable.filter(id == uuid)
+        do {
+            try db.run(transaction.delete())
+        } catch {
+            print(error)
+        }
+    }
+    
     func getBalance(startDate: Date, endDate: Date) -> Double {
         var monthlyBalance: Double
         var amounts: [Amount] = []
         do {
             let amountRows = Array(try db.prepare(transactionTable
-                                                            .select(amount)
+                                                    .select(amount)
                                                     .filter(startDate...endDate ~= dateAndTime)
-                                                         ))
+                                                 ))
             for amountRow in amountRows {
                 let amount  = Amount.init(row: amountRow)
                 amounts.append(amount)

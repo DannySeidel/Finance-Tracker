@@ -73,23 +73,47 @@ struct AddTransactionView: View {
     
     private func addTransaction() {
         if (amount != nil) {
+            amount! *= factor
             name == nil ? name = "unnamed Transaction" : nil
             category == nil ? category = "no Category" : nil
-            data.database.insertTransaction(
-                transaction: Transaction(
-                    amount: amount! * factor,
-                    name: name!,
-                    category: category!,
-                    dateAndTime: dateAndTime,
-                    repeatTag: repeatTag,
-                    endRepeat: endRepeat,
-                    repeatEndDate: repeatEndDate
+            
+            let repeatUuid = UUID().uuidString
+            let dates = data.getRepeatDates(dateAndTime: dateAndTime, repeatEndDate: endRepeat ? repeatEndDate : Date().StartOfNextMonth(), repeatTag: repeatTag)
+            
+            for date in dates {
+                data.database.insertTransaction(
+                    transaction: Transaction(
+                        amount: amount!,
+                        name: name!,
+                        category: category!,
+                        dateAndTime: date,
+                        repeatTag: repeatTag,
+                        endRepeat: endRepeat,
+                        repeatEndDate: repeatEndDate,
+                        repeatId: repeatUuid
+                    )
                 )
-            )
-            debugPrint(data.getRepeatDates(dateAndTime: dateAndTime, endRepeat: endRepeat, repeatTag: repeatTag, repeatEndDate: repeatEndDate))
+            }
+            
+            if dates.last! > repeatEndDate {
+                data.database.insertNextRepeatingTransaction(
+                    transaction: Transaction(
+                        amount: amount!,
+                        name: name!,
+                        category: category!,
+                        dateAndTime: dateAndTime,
+                        repeatTag: repeatTag,
+                        endRepeat: endRepeat,
+                        repeatEndDate: repeatEndDate,
+                        repeatId: repeatUuid
+                    )
+                )
+            }
+            
             if storeNewCategoriesByDefault && category != "no Category" {
                 transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
             }
+            
             data.refreshBalance()
             data.refreshTransactionGroups()
             showTransactionSheet.toggle()

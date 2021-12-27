@@ -44,7 +44,8 @@ struct Category: Hashable {
 
 
 class Data: ObservableObject {
-    @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
+    @AppStorage("defaultTimespan") var defaultTimespan: Int = 0
+    @AppStorage("currentMonth") var currentMonth: Int = Calendar.current.component(.month, from: Date())
     
     var database: Database = {
         var instance = Database()
@@ -57,10 +58,11 @@ class Data: ObservableObject {
     @Published var balance = 0.0
     
     @Published var transactionGroups: [[HistoryTransaction]] = [[]]
-
+    
     init() {
         refreshBalance()
         refreshTransactionGroups()
+        addRepeatingTransactions()
     }
     
     func refreshBalance() {
@@ -79,8 +81,6 @@ class Data: ObservableObject {
             balance = database.getBalance(startDate: Date().startOfLastYear(), endDate: Date().startOfCurrentYear())
         case 7:
             balance = database.getBalance(startDate: Date().todayOneYearAgo(), endDate: Date())
-            debugPrint("Date:\(Date().todayOneYearAgo())")
-            debugPrint("Date:\(Date().startOfCurrentYear())")
         default:
             balance = database.getBalance(startDate: Date().startOfCurrentMonth(), endDate: Date())
         }
@@ -108,41 +108,53 @@ class Data: ObservableObject {
         transactionGroups = groups
     }
     
-    func getRepeatDates(dateAndTime: Date, endRepeat: Bool, repeatTag: Int, repeatEndDate: Date) -> [Date] {
-        var repeatDates: [Date] = []
+    func getRepeatDates(dateAndTime: Date, repeatEndDate: Date, repeatTag: Int) -> [Date] {
         var transactionDate = dateAndTime
-        if endRepeat {
-            while transactionDate <= repeatEndDate {
-                switch repeatTag {
-                case 1:
-                    transactionDate = Calendar.current.date(byAdding: .day, value: 1, to: transactionDate)!
-                case 2:
-                    transactionDate = Calendar.current.date(byAdding: .day, value: 7, to: transactionDate)!
-                case 3:
-                    transactionDate = Calendar.current.date(byAdding: .month, value: 1, to: transactionDate)!
-                default:
-                    transactionDate = Calendar.current.date(byAdding: .year, value: 1, to: transactionDate)!
-                }
-                repeatDates.append(transactionDate)
+        var repeatDates: [Date] = []
+        while transactionDate <= repeatEndDate {
+            repeatDates.append(transactionDate)
+            switch repeatTag {
+            case 1:
+                transactionDate = Calendar.current.date(byAdding: .day, value: 1, to: transactionDate)!
+            case 2:
+                transactionDate = Calendar.current.date(byAdding: .day, value: 7, to: transactionDate)!
+            case 3:
+                transactionDate = Calendar.current.date(byAdding: .month, value: 1, to: transactionDate)!
+            default:
+                transactionDate = Calendar.current.date(byAdding: .year, value: 1, to: transactionDate)!
             }
-            repeatDates.removeLast()
-        } else {
-            while transactionDate <= Date().endOfCurrentMonth() {
-                switch repeatTag {
-                case 1:
-                    transactionDate = Calendar.current.date(byAdding: .day, value: 1, to: transactionDate)!
-                case 2:
-                    transactionDate = Calendar.current.date(byAdding: .day, value: 7, to: transactionDate)!
-                case 3:
-                    transactionDate = Calendar.current.date(byAdding: .month, value: 1, to: transactionDate)!
-                default:
-                    transactionDate = Calendar.current.date(byAdding: .year, value: 1, to: transactionDate)!
-                }
-                repeatDates.append(transactionDate)
-            }
-            repeatDates.removeLast()
         }
         return repeatDates
+    }
+    
+    func addRepeatingTransactions() {
+        if currentMonth != Calendar.current.component(.month, from: Date()) {
+            let transactions = database.getRepeatingTransactions()
+            for transaction in transactions {
+                let repeatUuid = UUID().uuidString
+                let dates = getRepeatDates(dateAndTime: transaction.dateAndTime, repeatEndDate: transaction.endRepeat ? transaction.repeatEndDate : Date().StartOfNextMonth(), repeatTag: transaction.repeatTag)
+                
+                for date in dates {
+                    database.insertTransaction(
+                        transaction: Transaction(
+                            amount: transaction.amount,
+                            name: transaction.name,
+                            category: transaction.category,
+                            dateAndTime: date,
+                            repeatTag: transaction.repeatTag,
+                            endRepeat: transaction.endRepeat,
+                            repeatEndDate: transaction.repeatEndDate,
+                            repeatId: repeatUuid
+                        )
+                    )
+                }
+                
+                if dates.last! <= transaction.repeatEndDate {
+                    database.deleteRepeatingTransaction(uuid: transaction.id)
+                }
+            }
+        }
+        currentMonth = Calendar.current.component(.month, from: Date())
     }
     
     @Published var categoriesExpense = [

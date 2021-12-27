@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var data: Data
     @AppStorage("storeNewCategoriesByDefault") var storeNewCategoriesByDefault: Bool = true
-    @AppStorage("DefaultTimespan") var defaultTimespan: Int = 0
+    @AppStorage("defaultTimespan") var defaultTimespan: Int = 0
     
     @Binding var showSettingsSheet: Bool
     
