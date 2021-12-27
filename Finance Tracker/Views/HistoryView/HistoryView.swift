@@ -12,6 +12,7 @@ struct HistoryView: View {
     @State var transactionSearchName = ""
     @State var filterTag = 0
     @State var showingSheet = false
+    @State var showingConfirmationDialog = false
     @State var uuid = ""
     @State var repeatUuid = ""
     @State var transactionType = false
@@ -69,7 +70,9 @@ struct HistoryView: View {
                                             Label("Edit", systemImage: "pencil")
                                         }
                                         Button(role: .destructive) {
-                                            onDelete(id: transaction.id, repeatId: transaction.repeatId)
+                                            showingConfirmationDialog.toggle()
+                                            uuid = transaction.id
+                                            repeatUuid = transaction.repeatId
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
@@ -80,6 +83,11 @@ struct HistoryView: View {
                     }
                 }
                 .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
+            }
+            .confirmationDialog("actionSheet", isPresented: $showingConfirmationDialog) {
+                Button("Delete", role: .destructive) {
+                    onDelete(id: uuid, repeatId: repeatUuid)
+                }
             }
             .sheet(isPresented: $showingSheet) {
                 EditTransactionView(showingSheet: $showingSheet, uuid: $uuid, repeatUuid: $repeatUuid, transactionType: $transactionType)
