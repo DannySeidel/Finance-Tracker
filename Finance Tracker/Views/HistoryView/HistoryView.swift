@@ -13,6 +13,7 @@ struct HistoryView: View {
     @State var filterTag = 0
     @State var showingSheet = false
     @State var uuid = ""
+    @State var repeatUuid = ""
     @State var transactionType = false
     
     var searchGroups: [[HistoryTransaction]] {
@@ -68,7 +69,7 @@ struct HistoryView: View {
                                             Label("Edit", systemImage: "pencil")
                                         }
                                         Button(role: .destructive) {
-                                            onDelete(id: transaction.id)
+                                            onDelete(id: transaction.id, repeatId: transaction.repeatId)
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
@@ -81,7 +82,7 @@ struct HistoryView: View {
                 .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
             }
             .sheet(isPresented: $showingSheet) {
-                EditTransactionView(showingSheet: $showingSheet, uuid: $uuid, transactionType: $transactionType)
+                EditTransactionView(showingSheet: $showingSheet, uuid: $uuid, repeatUuid: $repeatUuid, transactionType: $transactionType)
             }
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
@@ -104,7 +105,7 @@ struct HistoryView: View {
         .background(Color.init(UIColor(named: "AppBackground")!))
     }
     
-    private func onDelete(id: String) {
+    private func onDelete(id: String, repeatId: String) {
         data.database.deleteTransaction(uuid: id)
         data.refreshTransactionGroups()
         data.refreshBalance()
@@ -116,12 +117,12 @@ struct HistoryView_Previews: PreviewProvider {
         NavigationView {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
-            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatId: ""))
         }
         NavigationView {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
-            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatId: ""))
         }
         .preferredColorScheme(.dark)
     }

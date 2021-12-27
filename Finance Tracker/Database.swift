@@ -51,6 +51,7 @@ class Database {
     let repeatTag = Expression<Int>("repeatTag")
     let endRepeat = Expression<Bool>("endRepeat")
     let repeatEndDate = Expression<Date>("repeatEndDate")
+    let repeatId = Expression<String>("repeatId")
     
     let nameTable = Table("names")
     
@@ -80,6 +81,7 @@ class Database {
             table.column(repeatTag)
             table.column(endRepeat)
             table.column(repeatEndDate)
+            table.column(repeatId)
         }
             
         let createNameTable = nameTable.create(ifNotExists: true) { table in
@@ -112,8 +114,8 @@ class Database {
             categoriesIncome.forEach { category in
                 insertIncomeCategory(newCategory: category)
             }
+            firstUse = false
         }
-        firstUse = false
     }
     
     
@@ -200,7 +202,8 @@ class Database {
             dateAndTime <- transaction.dateAndTime,
             repeatTag <- transaction.repeatTag,
             endRepeat <- transaction.endRepeat,
-            repeatEndDate <- transaction.repeatEndDate
+            repeatEndDate <- transaction.repeatEndDate,
+            repeatId <- transaction.repeatId
         )
         do {
             try db.run(insert)
@@ -228,7 +231,7 @@ class Database {
         var transactions: [HistoryTransaction] = []
         do {
             let transactionRows = Array(try db.prepare(transactionTable
-                                                        .select(id, amount, name, category, dateAndTime)
+                                                        .select(id, amount, name, category, dateAndTime, repeatId)
                                                         .order(dateAndTime.desc)
                                                       ))
             for transactionRow in transactionRows {

@@ -14,7 +14,7 @@ struct AmountView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
+                .foregroundColor(Color.init(UIColor(named: "AppSheetElement")!))
             HStack {
                 Text("Amount")
                 TextField("9,11", value: $amountTemp, format: .number)

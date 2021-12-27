@@ -101,6 +101,7 @@ extension Transaction {
             try self.repeatTag = row.get(Expression<Int>("repeatTag"))
             try self.endRepeat = row.get(Expression<Bool>("endRepeat"))
             try self.repeatEndDate = row.get(Expression<Date>("repeatEndDate"))
+            try self.repeatId = row.get(Expression<String>("repeatId"))
         } catch {
             self.id = ""
             self.amount = 1.0
@@ -110,6 +111,7 @@ extension Transaction {
             self.repeatTag = 0
             self.endRepeat = false
             self.repeatEndDate = Date.now
+            self.repeatId = ""
             print(error)
         }
     }
@@ -124,12 +126,14 @@ extension HistoryTransaction {
             try self.name = row.get(Expression<String>("name"))
             try self.category = row.get(Expression<String>("category"))
             try self.dateAndTime = row.get(Expression<Date>("dateAndTime"))
+            try self.repeatId = row.get(Expression<String>("repeatId"))
         } catch {
             self.id = ""
             self.amount = 1.0
             self.name = ""
             self.category = ""
             self.dateAndTime = Date.now
+            self.repeatId = ""
             print(error)
         }
     }

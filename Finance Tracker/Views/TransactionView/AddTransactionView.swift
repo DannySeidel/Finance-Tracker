@@ -63,7 +63,7 @@ struct AddTransactionView: View {
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.init(UIColor(named: "AppText")!))
-                .background(Color.init(UIColor(named: "AppBackground")!))
+                .background(Color.init(UIColor(named: "AppSheetBackground")!))
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text("Missing an amount"))
@@ -84,6 +84,7 @@ struct AddTransactionView: View {
                     repeatTag: repeatTag,
                     endRepeat: endRepeat,
                     repeatEndDate: repeatEndDate
+                    
                 )
             )
             if storeNewCategoriesByDefault && category != "no Category" {

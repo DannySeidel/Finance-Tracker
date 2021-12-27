@@ -19,6 +19,7 @@ struct Transaction: Hashable, Identifiable {
     var repeatTag: Int
     var endRepeat: Bool
     var repeatEndDate: Date
+    var repeatId = UUID().uuidString
 }
 
 
@@ -28,6 +29,7 @@ struct HistoryTransaction: Hashable, Identifiable {
     var name: String
     var category: String
     var dateAndTime: Date
+    var repeatId: String
 }
 
 
