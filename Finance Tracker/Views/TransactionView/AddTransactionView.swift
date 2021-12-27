@@ -90,12 +90,12 @@ struct AddTransactionView: View {
             if storeNewCategoriesByDefault && category != "no Category" {
                 transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
             }
+            data.refreshBalance()
+            data.refreshTransactionGroups()
+            showTransactionSheet.toggle()
         } else {
             showingAlert.toggle()
         }
-        data.refreshBalance()
-        data.refreshTransactionGroups()
-        showTransactionSheet.toggle()
     }
 }
 

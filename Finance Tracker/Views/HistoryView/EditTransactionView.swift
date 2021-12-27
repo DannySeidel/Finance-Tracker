@@ -121,8 +121,10 @@ struct EditTransactionView: View {
             }
             data.refreshTransactionGroups()
             data.refreshBalance()
+            showingSheet.toggle()
+        } else {
+            showingAlert.toggle()
         }
-        showingSheet.toggle()
     }
 }
 
