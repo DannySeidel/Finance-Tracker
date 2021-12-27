@@ -49,7 +49,7 @@ struct DateView: View {
                     HStack {
                         Text("End Repeat")
                         if endRepeat == true {
-                            DatePicker("", selection: $repeatEndDate, in: Date()..., displayedComponents: .date)
+                            DatePicker("", selection: $repeatEndDate, in: dateAndTime..., displayedComponents: .date)
                                 .padding(-2)
                         }
                         Toggle("", isOn: $endRepeat)

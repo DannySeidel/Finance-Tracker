@@ -108,6 +108,43 @@ class Data: ObservableObject {
         transactionGroups = groups
     }
     
+    func getRepeatDates(dateAndTime: Date, endRepeat: Bool, repeatTag: Int, repeatEndDate: Date) -> [Date] {
+        var repeatDates: [Date] = []
+        var transactionDate = dateAndTime
+        if endRepeat {
+            while transactionDate <= repeatEndDate {
+                switch repeatTag {
+                case 1:
+                    transactionDate = Calendar.current.date(byAdding: .day, value: 1, to: transactionDate)!
+                case 2:
+                    transactionDate = Calendar.current.date(byAdding: .day, value: 7, to: transactionDate)!
+                case 3:
+                    transactionDate = Calendar.current.date(byAdding: .month, value: 1, to: transactionDate)!
+                default:
+                    transactionDate = Calendar.current.date(byAdding: .year, value: 1, to: transactionDate)!
+                }
+                repeatDates.append(transactionDate)
+            }
+            repeatDates.removeLast()
+        } else {
+            while transactionDate <= Date().endOfCurrentMonth() {
+                switch repeatTag {
+                case 1:
+                    transactionDate = Calendar.current.date(byAdding: .day, value: 1, to: transactionDate)!
+                case 2:
+                    transactionDate = Calendar.current.date(byAdding: .day, value: 7, to: transactionDate)!
+                case 3:
+                    transactionDate = Calendar.current.date(byAdding: .month, value: 1, to: transactionDate)!
+                default:
+                    transactionDate = Calendar.current.date(byAdding: .year, value: 1, to: transactionDate)!
+                }
+                repeatDates.append(transactionDate)
+            }
+            repeatDates.removeLast()
+        }
+        return repeatDates
+    }
+    
     @Published var categoriesExpense = [
         "Car",
         "Clothes",

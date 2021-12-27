@@ -84,9 +84,9 @@ struct AddTransactionView: View {
                     repeatTag: repeatTag,
                     endRepeat: endRepeat,
                     repeatEndDate: repeatEndDate
-                    
                 )
             )
+            debugPrint(data.getRepeatDates(dateAndTime: dateAndTime, endRepeat: endRepeat, repeatTag: repeatTag, repeatEndDate: repeatEndDate))
             if storeNewCategoriesByDefault && category != "no Category" {
                 transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
             }
