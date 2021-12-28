@@ -98,16 +98,12 @@ struct EditTransactionView: View {
     
     private func updateTransaction() {
         if amount != nil {
-            amount! *= factor
-            name == nil ? name = "unnamed Transaction" : nil
-            category == nil ? category = "no Category" : nil
-            
             data.database.updateTransaction(
                 transaction: Transaction(
                     id: uuid,
-                    amount: amount!,
-                    name: name!,
-                    category: category!,
+                    amount: amount! * factor,
+                    name: name ?? "unnamed Transaction",
+                    category: category ?? "no Category",
                     dateAndTime: dateAndTime,
                     repeatTag: repeatTag,
                     endRepeat: endRepeat,
@@ -115,7 +111,7 @@ struct EditTransactionView: View {
                 )
             )
             
-            if storeNewCategoriesByDefault && category != "no Category" {
+            if storeNewCategoriesByDefault && category != nil {
                 transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
             }
             

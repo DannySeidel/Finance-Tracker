@@ -73,19 +73,15 @@ struct AddTransactionView: View {
     
     private func addTransaction() {
         if (amount != nil) {
-            amount! *= factor
-            name == nil ? name = "unnamed Transaction" : nil
-            category == nil ? category = "no Category" : nil
-            
             let repeatUuid = UUID().uuidString
             let dates = data.getRepeatDates(dateAndTime: dateAndTime, repeatEndDate: endRepeat ? repeatEndDate : Date().StartOfNextMonth(), repeatTag: repeatTag)
             
             for date in dates {
                 data.database.insertTransaction(
                     transaction: Transaction(
-                        amount: amount!,
-                        name: name!,
-                        category: category!,
+                        amount: amount! * factor,
+                        name: name ?? "unnamed Transaction",
+                        category: category ?? "no Category",
                         dateAndTime: date,
                         repeatTag: repeatTag,
                         endRepeat: endRepeat,
@@ -98,9 +94,9 @@ struct AddTransactionView: View {
             if !endRepeat {
                 data.database.insertNextRepeatingTransaction(
                     transaction: Transaction(
-                        amount: amount!,
-                        name: name!,
-                        category: category!,
+                        amount: amount! * factor,
+                        name: name ?? "unnamed Transaction",
+                        category: category ?? "no Category",
                         dateAndTime: dateAndTime,
                         repeatTag: repeatTag,
                         endRepeat: endRepeat,
@@ -110,7 +106,7 @@ struct AddTransactionView: View {
                 )
             }
             
-            if storeNewCategoriesByDefault && category != "no Category" {
+            if storeNewCategoriesByDefault && category != nil {
                 transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
             }
             
