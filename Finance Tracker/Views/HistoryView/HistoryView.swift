@@ -17,6 +17,7 @@ struct HistoryView: View {
     @State var repeatUuid = ""
     @State var dateAndTime = Date()
     @State var transactionType = false
+    @State var confirmationType = ""
     
     var searchGroups: [[HistoryTransaction]] {
         if transactionSearchName.isEmpty {
@@ -71,10 +72,11 @@ struct HistoryView: View {
                                             Label("Edit", systemImage: "pencil")
                                         }
                                         Button(role: .destructive) {
-                                            showingConfirmationDialog.toggle()
                                             uuid = transaction.id
                                             repeatUuid = transaction.repeatId
                                             dateAndTime = transaction.dateAndTime
+                                            getconfirmationType(repeatId: repeatUuid)
+                                            showingConfirmationDialog.toggle()
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
@@ -86,8 +88,8 @@ struct HistoryView: View {
                 }
                 .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
             }
-            .confirmationDialog("actionSheet", isPresented: $showingConfirmationDialog) {
-                if data.database.getTransactionsFromRepeatId(repeatUuid: repeatUuid).count > 1 {
+            .confirmationDialog("This is a \(confirmationType) Transaction", isPresented: $showingConfirmationDialog, titleVisibility: .visible) {
+                if confirmationType == "Repeating" {
                     Button("Delete All Future Transactions", role: .destructive) {
                         deleteAllFutureTransactions(repeatId: repeatUuid, dateAndTime: dateAndTime)
                     }
@@ -120,6 +122,16 @@ struct HistoryView: View {
         .background(Color.init(UIColor(named: "AppBackground")!))
     }
     
+    private func getconfirmationType(repeatId: String) {
+        let repeatingTransactionCount = data.database.getTransactionsFromRepeatId(repeatUuid: repeatId).count
+        
+        if repeatingTransactionCount <= 1 {
+            confirmationType = "Single"
+        } else {
+            confirmationType = "Repeating"
+        }
+    }
+    
     private func deleteCurrentTransaction(id: String) {
         data.database.deleteTransaction(uuid: id)
         data.refreshTransactionGroups()
@@ -128,7 +140,7 @@ struct HistoryView: View {
     
     private func deleteAllFutureTransactions(repeatId: String, dateAndTime: Date) {
         data.database.deleteFutureTransactions(uuid: repeatId, date: dateAndTime)
-        if data.database.getTransactionsFromRepeatId(repeatUuid: repeatId).count <= 1 {
+        if confirmationType == "Single" {
             data.database.deleteRepeatingTransaction(uuid: repeatId)
         }
         data.refreshTransactionGroups()
