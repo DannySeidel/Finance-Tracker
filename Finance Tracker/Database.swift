@@ -36,8 +36,6 @@ class Database {
         "Tax Refunds"
     ]
     
-    @EnvironmentObject var data: Data
-    
     var db: Connection!
     
     let transactionTable = Table("transactions")
@@ -226,19 +224,7 @@ class Database {
     }
     
     func insertNextRepeatingTransaction(transaction: Transaction) {
-        var transactionDate = transaction.dateAndTime
-        while transactionDate <= Date().StartOfNextMonth() {
-            switch transaction.repeatTag {
-            case 1:
-                transactionDate = Calendar.current.date(byAdding: .day, value: 1, to: transactionDate)!
-            case 2:
-                transactionDate = Calendar.current.date(byAdding: .day, value: 7, to: transactionDate)!
-            case 3:
-                transactionDate = Calendar.current.date(byAdding: .month, value: 1, to: transactionDate)!
-            default:
-                transactionDate = Calendar.current.date(byAdding: .year, value: 1, to: transactionDate)!
-            }
-        }
+        let transactionDate = Data().getNextRepeatDate(transaction: transaction)
         
         let insert = repeatTransactionTable.insert(
             id <- transaction.id,
@@ -309,13 +295,34 @@ class Database {
         let updateTransaction = transactionTable.filter(id == transaction.id)
         do {
             try db.run(updateTransaction.update(
+                id <- transaction.id,
                 amount <- transaction.amount,
                 name <- transaction.name,
                 category <- transaction.category,
                 dateAndTime <- transaction.dateAndTime,
                 repeatTag <- transaction.repeatTag,
                 endRepeat <- transaction.endRepeat,
-                repeatEndDate <- transaction.repeatEndDate
+                repeatEndDate <- transaction.repeatEndDate,
+                repeatId <- transaction.repeatId
+            ))
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateRepeatingTransaction(transaction: Transaction) {
+        let updateTransaction = repeatTransactionTable.filter(id == transaction.id)
+        do {
+            try db.run(updateTransaction.update(
+                id <- transaction.id,
+                amount <- transaction.amount,
+                name <- transaction.name,
+                category <- transaction.category,
+                dateAndTime <- transaction.dateAndTime,
+                repeatTag <- transaction.repeatTag,
+                endRepeat <- transaction.endRepeat,
+                repeatEndDate <- transaction.repeatEndDate,
+                repeatId <- transaction.repeatId
             ))
         } catch {
             print(error)

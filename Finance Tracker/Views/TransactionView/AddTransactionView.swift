@@ -95,7 +95,7 @@ struct AddTransactionView: View {
                 )
             }
             
-            if dates.last! > repeatEndDate {
+            if !endRepeat {
                 data.database.insertNextRepeatingTransaction(
                     transaction: Transaction(
                         amount: amount!,
