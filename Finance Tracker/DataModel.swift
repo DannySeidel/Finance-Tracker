@@ -29,6 +29,7 @@ struct HistoryTransaction: Hashable, Identifiable {
     var name: String
     var category: String
     var dateAndTime: Date
+    var repeatTag: Int
     var repeatId: String
 }
 
@@ -81,14 +82,20 @@ class Data: ObservableObject {
             balance = database.getBalance(startDate: Date().startOfLastYear(), endDate: Date().startOfCurrentYear())
         case 7:
             balance = database.getBalance(startDate: Date().todayOneYearAgo(), endDate: Date())
+        case 8:
+            balance = database.getBalance(startDate: Date.distantPast, endDate: Date.distantFuture)
         default:
             balance = database.getBalance(startDate: Date().startOfCurrentMonth(), endDate: Date())
         }
     }
     
     func refreshTransactionGroups() {
+        var date = Date()
+        if defaultTimespan == 8 {
+            date = Date.distantFuture
+        }
         var groups: [[HistoryTransaction]] = []
-        for transaction in database.getTransactionsForHistory() {
+        for transaction in database.getTransactionsForHistory(endDate: date) {
             var groupexists = false
             for group in groups {
                 if let firstGroup = group.first, Calendar.current.isDate(
@@ -168,7 +175,7 @@ class Data: ObservableObject {
                 
                 let repeatDate = getNextRepeatDate(transaction: transaction)
                 
-                database.deleteRepeatingTransaction(uuid: transaction.id)
+                database.deleteRepeatingTransaction(uuid: transaction.repeatId)
                 
                 database.insertNextRepeatingTransaction(
                     transaction: Transaction(
@@ -178,7 +185,8 @@ class Data: ObservableObject {
                         dateAndTime: repeatDate,
                         repeatTag: transaction.repeatTag,
                         endRepeat: transaction.endRepeat,
-                        repeatEndDate: transaction.repeatEndDate
+                        repeatEndDate: transaction.repeatEndDate,
+                        repeatId: repeatUuid
                     )
                 )
             }

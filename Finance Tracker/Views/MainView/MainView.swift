@@ -30,6 +30,8 @@ struct MainView: View {
             return "Last Year"
         case 7:
             return "Previous 365 Days"
+        case 8:
+            return "Dev"
         default:
             return "Current Month"
         }

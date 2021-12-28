@@ -30,6 +30,7 @@ struct SettingsView: View {
                     Text("Current Year").tag(5)
                     Text("Last Year").tag(6)
                     Text("Previous 365 Days").tag(7)
+                    Text("Dev").tag(8) //Change Later to "Lifetime"
                 }
                 NavigationLink(destination: ManageAnalyticsView()) {
                     Text("Standart Diagram Type")
@@ -40,6 +41,7 @@ struct SettingsView: View {
                 trailing:
                     Button("Done") {
                         data.refreshBalance()
+                        data.refreshTransactionGroups()
                         showSettingsSheet.toggle()
                     }
                     .foregroundColor(Color.init(UIColor(named: "AppText")!))

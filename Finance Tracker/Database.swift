@@ -259,12 +259,12 @@ class Database {
         return transaction
     }
     
-    func getTransactionsForHistory() -> [HistoryTransaction] {
+    func getTransactionsForHistory(endDate: Date) -> [HistoryTransaction] {
         var transactions: [HistoryTransaction] = []
         do {
             let transactionRows = Array(try db.prepare(transactionTable
-                                                        .select(id, amount, name, category, dateAndTime, repeatId)
-                                                        .filter(dateAndTime < Date())
+                                                        .select(id, amount, name, category, dateAndTime, repeatTag, repeatId)
+                                                        .filter(dateAndTime < endDate)
                                                         .order(dateAndTime.desc)
                                                       ))
             for transactionRow in transactionRows {
@@ -281,6 +281,22 @@ class Database {
         var transactions: [Transaction] = []
         do {
             let transactionRows = Array(try db.prepare(repeatTransactionTable))
+            for transactionRow in transactionRows {
+                let transaction = Transaction.init(row: transactionRow)
+                transactions.append(transaction)
+            }
+        } catch {
+            print(error)
+        }
+        return transactions
+    }
+    
+    func getTransactionsFromRepeatId(repeatUuid: String) -> [Transaction] {
+        var transactions: [Transaction] = []
+        do {
+            let transactionRows = Array(try db.prepare(transactionTable
+                                                        .filter(repeatId == repeatUuid)
+                                                      ))
             for transactionRow in transactionRows {
                 let transaction = Transaction.init(row: transactionRow)
                 transactions.append(transaction)
@@ -338,8 +354,17 @@ class Database {
         }
     }
     
+    func deleteFutureTransactions(uuid: String, date: Date) {
+        let transactions = transactionTable.filter(repeatId == uuid && dateAndTime >= date)
+        do {
+            try db.run(transactions.delete())
+        } catch {
+            print(error)
+        }
+    }
+    
     func deleteRepeatingTransaction(uuid: String) {
-        let transaction = repeatTransactionTable.filter(id == uuid)
+        let transaction = repeatTransactionTable.filter(repeatId == uuid)
         do {
             try db.run(transaction.delete())
         } catch {

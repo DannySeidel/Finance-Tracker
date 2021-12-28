@@ -126,6 +126,7 @@ extension HistoryTransaction {
             try self.name = row.get(Expression<String>("name"))
             try self.category = row.get(Expression<String>("category"))
             try self.dateAndTime = row.get(Expression<Date>("dateAndTime"))
+            try self.repeatTag = row.get(Expression<Int>("repeatTag"))
             try self.repeatId = row.get(Expression<String>("repeatId"))
         } catch {
             self.id = ""
@@ -133,6 +134,7 @@ extension HistoryTransaction {
             self.name = ""
             self.category = ""
             self.dateAndTime = Date.now
+            self.repeatTag = 0
             self.repeatId = ""
             print(error)
         }

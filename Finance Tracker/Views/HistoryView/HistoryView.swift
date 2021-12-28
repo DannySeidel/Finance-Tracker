@@ -15,6 +15,7 @@ struct HistoryView: View {
     @State var showingConfirmationDialog = false
     @State var uuid = ""
     @State var repeatUuid = ""
+    @State var dateAndTime = Date()
     @State var transactionType = false
     
     var searchGroups: [[HistoryTransaction]] {
@@ -73,6 +74,7 @@ struct HistoryView: View {
                                             showingConfirmationDialog.toggle()
                                             uuid = transaction.id
                                             repeatUuid = transaction.repeatId
+                                            dateAndTime = transaction.dateAndTime
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
@@ -85,8 +87,13 @@ struct HistoryView: View {
                 .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
             }
             .confirmationDialog("actionSheet", isPresented: $showingConfirmationDialog) {
-                Button("Delete", role: .destructive) {
-                    onDelete(id: uuid, repeatId: repeatUuid)
+                if data.database.getTransactionsFromRepeatId(repeatUuid: repeatUuid).count > 1 {
+                    Button("Delete All Future Transactions", role: .destructive) {
+                        deleteAllFutureTransactions(repeatId: repeatUuid, dateAndTime: dateAndTime)
+                    }
+                }
+                Button("Delete This Transaction", role: .destructive) {
+                    deleteCurrentTransaction(id: uuid)
                 }
             }
             .sheet(isPresented: $showingSheet) {
@@ -113,8 +120,17 @@ struct HistoryView: View {
         .background(Color.init(UIColor(named: "AppBackground")!))
     }
     
-    private func onDelete(id: String, repeatId: String) {
+    private func deleteCurrentTransaction(id: String) {
         data.database.deleteTransaction(uuid: id)
+        data.refreshTransactionGroups()
+        data.refreshBalance()
+    }
+    
+    private func deleteAllFutureTransactions(repeatId: String, dateAndTime: Date) {
+        data.database.deleteFutureTransactions(uuid: repeatId, date: dateAndTime)
+        if data.database.getTransactionsFromRepeatId(repeatUuid: repeatId).count <= 1 {
+            data.database.deleteRepeatingTransaction(uuid: repeatId)
+        }
         data.refreshTransactionGroups()
         data.refreshBalance()
     }
@@ -125,12 +141,12 @@ struct HistoryView_Previews: PreviewProvider {
         NavigationView {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
-            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatId: ""))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatTag: 0, repeatId: ""))
         }
         NavigationView {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
-            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatId: ""))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatTag: 0, repeatId: ""))
         }
         .preferredColorScheme(.dark)
     }
