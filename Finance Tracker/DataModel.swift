@@ -29,7 +29,6 @@ struct HistoryTransaction: Hashable, Identifiable {
     var name: String
     var category: String
     var dateAndTime: Date
-    var repeatTag: Int
     var repeatId: String
 }
 

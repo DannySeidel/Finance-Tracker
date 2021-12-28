@@ -263,7 +263,7 @@ class Database {
         var transactions: [HistoryTransaction] = []
         do {
             let transactionRows = Array(try db.prepare(transactionTable
-                                                        .select(id, amount, name, category, dateAndTime, repeatTag, repeatId)
+                                                        .select(id, amount, name, category, dateAndTime, repeatId)
                                                         .filter(dateAndTime < endDate)
                                                         .order(dateAndTime.desc)
                                                       ))

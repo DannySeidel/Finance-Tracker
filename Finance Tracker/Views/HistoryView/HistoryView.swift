@@ -153,12 +153,12 @@ struct HistoryView_Previews: PreviewProvider {
         NavigationView {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
-            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatTag: 0, repeatId: ""))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatId: ""))
         }
         NavigationView {
             HistoryView(showingSheet: false)
                 .environmentObject(Data())
-            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatTag: 0, repeatId: ""))
+            TransactionElement(transaction: HistoryTransaction(id: "1959addc-387b-437c-87d2-776a40e9f509", amount: 9.11, name: "Lunch", category: "", dateAndTime: Date.now, repeatId: ""))
         }
         .preferredColorScheme(.dark)
     }
