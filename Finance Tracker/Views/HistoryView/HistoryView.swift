@@ -24,18 +24,15 @@ struct HistoryView: View {
             return data.transactionGroups
         } else {
             return data.transactionGroups.map { group in
-                switch filterTag {
-                case 1:
-                    return group.filter({$0.category.contains(transactionSearchName)})
-                case 2:
-                    return group.filter({String($0.amount).contains(transactionSearchName)})
-                case 3:
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd.MM.yy"
-                    return group.filter({dateFormatter.string(from: $0.dateAndTime).contains(transactionSearchName)})
-                default:
-                    return group.filter({$0.name.contains(transactionSearchName)})
-                }
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd.MM.yy"
+                return group.filter({
+                    $0.category.contains(transactionSearchName) ||
+                    String($0.amount).contains(transactionSearchName) ||
+                    dateFormatter.string(from: $0.dateAndTime).contains(transactionSearchName) ||
+                    $0.name.contains(transactionSearchName)
+                    }
+                )
             }
         }
     }
@@ -103,21 +100,6 @@ struct HistoryView: View {
             }
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                trailing:
-                    HStack {
-                        Spacer()
-                        Image(systemName: "line.3.horizontal.decrease.circle")
-                        Picker("\(Image(systemName: "line.3.horizontal.decrease.circle"))", selection: $filterTag) {
-                            Text("Name").tag(0)
-                            Text("Category").tag(1)
-                            Text("Amount").tag(2)
-                            Text("Date").tag(3)
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .offset(y: 1)
-                    }
-            )
         }
         .background(Color.init(UIColor(named: "AppBackground")!))
     }
