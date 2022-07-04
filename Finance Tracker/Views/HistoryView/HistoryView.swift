@@ -19,24 +19,6 @@ struct HistoryView: View {
     @State var transactionType = false
     @State var confirmationType = ""
     
-    var searchGroups: [[HistoryTransaction]] {
-        if transactionSearchName.isEmpty {
-            return data.transactionGroups
-        } else {
-            return data.transactionGroups.map { group in
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd.MM.yy"
-                return group.filter({
-                    $0.category.contains(transactionSearchName) ||
-                    String($0.amount).contains(transactionSearchName) ||
-                    dateFormatter.string(from: $0.dateAndTime).contains(transactionSearchName) ||
-                    $0.name.contains(transactionSearchName)
-                    }
-                )
-            }
-        }
-    }
-    
     var body: some View {
         VStack {
             BalanceHistoryView()
@@ -44,45 +26,7 @@ struct HistoryView: View {
                 .padding(.leading)
                 .padding(.trailing)
             ScrollView {
-                ForEach(searchGroups, id: \.first?.id) { group in
-                    if group.first != nil {
-                        VStack {
-                            HStack {
-                                Text(group.first!.dateAndTime, style: .date)
-                                
-                                Spacer()
-                            }
-                            .padding(.leading, 30)
-                            ForEach(group, id: \.id) { transaction in
-                                TransactionElement(transaction: transaction)
-                                    .frame(height: 70)
-                                    .contextMenu {
-                                        Button {
-                                            showingSheet.toggle()
-                                            uuid = transaction.id
-                                            if transaction.amount < 0 {
-                                                transactionType = false
-                                            } else {
-                                                transactionType = true
-                                            }
-                                        } label: {
-                                            Label("Edit", systemImage: "pencil")
-                                        }
-                                        Button(role: .destructive) {
-                                            uuid = transaction.id
-                                            repeatUuid = transaction.repeatId
-                                            dateAndTime = transaction.dateAndTime
-                                            getconfirmationType(repeatId: repeatUuid)
-                                            showingConfirmationDialog.toggle()
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                    }
-                            }
-                        }
-                        .padding(.top)
-                    }
-                }
+                HistoryContentView(transactionSearchName: $transactionSearchName, showingSheet: $showingSheet, showingConfirmationDialog: $showingConfirmationDialog, uuid: $uuid, repeatUuid: $repeatUuid, dateAndTime: $dateAndTime, transactionType: $transactionType, confirmationType: $confirmationType)
                 .searchable(text: $transactionSearchName, placement: .navigationBarDrawer(displayMode: .always))
             }
             .confirmationDialog("This is a \(confirmationType) Transaction", isPresented: $showingConfirmationDialog, titleVisibility: .visible) {
@@ -102,16 +46,6 @@ struct HistoryView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .background(Color.init(UIColor(named: "AppBackground")!))
-    }
-    
-    private func getconfirmationType(repeatId: String) {
-        let repeatingTransactionCount = data.database.getTransactionsFromRepeatId(repeatUuid: repeatId).count
-        
-        if repeatingTransactionCount <= 1 {
-            confirmationType = "Single"
-        } else {
-            confirmationType = "Repeating"
-        }
     }
     
     private func deleteCurrentTransaction(id: String) {

@@ -97,7 +97,7 @@ struct EditTransactionView: View {
     }
     
     private func updateTransaction() {
-        if amount != nil {
+        if amount != nil || amount == 0 {
             data.database.updateTransaction(
                 transaction: Transaction(
                     id: uuid,
