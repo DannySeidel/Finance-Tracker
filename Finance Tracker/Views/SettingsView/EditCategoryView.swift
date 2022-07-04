@@ -16,11 +16,11 @@ struct EditCategoryView: View {
     
     var searchCategories: [Category] {
         if searchText.isEmpty {
-            return categoryType ? data.database.getIncomeCategories() : data.database.getExpenseCategories()
+            return categoryType ? data.database.getCategories(type: "income") : data.database.getCategories(type: "expense")
         } else {
             return categoryType ?
-            data.database.getIncomeCategories().filter { $0.name.contains(searchText) } :
-            data.database.getExpenseCategories().filter { $0.name.contains(searchText) }
+            data.database.getCategories(type: "income").filter { $0.name.contains(searchText) } :
+            data.database.getCategories(type: "expense").filter { $0.name.contains(searchText) }
         }
     }
     
@@ -64,9 +64,9 @@ struct EditCategoryView: View {
         let category = searchCategories[offsets.first!]
         
         if categoryType {
-            data.database.deleteIncomeCategory(name: category.name)
+            data.database.deleteCategory(type: "income", name: category.name)
         } else {
-            data.database.deleteExpenseCategory(name: category.name)
+            data.database.deleteCategory(type: "expense", name: category.name)
         }
     }
 }

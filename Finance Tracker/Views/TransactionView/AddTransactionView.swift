@@ -107,7 +107,7 @@ struct AddTransactionView: View {
             }
             
             if storeNewCategoriesByDefault && category != nil {
-                transactionType ? data.database.insertIncomeCategory(newCategory: category!) : data.database.insertExpenseCategory(newCategory: category!)
+                transactionType ? data.database.insertCategory(type: "income", newCategory: category!) : data.database.insertCategory(type: "expense", newCategory: category!)
             }
             
             data.refreshBalance()

@@ -33,12 +33,12 @@ struct CategorySelectView: View {
     var searchCategories: [Category] {
         if searchText.isEmpty {
             return transactionTypeTemp ?
-            data.database.getIncomeCategories() :
-            data.database.getExpenseCategories()
+            data.database.getCategories(type: "income") :
+            data.database.getCategories(type: "expense")
         } else {
             return transactionTypeTemp ?
-            data.database.getIncomeCategories().filter { $0.name.contains(searchText) } :
-            data.database.getExpenseCategories().filter { $0.name.contains(searchText) }
+            data.database.getCategories(type: "income").filter { $0.name.contains(searchText) } :
+            data.database.getCategories(type: "expense").filter { $0.name.contains(searchText) }
         }
     }
     

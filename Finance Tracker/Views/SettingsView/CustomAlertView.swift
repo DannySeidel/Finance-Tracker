@@ -68,7 +68,8 @@ struct CustomAlertView<Content:View>: View {
     
     private func onAdd() {
         categories.append(alertText)
-        categoryType ? data.database.insertIncomeCategory(newCategory: alertText) : data.database.insertExpenseCategory(newCategory: alertText)
+        categoryType ? data.database.insertCategory(type: "income", newCategory: alertText) : data.database.insertCategory(type: "expense", newCategory: alertText)
+        
     }
 }
 

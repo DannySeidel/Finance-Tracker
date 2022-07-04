@@ -120,18 +120,32 @@ class Database {
     func insertDefaults() {
         if firstUse {
             categoriesExpense.forEach { category in
-                insertExpenseCategory(newCategory: category)
+                insertCategory(type: "expense", newCategory: category)
             }
             categoriesIncome.forEach { category in
-                insertIncomeCategory(newCategory: category)
+                insertCategory(type: "income", newCategory: category)
             }
             firstUse = false
         }
     }
     
+    func getCategoryTable(type: String) -> Table {
+        var table = Table("")
+        
+        if type == "income" {
+            table = incomeCategoryTable
+        } else if type == "expense" {
+            table = expenseCategoryTable
+        }
+        
+        return table
+    }
     
-    func insertExpenseCategory(newCategory: String) {
-        let insert = expenseCategoryTable.insert(
+    
+    func insertCategory(type: String, newCategory: String) {
+        let table = getCategoryTable(type: type)
+        
+        let insert = table.insert(
             category <- newCategory
         )
         do {
@@ -141,12 +155,14 @@ class Database {
         }
     }
     
-    func getExpenseCategories() -> [Category] {
+    func getCategories(type: String) -> [Category] {
+        let table = getCategoryTable(type: type)
+        
         var categories: [Category] = []
         do {
-            let categoryRows = Array(try db.prepare(expenseCategoryTable
-                                                        .order(category.asc)
-                                                   ))
+            let categoryRows = Array(try db.prepare(table
+                .order(category.asc)
+            ))
             for categoryRow in categoryRows {
                 let category = Category.init(row: categoryRow)
                 categories.append(category)
@@ -157,52 +173,16 @@ class Database {
         return categories
     }
     
-    func deleteExpenseCategory(name: String) {
-        let category = expenseCategoryTable.filter(category == name)
+    func deleteCategory(type: String, name: String) {
+        let table = getCategoryTable(type: type)
+        
+        let category = table.filter(category == name)
         do {
             try db.run(category.delete())
         } catch {
             print(error)
         }
     }
-    
-    
-    func insertIncomeCategory(newCategory: String) {
-        let insert = incomeCategoryTable.insert(
-            category <-  newCategory
-        )
-        do {
-            try db.run(insert)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func getIncomeCategories() -> [Category] {
-        var categories: [Category] = []
-        do {
-            let categoryRows = Array(try db.prepare(incomeCategoryTable
-                                                        .order(category.asc)
-                                                   ))
-            for categoryRow in categoryRows {
-                let category = Category.init(row: categoryRow)
-                categories.append(category)
-            }
-        } catch {
-            print(error)
-        }
-        return categories
-    }
-    
-    func deleteIncomeCategory(name: String) {
-        let category = incomeCategoryTable.filter(category == name)
-        do {
-            try db.run(category.delete())
-        } catch {
-            print(error)
-        }
-    }
-    
     
     func insertTransaction(transaction: Transaction) {
         let insert = transactionTable.insert(
