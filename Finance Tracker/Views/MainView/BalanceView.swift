@@ -30,7 +30,7 @@ struct BalanceView: View {
     
     var body: some View {
         ZStack {
-            Capsule(style: .continuous)
+            RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .foregroundColor(Color.init(UIColor(named: "AppElement")!))
             NavigationLink(destination: HistoryView()) {
                 if data.balance != 0 {

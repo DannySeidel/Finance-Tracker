@@ -55,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2805D4502872C6B40013F89A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2805D4522872C9020013F89A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2807A7F4272EB2E60052F3E3 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
 		2807A7F6272EB7100052F3E3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2807A7FC272EF66A0052F3E3 /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
@@ -148,6 +150,8 @@
 		2847CA65272D652200328103 = {
 			isa = PBXGroup;
 			children = (
+				2805D4502872C6B40013F89A /* README.md */,
+				2805D4522872C9020013F89A /* .gitignore */,
 				2847CA70272D652200328103 /* Finance Tracker */,
 				2847CA81272D652400328103 /* Finance TrackerTests */,
 				2847CA8B272D652400328103 /* Finance TrackerUITests */,
