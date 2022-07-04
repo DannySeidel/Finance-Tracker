@@ -120,21 +120,21 @@ class Database {
     func insertDefaults() {
         if firstUse {
             categoriesExpense.forEach { category in
-                insertCategory(type: "expense", newCategory: category)
+                insertCategory(type: false, newCategory: category)
             }
             categoriesIncome.forEach { category in
-                insertCategory(type: "income", newCategory: category)
+                insertCategory(type: true, newCategory: category)
             }
             firstUse = false
         }
     }
     
-    func getCategoryTable(type: String) -> Table {
+    func getCategoryTable(type: Bool) -> Table {
         var table = Table("")
         
-        if type == "income" {
+        if type {
             table = incomeCategoryTable
-        } else if type == "expense" {
+        } else {
             table = expenseCategoryTable
         }
         
@@ -142,7 +142,7 @@ class Database {
     }
     
     
-    func insertCategory(type: String, newCategory: String) {
+    func insertCategory(type: Bool, newCategory: String) {
         let table = getCategoryTable(type: type)
         
         let insert = table.insert(
@@ -155,7 +155,7 @@ class Database {
         }
     }
     
-    func getCategories(type: String) -> [Category] {
+    func getCategories(type: Bool) -> [Category] {
         let table = getCategoryTable(type: type)
         
         var categories: [Category] = []
@@ -173,7 +173,7 @@ class Database {
         return categories
     }
     
-    func deleteCategory(type: String, name: String) {
+    func deleteCategory(type: Bool, name: String) {
         let table = getCategoryTable(type: type)
         
         let category = table.filter(category == name)

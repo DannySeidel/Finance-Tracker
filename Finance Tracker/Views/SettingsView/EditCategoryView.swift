@@ -16,11 +16,9 @@ struct EditCategoryView: View {
     
     var searchCategories: [Category] {
         if searchText.isEmpty {
-            return categoryType ? data.database.getCategories(type: "income") : data.database.getCategories(type: "expense")
+            return data.database.getCategories(type: categoryType)
         } else {
-            return categoryType ?
-            data.database.getCategories(type: "income").filter { $0.name.contains(searchText) } :
-            data.database.getCategories(type: "expense").filter { $0.name.contains(searchText) }
+            return data.database.getCategories(type: categoryType).filter { $0.name.contains(searchText) }
         }
     }
     
@@ -63,11 +61,7 @@ struct EditCategoryView: View {
     private func onDelete(offsets: IndexSet) {
         let category = searchCategories[offsets.first!]
         
-        if categoryType {
-            data.database.deleteCategory(type: "income", name: category.name)
-        } else {
-            data.database.deleteCategory(type: "expense", name: category.name)
-        }
+        data.database.deleteCategory(type: categoryType, name: category.name)
     }
 }
 
