@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2804D5BA28746F1C00CB7530 /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 2804D5B928746F1C00CB7530 /* SwiftCharts */; };
+		2804D5BC2874745100CB7530 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2804D5BB2874745100CB7530 /* AnalyticsView.swift */; };
 		2807A7F5272EB2E60052F3E3 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7F4272EB2E60052F3E3 /* AddTransactionView.swift */; };
 		2807A7F7272EB7100052F3E3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7F6272EB7100052F3E3 /* SettingsView.swift */; };
 		2807A7FD272EF66A0052F3E3 /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7FC272EF66A0052F3E3 /* AmountView.swift */; };
@@ -56,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2804D5BB2874745100CB7530 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		2805D4502872C6B40013F89A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2805D4522872C9020013F89A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2807A7F4272EB2E60052F3E3 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28C0033D2768AD58004CA74E /* SQLite in Frameworks */,
+				2804D5BA28746F1C00CB7530 /* SwiftCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +121,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2804D5BD2874747F00CB7530 /* AnalyticsView */ = {
+			isa = PBXGroup;
+			children = (
+				2804D5BB2874745100CB7530 /* AnalyticsView.swift */,
+			);
+			path = AnalyticsView;
+			sourceTree = "<group>";
+		};
 		2807A7F8272ED7B10052F3E3 /* TransactionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +229,7 @@
 				2807A7F8272ED7B10052F3E3 /* TransactionView */,
 				28A3198227317DC10022103D /* HistoryView */,
 				2807A7F9272ED7F10052F3E3 /* SettingsView */,
+				2804D5BD2874747F00CB7530 /* AnalyticsView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -270,6 +283,7 @@
 			name = "Finance Tracker";
 			packageProductDependencies = (
 				28C0033C2768AD58004CA74E /* SQLite */,
+				2804D5B928746F1C00CB7530 /* SwiftCharts */,
 			);
 			productName = "Finance Tracker";
 			productReference = 2847CA6E272D652200328103 /* Finance Tracker.app */;
@@ -345,6 +359,8 @@
 			mainGroup = 2847CA65272D652200328103;
 			packageReferences = (
 				28C0033B2768AD58004CA74E /* XCRemoteSwiftPackageReference "SQLite" */,
+				2804D5B728746EF800CB7530 /* XCRemoteSwiftPackageReference "SwiftCharts" */,
+				2804D5B828746F1C00CB7530 /* XCRemoteSwiftPackageReference "SwiftCharts" */,
 			);
 			productRefGroup = 2847CA6F272D652200328103 /* Products */;
 			projectDirPath = "";
@@ -397,6 +413,7 @@
 				284722F6273D6D2800D76C1A /* EditCategoryView.swift in Sources */,
 				289B4188276C828F00F67356 /* BalanceHistoryView.swift in Sources */,
 				2874A94E274BDAF3006C51B2 /* CustomAlertView.swift in Sources */,
+				2804D5BC2874745100CB7530 /* AnalyticsView.swift in Sources */,
 				28A058E72773396900FC3CE6 /* Extensions.swift in Sources */,
 				285A46DA2732CD8C00A3996A /* TransactionElement.swift in Sources */,
 				28C7CC02272DD0A100D0FF33 /* AnalyticsFrameView.swift in Sources */,
@@ -767,6 +784,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2804D5B728746EF800CB7530 /* XCRemoteSwiftPackageReference "SwiftCharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanschuetz/SwiftCharts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.5;
+			};
+		};
+		2804D5B828746F1C00CB7530 /* XCRemoteSwiftPackageReference "SwiftCharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanschuetz/SwiftCharts";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		28C0033B2768AD58004CA74E /* XCRemoteSwiftPackageReference "SQLite" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
@@ -778,6 +811,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2804D5B928746F1C00CB7530 /* SwiftCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2804D5B828746F1C00CB7530 /* XCRemoteSwiftPackageReference "SwiftCharts" */;
+			productName = SwiftCharts;
+		};
 		28C0033C2768AD58004CA74E /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 28C0033B2768AD58004CA74E /* XCRemoteSwiftPackageReference "SQLite" */;

@@ -9,25 +9,27 @@ import SwiftUI
 
 struct AnalyticsFrameView: View {
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .fill(Color.init(UIColor(named: "AppElement")!))
-            
-            VStack {
-                Spacer()
+            NavigationLink(destination: AnalyticsView()) {
+                ZStack {
+                RoundedRectangle(cornerRadius: 30, style: .continuous)
+                    .fill(Color.init(UIColor(named: "AppElement")!))
                 
-                Divider()
-                
-                HStack {
-                    Image(systemName: "chart.line.uptrend.xyaxis")
-                    Button("Show analytics") {
-                    }
-                    .foregroundColor(Color.init(UIColor(named: "AppText")!))
-
+                VStack {
                     Spacer()
+                    
+                    Divider()
+                    
+                    HStack {
+                        Image(systemName: "chart.line.uptrend.xyaxis")
+                        Button("Show analytics") {
+                        }
+                        .foregroundColor(Color.init(UIColor(named: "AppText")!))
+                        
+                        Spacer()
+                    }
                 }
+                .padding()
             }
-            .padding()
         }
     }
 }

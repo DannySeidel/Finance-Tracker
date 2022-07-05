@@ -29,17 +29,19 @@ struct BalanceView: View {
     }
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .foregroundColor(Color.init(UIColor(named: "AppElement")!))
-            NavigationLink(destination: HistoryView()) {
-                if data.balance != 0 {
-                    Image(systemName: "shift.fill")
-                        .rotationEffect(.degrees(rotation))
+        NavigationLink(destination: HistoryView()) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 30, style: .continuous)
+                    .foregroundColor(Color.init(UIColor(named: "AppElement")!))
+                HStack {
+                    if data.balance != 0 {
+                        Image(systemName: "shift.fill")
+                            .rotationEffect(.degrees(rotation))
+                    }
+                    Text(String(format: "%.2f", data.balance * factor))
+                        .bold()
+                    Image(systemName: "eurosign.circle")                    
                 }
-                Text(String(format: "%.2f", data.balance * factor))
-                    .bold()
-                Image(systemName: "eurosign.circle")
             }
             .font(.system(size: 42))
             .foregroundColor(balanceColor)

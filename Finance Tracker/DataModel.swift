@@ -57,7 +57,7 @@ class Data: ObservableObject {
     
     @Published var balance = 0.0
     
-    @Published var transactionGroups: [[HistoryTransaction]] = [[]]
+    @Published var transactionGroups: [[HistoryTransaction]] = []
     
     init() {
         addRepeatingTransactions()
@@ -111,6 +111,7 @@ class Data: ObservableObject {
                 groups.append([transaction])
             }
         }
+        
         transactionGroups = groups
     }
     
